@@ -2,7 +2,7 @@
 ## Progetto
 Agentic RAG su EU AI Act + GDPR (EN/IT) con eval, tracing e deploy. Dettagli: docs/architecture.md. Stato: docs/PROGRESS.md. Brief completo: docs/PROJECT_BRIEF.md.
 ## Comandi
-make setup | make check (lint+typecheck+test, OBBLIGATORIO prima di ogni commit) | make ingest | make eval SPLIT=dev | make eval-smoke | make serve
+make setup | make check (lint+typecheck+test, OBBLIGATORIO prima di ogni commit) | make ingest | make test-data | make qdrant && make index | make eval SPLIT=dev CONFIG=configs/bm25.yaml | make beir | make review-sheet | make eval-smoke | make serve
 ## Regole
 - Una milestone alla volta; plan mode e approvazione prima del codice.
 - Test con il codice; mypy --strict su src/; niente print, solo structlog; config solo da config.py.

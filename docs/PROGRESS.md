@@ -36,4 +36,15 @@
   Esperimento proposto: due run diagnostici (solo `text` senza titolo; stemmer disabilitato) per misurare la sensibilità, più un confronto con `rank_bm25` sullo stesso preprocessing. Va rieseguito anche sul server Qdrant, quando Docker è disponibile.
 
 ### Prossimo passo
-Passo 2: ADR-0001.
+1. **Tu:** installa Docker (`brew install --cask orbstack`, poi apri OrbStack una volta).
+2. **Tu:** rivedi `evals/datasets/review/reglens_v0_review.md` (50 candidati) e segna correzioni e approvazioni.
+3. **Io, dopo i passi 1–2:** `make qdrant && make index`, `make test-integration`, `make beir` sul server Qdrant, applico le tue correzioni al dataset (`reviewed: true` solo sui record approvati), poi `make eval CONFIG=configs/bm25.yaml` e `make eval CONFIG=configs/dense.yaml`.
+4. Esperimenti diagnostici sul gap BEIR (vedi Problemi aperti), poi `/preflight`, creazione del repo GitHub e PR della M1 (con conferma prima del push).
+
+### Note per M2
+- FastEmbed 0.9.1 include solo `multilingual-e5-large` tra gli e5 (niente small/base, niente bge-m3 dense): per l'ablation sugli embedding serve `TextEmbedding.add_custom_model` con gli ONNX di e5-small/base.
+- Il chunker baseline divide l'art. 3 dell'AIA (70 definizioni in un solo paragrafo) su più chunk: per le domande sulle definizioni è un candidato naturale per la strategia article-aware.
+- `run_eval` rifiuta già `--split test` senza `--final`; resta da fare il log degli accessi (`test_access.log`).
+
+## Log sessioni
+- 2026-11-09: piano M1 approvato; passi 1–7 e 9 completati; passo 8 completato tranne il run reale (manca Docker); passo 10 in bozza. 174 unit test e 13 test sui dati verdi.
