@@ -31,6 +31,8 @@ def _scrub(_: Any, __: str, event_dict: MutableMapping[str, Any]) -> MutableMapp
 
 def configure_logging(level: str = "INFO") -> None:
     logging.basicConfig(format="%(message)s", stream=sys.stderr, level=level)
+    for noisy in ("httpx", "httpcore"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
     structlog.configure(
         processors=[
             structlog.contextvars.merge_contextvars,

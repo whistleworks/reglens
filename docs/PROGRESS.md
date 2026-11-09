@@ -10,7 +10,7 @@
 - [x] 1. Scaffold (pyproject, Makefile, CI, CLAUDE.md, .claude/, config, logging)
 - [x] 2. ADR-0001 stack e free tier
 - [x] 3. ids.py
-- [ ] 4. fetch.py (Cellar)
+- [x] 4. fetch.py (Cellar)
 - [ ] 5. parse.py
 - [ ] 6. xrefs.py + glossario
 - [ ] 7. chunk + manifest + idempotenza
