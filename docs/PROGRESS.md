@@ -20,7 +20,10 @@
 
 ### Metriche attuali
 - BEIR SciFact BM25 (backend Qdrant in-memory): nDCG@10 = 0.6886, CI95 [0.6472, 0.7317], n = 300 (il CI contiene 0.665) → `evals/results/20261109-1432_d425b8574451_beir-scifact.json`. Riferimento 0.665 (arXiv:2104.08663v4, Tab. 2): Δ = +0.0236, **fuori dalla tolleranza ±0.02** (più alto del valore pubblicato).
-- Nessun run sul dataset RegLens ancora (serve il dataset v0 e l'indice).
+- **Baseline preliminari** su reglens_v0 dev, **dataset NON ancora revisionato** (41 query con target di retrieval; indice in Qdrant locale embedded):
+  - BM25: recall@5 0.5915 [0.4674, 0.7236], recall@10 0.8293, MRR@10 0.5824, nDCG@10 0.5939 → `evals/results/20261109-1500_36dc321b4fc2_275a452f_dev.json`
+  - Dense e5-large: recall@5 0.7642 [0.6585, 0.8618], recall@10 0.8537, MRR@10 0.6943, nDCG@10 0.6902 → `evals/results/20261109-1500_36dc321b4fc2_70b5c872_dev.json`
+  - Soglia M2 recall@5 ≥ 0.85 non ancora raggiunta da nessuna configurazione. Errori ricorrenti: definizioni (art. 3/4, spezzati in più chunk), art. 113 (date), art. 53(1); i considerando "rubano" posizioni agli articoli. Da rifare dopo la revisione del dataset.
 
 ### Decisioni prese (con data)
 - 2026-11-09: corpus AIA = consolidato 02024R1689-20260727 (articoli/allegati) + GU 32024R1689 (considerando). Conteggi attesi aggiornati rispetto al brief.
@@ -28,7 +31,8 @@
 - 2026-11-09: Qdrant locale via Docker (da installare: OrbStack o Docker Desktop).
 
 ### Problemi aperti
-- Docker non installato sul Mac di sviluppo: bloccano `make index`, l'integration test e i run di eval sul corpus.
+- Docker non installato (e niente Homebrew): per ora l'indice usa Qdrant locale embedded (`QDRANT_URL=path:qdrant_local`). Integration test e BEIR sul server restano da fare.
+- Nei chunk IT i titoli di considerando e allegati sono in inglese ("Recital 57", "Annex III"): da localizzare (richiede reindicizzazione, ~12 min).
 - BEIR SciFact +0.0236 sopra il valore pubblicato (criterio M1: ±0.02). Ipotesi, da verificare senza fare tuning per centrare il numero:
   1. BEIR usa Elasticsearch multi_match su title e text come campi separati; noi concateniamo title + text in un solo campo.
   2. Analyzer diverso: Snowball english di FastEmbed con le sue stopword vs l'analyzer ES di BEIR.

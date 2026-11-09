@@ -107,5 +107,19 @@
    ">=512": 0
   }
  },
- "index": null
+ "index": {
+  "collection": "reglens_f4a0f187_e5large_paragraph",
+  "points": 2814,
+  "dense_model": "intfloat/multilingual-e5-large",
+  "dense_dim": 1024,
+  "sparse_model": "Qdrant/bm25",
+  "bm25_avg_len": {
+   "en": 59.57,
+   "it": 63.94
+  },
+  "enrich": "none",
+  "seconds": 731.4,
+  "created_at": "2026-11-09T15:00:27+00:00",
+  "content_hash": "f4a0f1877c96654ca628c5a7f81f2c27404aa40b33c849a99a408230ca615367"
+ }
 }

@@ -29,3 +29,4 @@ qdrant_storage/
 .idea/
 .vscode/
 .claude/settings.local.json
+qdrant_local/

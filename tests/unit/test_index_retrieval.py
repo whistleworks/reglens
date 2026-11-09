@@ -84,3 +84,14 @@ def test_dense_search_and_filters(client: QdrantClient) -> None:
 
 def test_empty_filters_are_none() -> None:
     assert SearchFilters().to_qdrant() is None
+
+
+def test_make_client_local_path(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    from reglens.config import Settings
+    from reglens.retrieval.qdrant import make_client
+
+    settings = Settings(_env_file=None, qdrant_url=f"path:{tmp_path / 'q'}")  # type: ignore[call-arg]
+    client = make_client(settings)
+    index_chunks(client, "local", CHUNKS, FakeDense(), FakeSparse())
+    assert client.count("local", exact=True).count == len(CHUNKS)
+    client.close()
