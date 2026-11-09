@@ -12,7 +12,7 @@
 - [x] 3. ids.py
 - [x] 4. fetch.py (Cellar)
 - [x] 5. parse.py
-- [ ] 6. xrefs.py + glossario
+- [x] 6. xrefs.py + glossario
 - [ ] 7. chunk + manifest + idempotenza
 - [ ] 8. Qdrant + indicizzazione dense/sparse
 - [ ] 9. Metriche retrieval + run_eval + BEIR sanity

@@ -1,0 +1,866 @@
+[
+ {
+  "id": "AIA:art:3:def:1",
+  "regulation": "AIA",
+  "number": "1",
+  "term_en": "AI system",
+  "term_it": "sistema di IA",
+  "definition_en": "(1) ‘AI system’ means a machine-based system that is designed to operate with varying levels of autonomy and that may exhibit adaptiveness after deployment, and that, for explicit or implicit objectives, infers, from the input it receives, how to generate outputs such as predictions, content, recommendations, or decisions that can influence physical or virtual environments;",
+  "definition_it": "1) «sistema di IA»: un sistema automatizzato progettato per funzionare con livelli di autonomia variabili e che può presentare adattabilità dopo la diffusione e che, per obiettivi espliciti o impliciti, deduce dall'input che riceve come generare output quali previsioni, contenuti, raccomandazioni o decisioni che possono influenzare ambienti fisici o virtuali;"
+ },
+ {
+  "id": "AIA:art:3:def:2",
+  "regulation": "AIA",
+  "number": "2",
+  "term_en": "risk",
+  "term_it": "rischio",
+  "definition_en": "(2) ‘risk’ means the combination of the probability of an occurrence of harm and the severity of that harm;",
+  "definition_it": "2) «rischio»: la combinazione della probabilità del verificarsi di un danno e la gravità del danno stesso;"
+ },
+ {
+  "id": "AIA:art:3:def:3",
+  "regulation": "AIA",
+  "number": "3",
+  "term_en": "provider",
+  "term_it": "fornitore",
+  "definition_en": "(3) ‘provider’ means a natural or legal person, public authority, agency or other body that develops an AI system or a general-purpose AI model or that has an AI system or a general-purpose AI model developed and places it on the market or puts the AI system into service under its own name or trademark, whether for payment or free of charge;",
+  "definition_it": "3) «fornitore»: una persona fisica o giuridica, un'autorità pubblica, un'agenzia o un altro organismo che sviluppa un sistema di IA o un modello di IA per finalità generali o che fa sviluppare un sistema di IA o un modello di IA per finalità generali e immette tale sistema o modello sul mercato o mette in servizio il sistema di IA con il proprio nome o marchio, a titolo oneroso o gratuito;"
+ },
+ {
+  "id": "AIA:art:3:def:4",
+  "regulation": "AIA",
+  "number": "4",
+  "term_en": "deployer",
+  "term_it": "deployer",
+  "definition_en": "(4) ‘deployer’ means a natural or legal person, public authority, agency or other body using an AI system under its authority except where the AI system is used in the course of a personal non-professional activity;",
+  "definition_it": "4) «deployer»: una persona fisica o giuridica, un’autorità pubblica, un’agenzia o un altro organismo che utilizza un sistema di IA sotto la propria autorità, tranne nel caso in cui il sistema di IA sia utilizzato nel corso di un'attività personale non professionale;"
+ },
+ {
+  "id": "AIA:art:3:def:5",
+  "regulation": "AIA",
+  "number": "5",
+  "term_en": "authorised representative",
+  "term_it": "rappresentante autorizzato",
+  "definition_en": "(5) ‘authorised representative’ means a natural or legal person located or established in the Union who has received and accepted a written mandate from a provider of an AI system or a general-purpose AI model to, respectively, perform and carry out on its behalf the obligations and procedures established by this Regulation;",
+  "definition_it": "5) «rappresentante autorizzato»: una persona fisica o giuridica ubicata o stabilita nell'Unione che ha ricevuto e accettato un mandato scritto da un fornitore di un sistema di IA o di un modello di IA per finalità generali al fine, rispettivamente, di adempiere ed eseguire per suo conto gli obblighi e le procedure stabiliti dal presente regolamento;"
+ },
+ {
+  "id": "AIA:art:3:def:6",
+  "regulation": "AIA",
+  "number": "6",
+  "term_en": "importer",
+  "term_it": "importatore",
+  "definition_en": "(6) ‘importer’ means a natural or legal person located or established in the Union that places on the market an AI system that bears the name or trademark of a natural or legal person established in a third country;",
+  "definition_it": "6) «importatore»: una persona fisica o giuridica ubicata o stabilita nell'Unione che immette sul mercato un sistema di IA recante il nome o il marchio di una persona fisica o giuridica stabilita in un paese terzo;"
+ },
+ {
+  "id": "AIA:art:3:def:7",
+  "regulation": "AIA",
+  "number": "7",
+  "term_en": "distributor",
+  "term_it": "distributore",
+  "definition_en": "(7) ‘distributor’ means a natural or legal person in the supply chain, other than the provider or the importer, that makes an AI system available on the Union market;",
+  "definition_it": "7) «distributore»: una persona fisica o giuridica nella catena di approvvigionamento, diversa dal fornitore o dall'importatore, che mette a disposizione un sistema di IA sul mercato dell'Unione;"
+ },
+ {
+  "id": "AIA:art:3:def:8",
+  "regulation": "AIA",
+  "number": "8",
+  "term_en": "operator",
+  "term_it": "operatore",
+  "definition_en": "(8) ‘operator’ means a provider, product manufacturer, deployer, authorised representative, importer or distributor;",
+  "definition_it": "8) «operatore»: un fornitore, un fabbricante del prodotto, un deployer, un rappresentante autorizzato, un importatore o un distributore;"
+ },
+ {
+  "id": "AIA:art:3:def:9",
+  "regulation": "AIA",
+  "number": "9",
+  "term_en": "placing on the market",
+  "term_it": "immissione sul mercato",
+  "definition_en": "(9) ‘placing on the market’ means the first making available of an AI system or a general-purpose AI model on the Union market;",
+  "definition_it": "9) «immissione sul mercato»: la prima messa a disposizione di un sistema di IA o di un modello di IA per finalità generali sul mercato dell'Unione;"
+ },
+ {
+  "id": "AIA:art:3:def:10",
+  "regulation": "AIA",
+  "number": "10",
+  "term_en": "making available on the market",
+  "term_it": "messa a disposizione sul mercato",
+  "definition_en": "(10) ‘making available on the market’ means the supply of an AI system or a general-purpose AI model for distribution or use on the Union market in the course of a commercial activity, whether in return for payment or free of charge;",
+  "definition_it": "10) «messa a disposizione sul mercato»: la fornitura di un sistema di IA o di un modello di IA per finalità generali per la distribuzione o l'uso sul mercato dell'Unione nel corso di un'attività commerciale, a titolo oneroso o gratuito;"
+ },
+ {
+  "id": "AIA:art:3:def:11",
+  "regulation": "AIA",
+  "number": "11",
+  "term_en": "putting into service",
+  "term_it": "messa in servizio",
+  "definition_en": "(11) ‘putting into service’ means the supply of an AI system for first use directly to the deployer or for own use in the Union for its intended purpose;",
+  "definition_it": "11) «messa in servizio»: la fornitura di un sistema di IA direttamente al deployer per il primo uso o per uso proprio nell'Unione per la finalità prevista;"
+ },
+ {
+  "id": "AIA:art:3:def:12",
+  "regulation": "AIA",
+  "number": "12",
+  "term_en": "intended purpose",
+  "term_it": "finalità prevista",
+  "definition_en": "(12) ‘intended purpose’ means the use for which an AI system is intended by the provider, including the specific context and conditions of use, as specified in the information supplied by the provider in the instructions for use, promotional or sales materials and statements, as well as in the technical documentation;",
+  "definition_it": "12) «finalità prevista»: l'uso di un sistema di IA previsto dal fornitore, compresi il contesto e le condizioni d'uso specifici, come dettagliati nelle informazioni comunicate dal fornitore nelle istruzioni per l'uso, nel materiale promozionale o di vendita e nelle dichiarazioni, nonché nella documentazione tecnica;"
+ },
+ {
+  "id": "AIA:art:3:def:13",
+  "regulation": "AIA",
+  "number": "13",
+  "term_en": "reasonably foreseeable misuse",
+  "term_it": "uso improprio ragionevolmente prevedibile",
+  "definition_en": "(13) ‘reasonably foreseeable misuse’ means the use of an AI system in a way that is not in accordance with its intended purpose, but which may result from reasonably foreseeable human behaviour or interaction with other systems, including other AI systems;",
+  "definition_it": "13) «uso improprio ragionevolmente prevedibile»: l'uso di un sistema di IA in un modo non conforme alla sua finalità prevista, ma che può derivare da un comportamento umano o da un'interazione con altri sistemi, ivi compresi altri sistemi di IA, ragionevolmente prevedibile;"
+ },
+ {
+  "id": "AIA:art:3:def:14",
+  "regulation": "AIA",
+  "number": "14",
+  "term_en": "safety component",
+  "term_it": "componente di sicurezza",
+  "definition_en": "(14) ‘safety component’ means a component of a product or of an AI system which fulfils a safety function for that product or AI system, or the failure or malfunctioning of which endangers the health and safety of persons or property; for the purposes of this definition, a component fulfils a safety function where its intended purpose is to prevent or mitigate risks to health and safety of persons or property;",
+  "definition_it": "14) «componente di sicurezza»: un componente di un prodotto o di un sistema di IA che svolge una funzione di sicurezza per tale prodotto o sistema di IA o il cui guasto o malfunzionamento mette in pericolo la salute e la sicurezza di persone o beni; ai fini della presente definizione, un componente svolge una funzione di sicurezza se la sua finalità prevista è prevenire o attenuare i rischi per la salute e la sicurezza di persone o beni;"
+ },
+ {
+  "id": "AIA:art:3:def:14a",
+  "regulation": "AIA",
+  "number": "14a",
+  "term_en": "micro, small and medium-sized enterprise",
+  "term_it": "microimprese, piccole e medie imprese",
+  "definition_en": "(14a) ‘micro, small and medium-sized enterprise’ or ‘SME’ means a micro, small or medium-sized enterprise as defined in Article 2 of the Annex to Recommendation 2003/361/EC;",
+  "definition_it": "14 bis) «microimprese, piccole e medie imprese» o «PMI»: microimprese, piccole o medie imprese quali definite all'articolo 2 dell'allegato della raccomandazione 2003/361/CE;"
+ },
+ {
+  "id": "AIA:art:3:def:14b",
+  "regulation": "AIA",
+  "number": "14b",
+  "term_en": "small mid-cap enterprise",
+  "term_it": "piccole imprese a media capitalizzazione",
+  "definition_en": "(14b) ‘small mid-cap enterprise’ or ‘SMC’ means a small mid-cap enterprise as defined in point (2) of the Annex to Recommendation (EU) 2025/1099;",
+  "definition_it": "14 ter) «piccole imprese a media capitalizzazione»: piccole imprese a media capitalizzazione quali definite al punto 2 dell'allegato della raccomandazione (UE) 2025/1099;"
+ },
+ {
+  "id": "AIA:art:3:def:15",
+  "regulation": "AIA",
+  "number": "15",
+  "term_en": "instructions for use",
+  "term_it": "istruzioni per l'uso",
+  "definition_en": "(15) ‘instructions for use’ means the information provided by the provider to inform the deployer of, in particular, an AI system’s intended purpose and proper use;",
+  "definition_it": "15) «istruzioni per l'uso»: le informazioni comunicate dal fornitore per informare il deployer in particolare della finalità prevista e dell'uso corretto di un sistema di IA;"
+ },
+ {
+  "id": "AIA:art:3:def:16",
+  "regulation": "AIA",
+  "number": "16",
+  "term_en": "recall of an AI system",
+  "term_it": "richiamo di un sistema di IA",
+  "definition_en": "(16) ‘recall of an AI system’ means any measure aiming to achieve the return to the provider or taking out of service or disabling the use of an AI system made available to deployers;",
+  "definition_it": "16) «richiamo di un sistema di IA»: qualsiasi misura volta a ottenere la restituzione al fornitore, la messa fuori servizio o la disabilitazione dell'uso di un sistema di IA messo a disposizione dei deployer;"
+ },
+ {
+  "id": "AIA:art:3:def:17",
+  "regulation": "AIA",
+  "number": "17",
+  "term_en": "withdrawal of an AI system",
+  "term_it": "ritiro di un sistema di IA",
+  "definition_en": "(17) ‘withdrawal of an AI system’ means any measure aiming to prevent an AI system in the supply chain being made available on the market;",
+  "definition_it": "17) «ritiro di un sistema di IA»: qualsiasi misura volta a impedire che un sistema di IA nella catena di approvvigionamento sia messo a disposizione sul mercato;"
+ },
+ {
+  "id": "AIA:art:3:def:18",
+  "regulation": "AIA",
+  "number": "18",
+  "term_en": "performance of an AI system",
+  "term_it": "prestazioni di un sistema di IA",
+  "definition_en": "(18) ‘performance of an AI system’ means the ability of an AI system to achieve its intended purpose;",
+  "definition_it": "18) «prestazioni di un sistema di IA»: la capacità di un sistema di IA di conseguire la finalità prevista;"
+ },
+ {
+  "id": "AIA:art:3:def:19",
+  "regulation": "AIA",
+  "number": "19",
+  "term_en": "notifying authority",
+  "term_it": "autorità di notifica",
+  "definition_en": "(19) ‘notifying authority’ means the national authority responsible for setting up and carrying out the necessary procedures for the assessment, designation and notification of conformity assessment bodies and for their monitoring;",
+  "definition_it": "19) «autorità di notifica»: l'autorità nazionale responsabile dell'istituzione e dell'esecuzione delle procedure necessarie per la valutazione, la designazione e la notifica degli organismi di valutazione della conformità e per il loro monitoraggio;"
+ },
+ {
+  "id": "AIA:art:3:def:20",
+  "regulation": "AIA",
+  "number": "20",
+  "term_en": "conformity assessment",
+  "term_it": "valutazione della conformità",
+  "definition_en": "(20) ‘conformity assessment’ means the process of demonstrating whether the requirements set out in Chapter III, Section 2 relating to a high-risk AI system have been fulfilled;",
+  "definition_it": "20) «valutazione della conformità»: la procedura atta a dimostrare se i requisiti di cui al capo III, sezione 2, relativi a un sistema di IA ad alto rischio sono stati soddisfatti;"
+ },
+ {
+  "id": "AIA:art:3:def:21",
+  "regulation": "AIA",
+  "number": "21",
+  "term_en": "conformity assessment body",
+  "term_it": "organismo di valutazione della conformità",
+  "definition_en": "(21) ‘conformity assessment body’ means a body that performs third-party conformity assessment activities, including testing, certification and inspection;",
+  "definition_it": "21) «organismo di valutazione della conformità»: un organismo che svolge per conto di terzi attività di valutazione della conformità, incluse prove, certificazioni e ispezioni;"
+ },
+ {
+  "id": "AIA:art:3:def:22",
+  "regulation": "AIA",
+  "number": "22",
+  "term_en": "notified body",
+  "term_it": "organismo notificato",
+  "definition_en": "(22) ‘notified body’ means a conformity assessment body notified in accordance with this Regulation and other relevant Union harmonisation legislation;",
+  "definition_it": "22) «organismo notificato»: un organismo di valutazione della conformità notificato in conformità del presente regolamento e di altre pertinenti normative di armonizzazione dell'Unione;"
+ },
+ {
+  "id": "AIA:art:3:def:23",
+  "regulation": "AIA",
+  "number": "23",
+  "term_en": "substantial modification",
+  "term_it": "modifica sostanziale",
+  "definition_en": "(23) ‘substantial modification’ means a change to an AI system after its placing on the market or putting into service which is not foreseen or planned in the initial conformity assessment carried out by the provider and as a result of which the compliance of the AI system with the requirements set out in Chapter III, Section 2 is affected or results in a modification to the intended purpose for which the AI system has been assessed;",
+  "definition_it": "23) «modifica sostanziale»: una modifica di un sistema di IA a seguito della sua immissione sul mercato o messa in servizio che non è prevista o programmata nella valutazione iniziale della conformità effettuata dal fornitore e che ha l'effetto di incidere sulla conformità del sistema di IA ai requisiti di cui al capo III, sezione 2, o comporta una modifica della finalità prevista per la quale il sistema di IA è stato valutato;"
+ },
+ {
+  "id": "AIA:art:3:def:24",
+  "regulation": "AIA",
+  "number": "24",
+  "term_en": "CE marking",
+  "term_it": "marcatura CE",
+  "definition_en": "(24) ‘CE marking’ means a marking by which a provider indicates that an AI system is in conformity with the requirements set out in Chapter III, Section 2 and other applicable Union harmonisation legislation providing for its affixing;",
+  "definition_it": "24) «marcatura CE»: una marcatura mediante la quale un fornitore indica che un sistema di IA è conforme ai requisiti stabiliti al capo III, sezione 2, e in altre normative di armonizzazione dell'Unione applicabili e che ne prevedono l'apposizione;"
+ },
+ {
+  "id": "AIA:art:3:def:25",
+  "regulation": "AIA",
+  "number": "25",
+  "term_en": "post-market monitoring system",
+  "term_it": "sistema di monitoraggio successivo all'immissione sul mercato",
+  "definition_en": "(25) ‘post-market monitoring system’ means all activities carried out by providers of AI systems to collect and review experience gained from the use of AI systems they place on the market or put into service for the purpose of identifying any need to immediately apply any necessary corrective or preventive actions;",
+  "definition_it": "25) «sistema di monitoraggio successivo all'immissione sul mercato»: tutte le attività svolte dai fornitori di sistemi di IA al fine diraccogliere e analizzare l'esperienza maturata tramite l'uso dei sistemi di IA che immettono sul mercato o che mettono in servizio, al fine di individuare eventuali necessità di immediate azioni correttive o preventive;"
+ },
+ {
+  "id": "AIA:art:3:def:26",
+  "regulation": "AIA",
+  "number": "26",
+  "term_en": "market surveillance authority",
+  "term_it": "autorità di vigilanza del mercato",
+  "definition_en": "(26) ‘market surveillance authority’ means the national authority carrying out the activities and taking the measures pursuant to Regulation (EU) 2019/1020;",
+  "definition_it": "26) «autorità di vigilanza del mercato»: l'autorità nazionale che svolge le attività e adotta le misure a norma del regolamento (UE) 2019/1020;"
+ },
+ {
+  "id": "AIA:art:3:def:27",
+  "regulation": "AIA",
+  "number": "27",
+  "term_en": "harmonised standard",
+  "term_it": "norma armonizzata",
+  "definition_en": "(27) ‘harmonised standard’ means a harmonised standard as defined in Article 2(1), point (c), of Regulation (EU) No 1025/2012;",
+  "definition_it": "27) «norma armonizzata»: la norma armonizzata di cui all'articolo 2, punto 1), lettera c), del regolamento (UE) n, 1025/2012;"
+ },
+ {
+  "id": "AIA:art:3:def:28",
+  "regulation": "AIA",
+  "number": "28",
+  "term_en": "common specification",
+  "term_it": "specifiche comuni",
+  "definition_en": "(28) ‘common specification’ means a set of technical specifications as defined in Article 2, point (4) of Regulation (EU) No 1025/2012, providing means to comply with certain requirements established under this Regulation;",
+  "definition_it": "28) «specifiche comuni»: un insieme di specifiche tecniche quali definite all'articolo 2, punto 4), del regolamento (UE) n, 1025/2012, che forniscono i mezzi persoddisfare determinati requisitistabiliti a norma del presente regolamento;"
+ },
+ {
+  "id": "AIA:art:3:def:29",
+  "regulation": "AIA",
+  "number": "29",
+  "term_en": "training data",
+  "term_it": "dati di addestramento",
+  "definition_en": "(29) ‘training data’ means data used for training an AI system through fitting its learnable parameters;",
+  "definition_it": "29) «dati di addestramento»: i dati utilizzati per addestrare un sistema di IA adattandone i parametri che può apprendere;"
+ },
+ {
+  "id": "AIA:art:3:def:30",
+  "regulation": "AIA",
+  "number": "30",
+  "term_en": "validation data",
+  "term_it": "dati di convalida",
+  "definition_en": "(30) ‘validation data’ means data used for providing an evaluation of the trained AI system and for tuning its non-learnable parameters and its learning process in order, inter alia, to prevent underfitting or overfitting;",
+  "definition_it": "30) «dati di convalida»: i dati utilizzati per fornire una valutazione del sistema di IA addestrato e per metterne a punto, tra l'altro, i parametri che non può apprendere e il processo di apprendimento, al fine tra l'altro di evitare lo scarso (underfitting) o l'eccessivo (overfitting) adattamento ai dati di addestramento;"
+ },
+ {
+  "id": "AIA:art:3:def:31",
+  "regulation": "AIA",
+  "number": "31",
+  "term_en": "validation data set",
+  "term_it": "set di dati di convalida",
+  "definition_en": "(31) ‘validation data set’ means a separate data set or part of the training data set, either as a fixed or variable split;",
+  "definition_it": "31) «set di dati di convalida»: un set di dati distinto o costituito da una partizione fissa o variabile del set di dati di addestramento;"
+ },
+ {
+  "id": "AIA:art:3:def:32",
+  "regulation": "AIA",
+  "number": "32",
+  "term_en": "testing data",
+  "term_it": "dati di prova",
+  "definition_en": "(32) ‘testing data’ means data used for providing an independent evaluation of the AI system in order to confirm the expected performance of that system before its placing on the market or putting into service;",
+  "definition_it": "32) «dati di prova»: i dati utilizzati per fornire una valutazione indipendente delsistema di IA al fine di confermarne le prestazioni attese prima della sua immissione sul mercato o messa in servizio;"
+ },
+ {
+  "id": "AIA:art:3:def:33",
+  "regulation": "AIA",
+  "number": "33",
+  "term_en": "input data",
+  "term_it": "dati di input",
+  "definition_en": "(33) ‘input data’ means data provided to or directly acquired by an AI system on the basis of which the system produces an output;",
+  "definition_it": "33) «dati di input»: i dati forniti a un sistema di IA o direttamente acquisiti dallo stesso, in base ai quali il sistema produce un output;"
+ },
+ {
+  "id": "AIA:art:3:def:34",
+  "regulation": "AIA",
+  "number": "34",
+  "term_en": "biometric data",
+  "term_it": "dati biometrici",
+  "definition_en": "(34) ‘biometric data’ means personal data resulting from specific technical processing relating to the physical, physiological or behavioural characteristics of a natural person, such as facial images or dactyloscopic data;",
+  "definition_it": "34) «dati biometrici»: i dati personali ottenuti da un trattamento tecnico specifico relativi alle caratteristiche fisiche, fisiologiche o comportamentali di una persona fisica,quali le immagini facciali o i dati dattiloscopici;"
+ },
+ {
+  "id": "AIA:art:3:def:35",
+  "regulation": "AIA",
+  "number": "35",
+  "term_en": "biometric identification",
+  "term_it": "identificazione biometrica",
+  "definition_en": "(35) ‘biometric identification’ means the automated recognition of physical, physiological, behavioural, or psychological human features for the purpose of establishing the identity of a natural person by comparing biometric data of that individual to biometric data of individuals stored in a database;",
+  "definition_it": "35) «identificazione biometrica»: il riconoscimento automatizzato delle caratteristiche umane fisiche, fisiologiche, comportamentali o psicologiche allo scopo di determinare l'identità di una persona fisica confrontando i suoi dati biometrici con quelli di individui memorizzati in una banca dati;"
+ },
+ {
+  "id": "AIA:art:3:def:36",
+  "regulation": "AIA",
+  "number": "36",
+  "term_en": "biometric verification",
+  "term_it": "verifica biometrica",
+  "definition_en": "(36) ‘biometric verification’ means the automated, one-to-one verification, including authentication, of the identity of natural persons by comparing their biometric data to previously provided biometric data;",
+  "definition_it": "36) «verifica biometrica»: la verifica automatizzata e uno a uno, inclusa l'autenticazione, dell'identità di persone fisiche mediante il confronto dei loro dati biometrici con i dati biometrici forniti in precedenza;"
+ },
+ {
+  "id": "AIA:art:3:def:37",
+  "regulation": "AIA",
+  "number": "37",
+  "term_en": "special categories of personal data",
+  "term_it": "categorie particolari di dati personali",
+  "definition_en": "(37) ‘special categories of personal data’ means the categories of personal data referred to in Article 9(1) of Regulation (EU) 2016/679, Article 10 of Directive (EU) 2016/680 and Article 10(1) of Regulation (EU) 2018/1725;",
+  "definition_it": "37) «categorie particolari di dati personali»: le categorie di dati personali di cui all'articolo 9, paragrafo 1, del regolamento (UE) 2016/679, all'articolo 10 della direttiva (UE) 2016/680 e all'articolo 10, paragrafo 1, del regolamento (UE) 2018/1725;"
+ },
+ {
+  "id": "AIA:art:3:def:38",
+  "regulation": "AIA",
+  "number": "38",
+  "term_en": "sensitive operational data",
+  "term_it": "dati operativi sensibili",
+  "definition_en": "(38) ‘sensitive operational data’ means operational data related to activities of prevention, detection, investigation or prosecution of criminal offences, the disclosure of which could jeopardise the integrity of criminal proceedings;",
+  "definition_it": "38) «dati operativi sensibili»: dati operativi relativi ad attività di prevenzione, accertamento, indagine o perseguimento di reati, la cui divulgazione potrebbe compromettere l'integrità dei procedimenti penali;"
+ },
+ {
+  "id": "AIA:art:3:def:39",
+  "regulation": "AIA",
+  "number": "39",
+  "term_en": "emotion recognition system",
+  "term_it": "sistema di riconoscimento delle emozioni",
+  "definition_en": "(39) ‘emotion recognition system’ means an AI system for the purpose of identifying or inferring emotions or intentions of natural persons on the basis of their biometric data;",
+  "definition_it": "39) «sistema di riconoscimento delle emozioni»: un sistema di IA finalizzato all'identificazione o all'inferenza di emozioni o intenzioni di persone fisiche sulla base dei loro dati biometrici;"
+ },
+ {
+  "id": "AIA:art:3:def:40",
+  "regulation": "AIA",
+  "number": "40",
+  "term_en": "biometric categorisation system",
+  "term_it": "sistema di categorizzazione biometrica",
+  "definition_en": "(40) ‘biometric categorisation system’ means an AI system for the purpose of assigning natural persons to specific categories on the basis of their biometric data, unless it is ancillary to another commercial service and strictly necessary for objective technical reasons;",
+  "definition_it": "40) «sistema di categorizzazione biometrica»: un sistema di IA che utilizza i dati biometrici di persone fisiche al fine di assegnarle a categorie specifiche, a meno che non sia accessorio a un altro servizio commerciale e strettamente necessario per ragioni tecniche oggettive;"
+ },
+ {
+  "id": "AIA:art:3:def:41",
+  "regulation": "AIA",
+  "number": "41",
+  "term_en": "remote biometric identification system",
+  "term_it": "sistema di identificazione biometrica remota",
+  "definition_en": "(41) ‘remote biometric identification system’ means an AI system for the purpose of identifying natural persons, without their active involvement, typically at a distance through the comparison of a person’s biometric data with the biometric data contained in a reference database;",
+  "definition_it": "41) «sistema di identificazione biometrica remota»: un sistema di IA finalizzato all'identificazione di persone fisiche, senza il loro coinvolgimento attivo, tipicamente a distanza mediante il confronto dei dati biometrici di una persona con i dati biometrici contenuti in una banca dati di riferimento;"
+ },
+ {
+  "id": "AIA:art:3:def:42",
+  "regulation": "AIA",
+  "number": "42",
+  "term_en": "real-time remote biometric identification system",
+  "term_it": "sistema di identificazione biometrica remota in tempo reale",
+  "definition_en": "(42) ‘real-time remote biometric identification system’ means a remote biometric identification system, whereby the capturing of biometric data, the comparison and the identification all occur without a significant delay, comprising not only instant identification, but also limited short delays in order to avoid circumvention;",
+  "definition_it": "42) «sistema di identificazione biometrica remota in tempo reale»: un sistema di identificazione biometrica remota in cui il rilevamento dei dati biometrici, il confronto e l'identificazione avvengono senza ritardi significativi, il quale comprende non solo le identificazioni istantanee, ma anche quelle che avvengono con brevi ritardi limitati al fine di evitare l'elusione;"
+ },
+ {
+  "id": "AIA:art:3:def:43",
+  "regulation": "AIA",
+  "number": "43",
+  "term_en": "post-remote biometric identification system",
+  "term_it": "sistema di identificazione biometrica remota a posteriori",
+  "definition_en": "(43) ‘post-remote biometric identification system’ means a remote biometric identification system other than a real-time remote biometric identification system;",
+  "definition_it": "43) «sistema di identificazione biometrica remota a posteriori»: un sistema di identificazione biometrica remota diverso da un sistema di identificazione biometrica remota «in tempo reale»;"
+ },
+ {
+  "id": "AIA:art:3:def:44",
+  "regulation": "AIA",
+  "number": "44",
+  "term_en": "publicly accessible space",
+  "term_it": "spazio accessibile al pubblico",
+  "definition_en": "(44) ‘publicly accessible space’ means any publicly or privately owned physical place accessible to an undetermined number of natural persons, regardless of whether certain conditions for access may apply, and regardless of the potential capacity restrictions;",
+  "definition_it": "44) «spazio accessibile al pubblico»: qualsiasi luogo fisico di proprietà pubblica o privata accessibile a un numero indeterminato di persone fisiche, indipendentemente dal fatto che possano applicarsi determinate condizioni di accesso e indipendentemente dalle potenziali restrizioni di capacità;"
+ },
+ {
+  "id": "AIA:art:3:def:45",
+  "regulation": "AIA",
+  "number": "45",
+  "term_en": "law enforcement authority",
+  "term_it": "autorità di contrasto",
+  "definition_en": "(45) ‘law enforcement authority’ means:\n(a) any public authority competent for the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security; or\n(b) any other body or entity entrusted by Member State law to exercise public authority and public powers for the purposes of the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security;",
+  "definition_it": "45) «autorità di contrasto»:\na) qualsiasi autorità pubblica competente in materia di prevenzione, indagine, accertamento o perseguimento di reati o esecuzione di sanzioni penali, incluse la salvaguardia contro le minacce alla sicurezza pubblica e la prevenzione delle stesse; oppure\nb) qualsiasi altro organismo o entità incaricati dal diritto dello Stato membro di esercitare l'autorità pubblica e i poteri pubblici a fini di prevenzione, indagine, accertamento o perseguimento di reati o esecuzione di sanzioni penali, incluse la salvaguardia contro le minacce alla sicurezza pubblica e la prevenzione delle stesse;"
+ },
+ {
+  "id": "AIA:art:3:def:46",
+  "regulation": "AIA",
+  "number": "46",
+  "term_en": "law enforcement",
+  "term_it": "attività di contrasto",
+  "definition_en": "(46) ‘law enforcement’ means activities carried out by law enforcement authorities or on their behalf for the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including safeguarding against and preventing threats to public security;",
+  "definition_it": "46) «attività di contrasto»: le attività svolte dalle autorità di contrasto o per loro conto a fini di prevenzione, indagine, accertamento o perseguimento di reati o esecuzione di sanzioni penali, incluse la salvaguardia contro le minacce alla sicurezza pubblica e la prevenzione delle stesse;"
+ },
+ {
+  "id": "AIA:art:3:def:47",
+  "regulation": "AIA",
+  "number": "47",
+  "term_en": "AI Office",
+  "term_it": "ufficio per l'IA",
+  "definition_en": "(47) ‘AI Office’ means the Commission’s function of contributing to the implementation, monitoring and supervision of AI systems and general-purpose AI models, and AI governance, provided for in Commission Decision of 24 January 2024; references in this Regulation to the AI Office shall be construed as references to the Commission;",
+  "definition_it": "47) «ufficio per l'IA»: la funzione della Commissione volta a contribuire all'attuazione, al monitoraggio e alla supervisione dei sistemi di IA e dei modelli di IA per finalità generali, e della governance dell'IA prevista dalla decisione della Commissione del 24 gennaio 2024. I riferimenti all'ufficio per l'IA contenuti nel presente regolamento si intendono fatti alla Commissione;"
+ },
+ {
+  "id": "AIA:art:3:def:48",
+  "regulation": "AIA",
+  "number": "48",
+  "term_en": "national competent authority",
+  "term_it": "autorità nazionale competente",
+  "definition_en": "(48) ‘national competent authority’ means a notifying authority or a market surveillance authority; as regards AI systems put into service or used by Union institutions, agencies, offices and bodies, references to national competent authorities or market surveillance authorities in this Regulation shall be construed as references to the European Data Protection Supervisor;",
+  "definition_it": "48) «autorità nazionale competente»: un'autorità di notifica o un'autorità di vigilanza del mercato; per quanto riguarda i sistemi di IA messi in servizio o utilizzati da istituzioni, organi e organismi dell'Unione, i riferimenti alle autorità nazionali competenti o alle autorità di vigilanza del mercato contenuti nel presente regolamento si intendono fatti al Garante europeo della protezione dei dati;"
+ },
+ {
+  "id": "AIA:art:3:def:49",
+  "regulation": "AIA",
+  "number": "49",
+  "term_en": "serious incident",
+  "term_it": "incidente grave",
+  "definition_en": "(49) ‘serious incident’ means an incident or malfunctioning of an AI system that directly or indirectly leads to any of the following:\n(a) the death of a person, or serious harm to a person’s health;\n(b) a serious and irreversible disruption of the management or operation of critical infrastructure;\n(c) the infringement of obligations under Union law intended to protect fundamental rights;\n(d) serious harm to property or the environment;",
+  "definition_it": "49) «incidente grave»: un incidente o malfunzionamento di un sistema di IA che, direttamente o indirettamente, causa una delle conseguenze seguenti:\na) il decesso di una persona o gravi danni alla salute di una persona;\nb) una perturbazione grave e irreversibile della gestione o del funzionamento delle infrastrutture critiche;\nc) la violazione degli obblighi a norma del diritto dell'Unione intesi a proteggere i diritti fondamentali;\nd) gravi danni alle cose o all'ambiente;"
+ },
+ {
+  "id": "AIA:art:3:def:50",
+  "regulation": "AIA",
+  "number": "50",
+  "term_en": "personal data",
+  "term_it": "dati personali",
+  "definition_en": "(50) ‘personal data’ means personal data as defined in Article 4, point (1), of Regulation (EU) 2016/679;",
+  "definition_it": "50) «dati personali»: i dati personali quali definiti all'articolo 4, punto 1), del regolamento (UE) 2016/679;"
+ },
+ {
+  "id": "AIA:art:3:def:51",
+  "regulation": "AIA",
+  "number": "51",
+  "term_en": "non-personal data",
+  "term_it": "dati non personali",
+  "definition_en": "(51) ‘non-personal data’ means data other than personal data as defined in Article 4, point (1), of Regulation (EU) 2016/679;",
+  "definition_it": "51) «dati non personali»: dati diversi dai dati personali di cui all'articolo 4, punto 1), del regolamento (UE) 2016/679;"
+ },
+ {
+  "id": "AIA:art:3:def:52",
+  "regulation": "AIA",
+  "number": "52",
+  "term_en": "profiling",
+  "term_it": "profilazione",
+  "definition_en": "(52) ‘profiling’ means profiling as defined in Article 4, point (4), of Regulation (EU) 2016/679;",
+  "definition_it": "52) «profilazione»: la profilazione quale definita all'articolo 4, punto 4), del regolamento (UE) 2016/679;"
+ },
+ {
+  "id": "AIA:art:3:def:53",
+  "regulation": "AIA",
+  "number": "53",
+  "term_en": "real-world testing plan",
+  "term_it": "piano di prova in condizioni reali",
+  "definition_en": "(53) ‘real-world testing plan’ means a document that describes the objectives, methodology, geographical, population and temporal scope, monitoring, organisation and conduct of testing in real-world conditions;",
+  "definition_it": "53) «piano di prova in condizioni reali»: un documento che descrive gli obiettivi, la metodologia, l'ambito geografico, della popolazione e temporale, il monitoraggio, l'organizzazione e lo svolgimento della prova in condizioni reali;"
+ },
+ {
+  "id": "AIA:art:3:def:54",
+  "regulation": "AIA",
+  "number": "54",
+  "term_en": "sandbox plan",
+  "term_it": "piano dello spazio di sperimentazione",
+  "definition_en": "(54) ‘sandbox plan’ means a document agreed between the participating provider and the competent authority describing the objectives, conditions, timeframe, methodology and requirements for the activities carried out within the sandbox;",
+  "definition_it": "54) «piano dello spazio di sperimentazione»: un documento concordato tra il fornitore partecipante e l'autorità competente in cui sono descritti gli obiettivi, le condizioni, il calendario, la metodologia e i requisiti relativamente alle attività svolte all'interno dello spazio di sperimentazione;"
+ },
+ {
+  "id": "AIA:art:3:def:55",
+  "regulation": "AIA",
+  "number": "55",
+  "term_en": "AI regulatory sandbox",
+  "term_it": "spazio di sperimentazione normativa per l'IA",
+  "definition_en": "(55) ‘AI regulatory sandbox’ means a controlled framework set up by a competent authority which offers providers or prospective providers of AI systems the possibility to develop, train, validate and test, where appropriate in real-world conditions, an innovative AI system, pursuant to a sandbox plan for a limited time under regulatory supervision;",
+  "definition_it": "55) «spazio di sperimentazione normativa per l'IA»: un quadro controllato istituito da un'autorità competente che offre ai fornitori o potenziali fornitori di sistemi di IA la possibilità di sviluppare, addestrare, convalidare e provare, se del caso in condizioni reali, un sistema di IA innovativo, conformemente a un piano dello spazio di sperimentazione per un periodo di tempo limitato sotto supervisione regolamentare;"
+ },
+ {
+  "id": "AIA:art:3:def:56",
+  "regulation": "AIA",
+  "number": "56",
+  "term_en": "AI literacy",
+  "term_it": "alfabetizzazione in materia di IA",
+  "definition_en": "(56) ‘AI literacy’ means skills, knowledge and understanding that allow providers, deployers and affected persons, taking into account their respective rights and obligations in the context of this Regulation, to make an informed deployment of AI systems, as well as to gain awareness about the opportunities and risks of AI and possible harm it can cause;",
+  "definition_it": "56) «alfabetizzazione in materia di IA»: le competenze, le conoscenze e la comprensione che consentono ai fornitori, ai deployer e alle persone interessate, tenendo conto dei loro rispettivi diritti e obblighi nel contesto del presente regolamento, di procedere a una diffusione informata dei sistemi di IA, nonché di acquisire consapevolezza in merito alle opportunità e ai rischi dell'IA e ai possibili danni che essa può causare;"
+ },
+ {
+  "id": "AIA:art:3:def:57",
+  "regulation": "AIA",
+  "number": "57",
+  "term_en": "testing in real-world conditions",
+  "term_it": "prova in condizioni reali",
+  "definition_en": "(57) ‘testing in real-world conditions’ means the temporary testing of an AI system for its intended purpose in real-world conditions outside a laboratory or otherwise simulated environment, with a view to gathering reliable and robust data and to assessing and verifying the conformity of the AI system with the requirements of this Regulation and it does not qualify as placing the AI system on the market or putting it into service within the meaning of this Regulation, provided that all the conditions laid down in Article 57 or 60 are fulfilled;",
+  "definition_it": "57) «prova in condizioni reali»: la prova temporanea di un sistema di IA per la sua finalità prevista in condizioni reali al di fuori di un laboratorio o di un ambiente altrimenti simulato al fine di raccogliere dati affidabili e solidi e di valutare e verificare la conformità del sistema di IA ai requisiti del presente regolamento e che non è considerata immissione sul mercato o messa in servizio del sistema di IA ai sensi del presente regolamento, purché siano soddisfatte tutte le condizioni di cui all'articolo 57 o 60;"
+ },
+ {
+  "id": "AIA:art:3:def:58",
+  "regulation": "AIA",
+  "number": "58",
+  "term_en": "subject",
+  "term_it": "soggetto",
+  "definition_en": "(58) ‘subject’, for the purpose of real-world testing, means a natural person who participates in testing in real-world conditions;",
+  "definition_it": "58) «soggetto»: ai fini della prova in condizioni reali, una persona fisica che partecipa a prove in condizioni reali;"
+ },
+ {
+  "id": "AIA:art:3:def:59",
+  "regulation": "AIA",
+  "number": "59",
+  "term_en": "informed consent",
+  "term_it": "consenso informato",
+  "definition_en": "(59) ‘informed consent’ means a subject’s freely given, specific, unambiguous and voluntary expression of his or her willingness to participate in a particular testing in real-world conditions, after having been informed of all aspects of the testing that are relevant to the subject’s decision to participate;",
+  "definition_it": "59) «consenso informato»: l'espressione libera, specifica, inequivocabile e volontaria di un soggetto della propria disponibilità a partecipare a una determinata prova in condizioni reali, dopo essere stato informato di tutti gli aspetti della prova rilevanti per la sua decisione di partecipare;"
+ },
+ {
+  "id": "AIA:art:3:def:60",
+  "regulation": "AIA",
+  "number": "60",
+  "term_en": "deep fake",
+  "term_it": "deep fake",
+  "definition_en": "(60) ‘deep fake’ means AI-generated or manipulated image, audio or video content that resembles existing persons, objects, places, entities or events and would falsely appear to a person to be authentic or truthful;",
+  "definition_it": "60) «deep fake»: un'immagine o un contenuto audio o video generato o manipolato dall'IA che assomiglia a persone, oggetti, luoghi, entità o eventi esistenti e che apparirebbe falsamente autentico o veritiero a una persona;"
+ },
+ {
+  "id": "AIA:art:3:def:61",
+  "regulation": "AIA",
+  "number": "61",
+  "term_en": "widespread infringement",
+  "term_it": "infrazione diffusa",
+  "definition_en": "(61) ‘widespread infringement’ means any act or omission contrary to Union law protecting the interest of individuals, which:\n(a) has harmed or is likely to harm the collective interests of individuals residing in at least two Member States other than the Member State in which:\n(i) the act or omission originated or took place;\n(ii) the provider concerned, or, where applicable, its authorised representative is located or established; or\n(iii) the deployer is established, when the infringement is committed by the deployer;\n(b) has caused, causes or is likely to cause harm to the collective interests of individuals and has common features, including the same unlawful practice or the same interest being infringed, and is occurring concurrently, committed by the same operator, in at least three Member States;",
+  "definition_it": "61) «infrazione diffusa»: qualsiasi azione od omissione contraria al diritto dell'Unione che tutela gli interessi delle persone:\na) che abbia arrecato o possa arrecare un danno agli interessi collettivi di persone che risiedono in almeno due Stati membri diversi dallo Stato membro in cui:\ni) ha avuto origine o si è verificato l'azione o l'omissione in questione;\nii) è ubicato o stabilito il fornitore interessato o, se del caso, il suo rappresentante autorizzato; oppure\niii) è stabilito il deployer, quando la violazione è commessa dal deployer;\nb) che abbia arrecato, arrechi o possa arrecare un danno agli interessi collettivi di persone e che presenti caratteristiche comuni, compresa la stessa pratica illecita e lo stesso interesse leso e che si verifichi simultaneamente, commessa dal medesimo operatore, in almeno tre Stati membri;"
+ },
+ {
+  "id": "AIA:art:3:def:62",
+  "regulation": "AIA",
+  "number": "62",
+  "term_en": "critical infrastructure",
+  "term_it": "infrastruttura critica",
+  "definition_en": "(62) ‘critical infrastructure’ means critical infrastructure as defined in Article 2, point (4), of Directive (EU) 2022/2557;",
+  "definition_it": "62) «infrastruttura critica»: infrastruttura critica quale definita all'articolo 2, punto 4), della direttiva (UE) 2022/2557;"
+ },
+ {
+  "id": "AIA:art:3:def:63",
+  "regulation": "AIA",
+  "number": "63",
+  "term_en": "general-purpose AI model",
+  "term_it": "modello di IA per finalità generali",
+  "definition_en": "(63) ‘general-purpose AI model’ means an AI model, including where such an AI model is trained with a large amount of data using self-supervision at scale, that displays significant generality and is capable of competently performing a wide range of distinct tasks regardless of the way the model is placed on the market and that can be integrated into a variety of downstream systems or applications, except AI models that are used for research, development or prototyping activities before they are placed on the market;",
+  "definition_it": "63) «modello di IA per finalità generali»: un modello di IA, anche laddove tale modello di IA sia addestrato con grandi quantità di dati utilizzando l'autosupervisione su larga scala, che sia caratterizzato una generalità significativa e sia in grado di svolgere con competenza un'ampia gamma di compiti distinti, indipendentemente dalle modalità con cui il modello è immesso sul mercato, e che può essere integrato in una varietà di sistemi o applicazioni a valle, ad eccezione dei modelli di IA utilizzati per attività di ricerca, sviluppo o prototipazione prima di essere immessi sul mercato;"
+ },
+ {
+  "id": "AIA:art:3:def:64",
+  "regulation": "AIA",
+  "number": "64",
+  "term_en": "high-impact capabilities",
+  "term_it": "capacità di impatto elevato",
+  "definition_en": "(64) ‘high-impact capabilities’ means capabilities that match or exceed the capabilities recorded in the most advanced general-purpose AI models;",
+  "definition_it": "64) «capacità di impatto elevato»: capacità che corrispondono o superano le capacità registrate nei modelli di IA per finalità generali più avanzati;"
+ },
+ {
+  "id": "AIA:art:3:def:65",
+  "regulation": "AIA",
+  "number": "65",
+  "term_en": "systemic risk",
+  "term_it": "rischio sistemico",
+  "definition_en": "(65) ‘systemic risk’ means a risk that is specific to the high-impact capabilities of general-purpose AI models, having a significant impact on the Union market due to their reach, or due to actual or reasonably foreseeable negative effects on public health, safety, public security, fundamental rights, or the society as a whole, that can be propagated at scale across the value chain;",
+  "definition_it": "65) «rischio sistemico»: un rischio specifico per le capacità di impatto elevato dei modelli di IA per finalità generali, avente un impatto significativo sul mercato dell'Unione a causa della sua portata o di effetti negativi effettivi o ragionevolmente prevedibili sulla salute pubblica, la sicurezza, i diritti fondamentali o la società nel suo complesso, che può propagarsi su larga scala lungo l'intera catena del valore;"
+ },
+ {
+  "id": "AIA:art:3:def:66",
+  "regulation": "AIA",
+  "number": "66",
+  "term_en": "general-purpose AI system",
+  "term_it": "sistema di IA per finalità generali",
+  "definition_en": "(66) ‘general-purpose AI system’ means an AI system which is based on a general-purpose AI model and which has the capability to serve a variety of purposes, both for direct use as well as for integration in other AI systems;",
+  "definition_it": "66) «sistema di IA per finalità generali»: un sistema di IA basato su un modello di IA per finalità generali e che ha la capacità di perseguire varie finalità, sia per uso diretto che per integrazione in altri sistemi di IA;"
+ },
+ {
+  "id": "AIA:art:3:def:67",
+  "regulation": "AIA",
+  "number": "67",
+  "term_en": "floating-point operation",
+  "term_it": "operazione in virgola mobile",
+  "definition_en": "(67) ‘floating-point operation’ means any mathematical operation or assignment involving floating-point numbers, which are a subset of the real numbers typically represented on computers by an integer of fixed precision scaled by an integer exponent of a fixed base;",
+  "definition_it": "67) «operazione in virgola mobile»: qualsiasi operazione o assegnazione matematica che comporta numeri in virgola mobile, un sottoinsieme dei numeri reali generalmente rappresentati sui computer mediante un numero intero con precisione fissa avente come fattore di scala un esponente intero di una base fissa;"
+ },
+ {
+  "id": "AIA:art:3:def:68",
+  "regulation": "AIA",
+  "number": "68",
+  "term_en": "downstream provider",
+  "term_it": "fornitore a valle",
+  "definition_en": "(68) ‘downstream provider’ means a provider of an AI system, including a general-purpose AI system, which integrates an AI model, regardless of whether the AI model is provided by themselves and vertically integrated or provided by another entity based on contractual relations.",
+  "definition_it": "68) «fornitore a valle»: un fornitore di un sistema di IA, compreso un sistema di IA per finalità generali, che integra un modello di IA, indipendentemente dal fatto che il modello di IA sia fornito dallo stesso e integrato verticalmente o fornito da un'altra entità sulla base di relazioni contrattuali."
+ },
+ {
+  "id": "GDPR:art:4:def:1",
+  "regulation": "GDPR",
+  "number": "1",
+  "term_en": "personal data",
+  "term_it": "dato personale",
+  "definition_en": "(1) ‘personal data’ means any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;",
+  "definition_it": "1) «dato personale»: qualsiasi informazione riguardante una persona fisica identificata o identificabile («interessato»); si considera identificabile la persona fisica che può essere identificata, direttamente o indirettamente, con particolare riferimento a un identificativo come il nome, un numero di identificazione, dati relativi all'ubicazione, un identificativo online o a uno o più elementi caratteristici della sua identità fisica, fisiologica, genetica, psichica, economica, culturale o sociale;"
+ },
+ {
+  "id": "GDPR:art:4:def:2",
+  "regulation": "GDPR",
+  "number": "2",
+  "term_en": "processing",
+  "term_it": "trattamento",
+  "definition_en": "(2) ‘processing’ means any operation or set of operations which is performed on personal data or on sets of personal data, whether or not by automated means, such as collection, recording, organisation, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;",
+  "definition_it": "2) «trattamento»: qualsiasi operazione o insieme di operazioni, compiute con o senza l'ausilio di processi automatizzati e applicate a dati personali o insiemi di dati personali, come la raccolta, la registrazione, l'organizzazione, la strutturazione, la conservazione, l'adattamento o la modifica, l'estrazione, la consultazione, l'uso, la comunicazione mediante trasmissione, diffusione o qualsiasi altra forma di messa a disposizione, il raffronto o l'interconnessione, la limitazione, la cancellazione o la distruzione;"
+ },
+ {
+  "id": "GDPR:art:4:def:3",
+  "regulation": "GDPR",
+  "number": "3",
+  "term_en": "restriction of processing",
+  "term_it": "limitazione di trattamento",
+  "definition_en": "(3) ‘restriction of processing’ means the marking of stored personal data with the aim of limiting their processing in the future;",
+  "definition_it": "3) «limitazione di trattamento»: il contrassegno dei dati personali conservati con l'obiettivo di limitarne il trattamento in futuro;"
+ },
+ {
+  "id": "GDPR:art:4:def:4",
+  "regulation": "GDPR",
+  "number": "4",
+  "term_en": "profiling",
+  "term_it": "profilazione",
+  "definition_en": "(4) ‘profiling’ means any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person, in particular to analyse or predict aspects concerning that natural person's performance at work, economic situation, health, personal preferences, interests, reliability, behaviour, location or movements;",
+  "definition_it": "4) «profilazione»: qualsiasi forma di trattamento automatizzato di dati personali consistente nell'utilizzo di tali dati personali per valutare determinati aspetti personali relativi a una persona fisica, in particolare per analizzare o prevedere aspetti riguardanti il rendimento professionale, la situazione economica, la salute, le preferenze personali, gli interessi, l'affidabilità, il comportamento, l'ubicazione o gli spostamenti di detta persona fisica;"
+ },
+ {
+  "id": "GDPR:art:4:def:5",
+  "regulation": "GDPR",
+  "number": "5",
+  "term_en": "pseudonymisation",
+  "term_it": "pseudonimizzazione",
+  "definition_en": "(5) ‘pseudonymisation’ means the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person;",
+  "definition_it": "5) «pseudonimizzazione»: il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile;"
+ },
+ {
+  "id": "GDPR:art:4:def:6",
+  "regulation": "GDPR",
+  "number": "6",
+  "term_en": "filing system",
+  "term_it": "archivio",
+  "definition_en": "(6) ‘filing system’ means any structured set of personal data which are accessible according to specific criteria, whether centralised, decentralised or dispersed on a functional or geographical basis;",
+  "definition_it": "6) «archivio»: qualsiasi insieme strutturato di dati personali accessibili secondo criteri determinati, indipendentemente dal fatto che tale insieme sia centralizzato, decentralizzato o ripartito in modo funzionale o geografico;"
+ },
+ {
+  "id": "GDPR:art:4:def:7",
+  "regulation": "GDPR",
+  "number": "7",
+  "term_en": "controller",
+  "term_it": "titolare del trattamento",
+  "definition_en": "(7) ‘controller’ means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data; where the purposes and means of such processing are determined by Union or Member State law, the controller or the specific criteria for its nomination may be provided for by Union or Member State law;",
+  "definition_it": "7) «titolare del trattamento»: la persona fisica o giuridica, l'autorità pubblica, il servizio o altro organismo che, singolarmente o insieme ad altri, determina le finalità e i mezzi del trattamento di dati personali; quando le finalità e i mezzi di tale trattamento sono determinati dal diritto dell'Unione o degli Stati membri, il titolare del trattamento o i criteri specifici applicabili alla sua designazione possono essere stabiliti dal diritto dell'Unione o degli Stati membri;"
+ },
+ {
+  "id": "GDPR:art:4:def:8",
+  "regulation": "GDPR",
+  "number": "8",
+  "term_en": "processor",
+  "term_it": "responsabile del trattamento",
+  "definition_en": "(8) ‘processor’ means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller;",
+  "definition_it": "8) «responsabile del trattamento»: la persona fisica o giuridica, l'autorità pubblica, il servizio o altro organismo che tratta dati personali per conto del titolare del trattamento;"
+ },
+ {
+  "id": "GDPR:art:4:def:9",
+  "regulation": "GDPR",
+  "number": "9",
+  "term_en": "recipient",
+  "term_it": "destinatario",
+  "definition_en": "(9) ‘recipient’ means a natural or legal person, public authority, agency or another body, to which the personal data are disclosed, whether a third party or not. However, public authorities which may receive personal data in the framework of a particular inquiry in accordance with Union or Member State law shall not be regarded as recipients; the processing of those data by those public authorities shall be in compliance with the applicable data protection rules according to the purposes of the processing;",
+  "definition_it": "9) «destinatario»: la persona fisica o giuridica, l'autorità pubblica, il servizio o un altro organismo che riceve comunicazione di dati personali, che si tratti o meno di terzi. Tuttavia, le autorità pubbliche che possono ricevere comunicazione di dati personali nell'ambito di una specifica indagine conformemente al diritto dell'Unione o degli Stati membri non sono considerate destinatari; il trattamento di tali dati da parte di dette autorità pubbliche è conforme alle norme applicabili in materia di protezione dei dati secondo le finalità del trattamento;"
+ },
+ {
+  "id": "GDPR:art:4:def:10",
+  "regulation": "GDPR",
+  "number": "10",
+  "term_en": "third party",
+  "term_it": "terzo",
+  "definition_en": "(10) ‘third party’ means a natural or legal person, public authority, agency or body other than the data subject, controller, processor and persons who, under the direct authority of the controller or processor, are authorised to process personal data;",
+  "definition_it": "10) «terzo»: la persona fisica o giuridica, l'autorità pubblica, il servizio o altro organismo che non sia l'interessato, il titolare del trattamento, il responsabile del trattamento e le persone autorizzate al trattamento dei dati personali sotto l'autorità diretta del titolare o del responsabile;"
+ },
+ {
+  "id": "GDPR:art:4:def:11",
+  "regulation": "GDPR",
+  "number": "11",
+  "term_en": "consent",
+  "term_it": "consenso dell'interessato",
+  "definition_en": "(11) ‘consent’ of the data subject means any freely given, specific, informed and unambiguous indication of the data subject's wishes by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her;",
+  "definition_it": "11) «consenso dell'interessato»: qualsiasi manifestazione di volontà libera, specifica, informata e inequivocabile dell'interessato, con la quale lo stesso manifesta il proprio assenso, mediante dichiarazione o azione positiva inequivocabile, che i dati personali che lo riguardano siano oggetto di trattamento;"
+ },
+ {
+  "id": "GDPR:art:4:def:12",
+  "regulation": "GDPR",
+  "number": "12",
+  "term_en": "personal data breach",
+  "term_it": "violazione dei dati personali",
+  "definition_en": "(12) ‘personal data breach’ means a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, personal data transmitted, stored or otherwise processed;",
+  "definition_it": "12) «violazione dei dati personali»: la violazione di sicurezza che comporta accidentalmente o in modo illecito la distruzione, la perdita, la modifica, la divulgazione non autorizzata o l'accesso ai dati personali trasmessi, conservati o comunque trattati;"
+ },
+ {
+  "id": "GDPR:art:4:def:13",
+  "regulation": "GDPR",
+  "number": "13",
+  "term_en": "genetic data",
+  "term_it": "dati genetici",
+  "definition_en": "(13) ‘genetic data’ means personal data relating to the inherited or acquired genetic characteristics of a natural person which give unique information about the physiology or the health of that natural person and which result, in particular, from an analysis of a biological sample from the natural person in question;",
+  "definition_it": "13) «dati genetici»: i dati personali relativi alle caratteristiche genetiche ereditarie o acquisite di una persona fisica che forniscono informazioni univoche sulla fisiologia o sulla salute di detta persona fisica, e che risultano in particolare dall'analisi di un campione biologico della persona fisica in questione;"
+ },
+ {
+  "id": "GDPR:art:4:def:14",
+  "regulation": "GDPR",
+  "number": "14",
+  "term_en": "biometric data",
+  "term_it": "dati biometrici",
+  "definition_en": "(14) ‘biometric data’ means personal data resulting from specific technical processing relating to the physical, physiological or behavioural characteristics of a natural person, which allow or confirm the unique identification of that natural person, such as facial images or dactyloscopic data;",
+  "definition_it": "14) «dati biometrici»: i dati personali ottenuti da un trattamento tecnico specifico relativi alle caratteristiche fisiche, fisiologiche o comportamentali di una persona fisica che ne consentono o confermano l'identificazione univoca, quali l'immagine facciale o i dati dattiloscopici;"
+ },
+ {
+  "id": "GDPR:art:4:def:15",
+  "regulation": "GDPR",
+  "number": "15",
+  "term_en": "data concerning health",
+  "term_it": "dati relativi alla salute",
+  "definition_en": "(15) ‘data concerning health’ means personal data related to the physical or mental health of a natural person, including the provision of health care services, which reveal information about his or her health status;",
+  "definition_it": "15) «dati relativi alla salute»: i dati personali attinenti alla salute fisica o mentale di una persona fisica, compresa la prestazione di servizi di assistenza sanitaria, che rivelano informazioni relative al suo stato di salute;"
+ },
+ {
+  "id": "GDPR:art:4:def:16",
+  "regulation": "GDPR",
+  "number": "16",
+  "term_en": "main establishment",
+  "term_it": "stabilimento principale",
+  "definition_en": "(16) ‘main establishment’ means:\n(a) as regards a controller with establishments in more than one Member State, the place of its central administration in the Union, unless the decisions on the purposes and means of the processing of personal data are taken in another establishment of the controller in the Union and the latter establishment has the power to have such decisions implemented, in which case the establishment having taken such decisions is to be considered to be the main establishment;\n(b) as regards a processor with establishments in more than one Member State, the place of its central administration in the Union, or, if the processor has no central administration in the Union, the establishment of the processor in the Union where the main processing activities in the context of the activities of an establishment of the processor take place to the extent that the processor is subject to specific obligations under this Regulation;\n(a) as regards a controller with establishments in more than one Member State, the place of its central administration in the Union, unless the decisions on the purposes and means of the processing of personal data are taken in another establishment of the controller in the Union and the latter establishment has the power to have such decisions implemented, in which case the establishment having taken such decisions is to be considered to be the main establishment;\n(b) as regards a processor with establishments in more than one Member State, the place of its central administration in the Union, or, if the processor has no central administration in the Union, the establishment of the processor in the Union where the main processing activities in the context of the activities of an establishment of the processor take place to the extent that the processor is subject to specific obligations under this Regulation;",
+  "definition_it": "16) «stabilimento principale»:\na) per quanto riguarda un titolare del trattamento con stabilimenti in più di uno Stato membro, il luogo della sua amministrazione centrale nell'Unione, salvo che le decisioni sulle finalità e i mezzi del trattamento di dati personali siano adottate in un altro stabilimento del titolare del trattamento nell'Unione e che quest'ultimo stabilimento abbia facoltà di ordinare l'esecuzione di tali decisioni, nel qual caso lo stabilimento che ha adottato siffatte decisioni è considerato essere lo stabilimento principale;\nb) con riferimento a un responsabile del trattamento con stabilimenti in più di uno Stato membro, il luogo in cui ha sede la sua amministrazione centrale nell'Unione o, se il responsabile del trattamento non ha un'amministrazione centrale nell'Unione, lo stabilimento del responsabile del trattamento nell'Unione in cui sono condotte le principali attività di trattamento nel contesto delle attività di uno stabilimento del responsabile del trattamento nella misura in cui tale responsabile è soggetto a obblighi specifici ai sensi del presente regolamento;"
+ },
+ {
+  "id": "GDPR:art:4:def:17",
+  "regulation": "GDPR",
+  "number": "17",
+  "term_en": "representative",
+  "term_it": "rappresentante",
+  "definition_en": "(17) ‘representative’ means a natural or legal person established in the Union who, designated by the controller or processor in writing pursuant to Article 27, represents the controller or processor with regard to their respective obligations under this Regulation;",
+  "definition_it": "17) «rappresentante»: la persona fisica o giuridica stabilita nell'Unione che, designata dal titolare del trattamento o dal responsabile del trattamento per iscritto ai sensi dell'articolo 27, li rappresenta per quanto riguarda gli obblighi rispettivi a norma del presente regolamento;"
+ },
+ {
+  "id": "GDPR:art:4:def:18",
+  "regulation": "GDPR",
+  "number": "18",
+  "term_en": "enterprise",
+  "term_it": "impresa",
+  "definition_en": "(18) ‘enterprise’ means a natural or legal person engaged in an economic activity, irrespective of its legal form, including partnerships or associations regularly engaged in an economic activity;",
+  "definition_it": "18) «impresa»: la persona fisica o giuridica, indipendentemente dalla forma giuridica rivestita, che eserciti un'attività economica, comprendente le società di persone o le associazioni che esercitano regolarmente un'attività economica;"
+ },
+ {
+  "id": "GDPR:art:4:def:19",
+  "regulation": "GDPR",
+  "number": "19",
+  "term_en": "group of undertakings",
+  "term_it": "gruppo imprenditoriale",
+  "definition_en": "(19) ‘group of undertakings’ means a controlling undertaking and its controlled undertakings;",
+  "definition_it": "19) «gruppo imprenditoriale»: un gruppo costituito da un'impresa controllante e dalle imprese da questa controllate;"
+ },
+ {
+  "id": "GDPR:art:4:def:20",
+  "regulation": "GDPR",
+  "number": "20",
+  "term_en": "binding corporate rules",
+  "term_it": "norme vincolanti d'impresa",
+  "definition_en": "(20) ‘binding corporate rules’ means personal data protection policies which are adhered to by a controller or processor established on the territory of a Member State for transfers or a set of transfers of personal data to a controller or processor in one or more third countries within a group of undertakings, or group of enterprises engaged in a joint economic activity;",
+  "definition_it": "20) «norme vincolanti d'impresa»: le politiche in materia di protezione dei dati personali applicate da un titolare del trattamento o responsabile del trattamento stabilito nel territorio di uno Stato membro al trasferimento o al complesso di trasferimenti di dati personali a un titolare del trattamento o responsabile del trattamento in uno o più paesi terzi, nell'ambito di un gruppo imprenditoriale o di un gruppo di imprese che svolge un'attività economica comune;"
+ },
+ {
+  "id": "GDPR:art:4:def:21",
+  "regulation": "GDPR",
+  "number": "21",
+  "term_en": "supervisory authority",
+  "term_it": "autorità di controllo",
+  "definition_en": "(21) ‘supervisory authority’ means an independent public authority which is established by a Member State pursuant to Article 51;",
+  "definition_it": "21) «autorità di controllo»: l'autorità pubblica indipendente istituita da uno Stato membro ai sensi dell'articolo 51;"
+ },
+ {
+  "id": "GDPR:art:4:def:22",
+  "regulation": "GDPR",
+  "number": "22",
+  "term_en": "supervisory authority concerned",
+  "term_it": "autorità di controllo interessata",
+  "definition_en": "(22) ‘supervisory authority concerned’ means a supervisory authority which is concerned by the processing of personal data because:\n(a) the controller or processor is established on the territory of the Member State of that supervisory authority;\n(b) data subjects residing in the Member State of that supervisory authority are substantially affected or likely to be substantially affected by the processing; or\n(c) a complaint has been lodged with that supervisory authority;\n(a) the controller or processor is established on the territory of the Member State of that supervisory authority;\n(b) data subjects residing in the Member State of that supervisory authority are substantially affected or likely to be substantially affected by the processing; or\n(c) a complaint has been lodged with that supervisory authority;",
+  "definition_it": "22) «autorità di controllo interessata»: un'autorità di controllo interessata dal trattamento di dati personali in quanto:\na) il titolare del trattamento o il responsabile del trattamento è stabilito sul territorio dello Stato membro di tale autorità di controllo;\nb) gli interessati che risiedono nello Stato membro dell'autorità di controllo sono o sono probabilmente influenzati in modo sostanziale dal trattamento; oppure\nc) un reclamo è stato proposto a tale autorità di controllo;"
+ },
+ {
+  "id": "GDPR:art:4:def:23",
+  "regulation": "GDPR",
+  "number": "23",
+  "term_en": "cross-border processing",
+  "term_it": "trattamento transfrontaliero",
+  "definition_en": "(23) ‘cross-border processing’ means either:\n(a) processing of personal data which takes place in the context of the activities of establishments in more than one Member State of a controller or processor in the Union where the controller or processor is established in more than one Member State; or\n(b) processing of personal data which takes place in the context of the activities of a single establishment of a controller or processor in the Union but which substantially affects or is likely to substantially affect data subjects in more than one Member State.\n(a) processing of personal data which takes place in the context of the activities of establishments in more than one Member State of a controller or processor in the Union where the controller or processor is established in more than one Member State; or\n(b) processing of personal data which takes place in the context of the activities of a single establishment of a controller or processor in the Union but which substantially affects or is likely to substantially affect data subjects in more than one Member State.",
+  "definition_it": "23) «trattamento transfrontaliero»:\na) trattamento di dati personali che ha luogo nell'ambito delle attività di stabilimenti in più di uno Stato membro di un titolare del trattamento o responsabile del trattamento nell'Unione ove il titolare del trattamento o il responsabile del trattamento siano stabiliti in più di uno Stato membro; oppure\nb) trattamento di dati personali che ha luogo nell'ambito delle attività di un unico stabilimento di un titolare del trattamento o responsabile del trattamento nell'Unione, ma che incide o probabilmente incide in modo sostanziale su interessati in più di uno Stato membro;"
+ },
+ {
+  "id": "GDPR:art:4:def:24",
+  "regulation": "GDPR",
+  "number": "24",
+  "term_en": "relevant and reasoned objection",
+  "term_it": "obiezione pertinente e motivata",
+  "definition_en": "(24) ‘relevant and reasoned objection’ means an objection to a draft decision as to whether there is an infringement of this Regulation, or whether envisaged action in relation to the controller or processor complies with this Regulation, which clearly demonstrates the significance of the risks posed by the draft decision as regards the fundamental rights and freedoms of data subjects and, where applicable, the free flow of personal data within the Union;",
+  "definition_it": "24) «obiezione pertinente e motivata»: un'obiezione al progetto di decisione sul fatto che vi sia o meno una violazione del presente regolamento, oppure che l'azione prevista in relazione al titolare del trattamento o responsabile del trattamento sia conforme al presente regolamento, la quale obiezione dimostra chiaramente la rilevanza dei rischi posti dal progetto di decisione riguardo ai diritti e alle libertà fondamentali degli interessati e, ove applicabile, alla libera circolazione dei dati personali all'interno dell'Unione;"
+ },
+ {
+  "id": "GDPR:art:4:def:25",
+  "regulation": "GDPR",
+  "number": "25",
+  "term_en": "information society service",
+  "term_it": "servizio della società dell'informazione",
+  "definition_en": "(25) ‘information society service’ means a service as defined in point (b) of Article 1(1) of Directive (EU) 2015/1535 of the European Parliament and of the Council ;",
+  "definition_it": "25) «servizio della società dell'informazione»: il servizio definito all'articolo 1, paragrafo 1, lettera b), della direttiva (UE) 2015/1535 del Parlamento europeo e del Consiglio ;"
+ },
+ {
+  "id": "GDPR:art:4:def:26",
+  "regulation": "GDPR",
+  "number": "26",
+  "term_en": "international organisation",
+  "term_it": "organizzazione internazionale",
+  "definition_en": "(26) ‘international organisation’ means an organisation and its subordinate bodies governed by public international law, or any other body which is set up by, or on the basis of, an agreement between two or more countries.",
+  "definition_it": "26) «organizzazione internazionale»: un'organizzazione e gli organismi di diritto internazionale pubblico a essa subordinati o qualsiasi altro organismo istituito da o sulla base di un accordo tra due o più Stati."
+ }
+]
