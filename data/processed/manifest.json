@@ -1,0 +1,111 @@
+{
+ "schema_version": 1,
+ "content_hash": "f4a0f1877c96654ca628c5a7f81f2c27404aa40b33c849a99a408230ca615367",
+ "created_at": "2026-11-09T14:23:26+00:00",
+ "git_sha": "1813f1a4cfc5",
+ "sources": {
+  "aia_consolidated_en": {
+   "celex": "02024R1689-20260727",
+   "sha256": "5e7719f77e8a606b257dc25958ee3222c4383300a5a34270a5b850a2ce8b8715",
+   "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0001.03/DOC_1"
+  },
+  "aia_consolidated_it": {
+   "celex": "02024R1689-20260727",
+   "sha256": "e551fd4e6b2e29d6ae5f66f22ff945ee06a44bd6f3b7031573fe2eee83f67d4e",
+   "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0015.02/DOC_1"
+  },
+  "aia_oj_en": {
+   "celex": "32024R1689",
+   "sha256": "8f0b656302f9864cc87e040c371f209a9d65ae1a6cecc25ca5eb737e872d721a",
+   "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "aia_oj_it": {
+   "celex": "32024R1689",
+   "sha256": "ba2ca075faa2ccfc19c57185692771db11319ecc3b4e5bb067a90f63aa8b2c86",
+   "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0013.03/DOC_1"
+  },
+  "gdpr_oj_en": {
+   "celex": "32016R0679",
+   "sha256": "962539af03738bf552319ff4ce42d69e5f95a576307c4dfed7bf87e81b646b9d",
+   "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "gdpr_oj_it": {
+   "celex": "32016R0679",
+   "sha256": "52dbf00e8092bbff225158d1ce09ed3e4a6d2712f2bb9d5c6bfdf1d1b61b9f0a",
+   "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0013.03/DOC_1"
+  }
+ },
+ "chunking": {
+  "strategy": "paragraph",
+  "max_tokens": 500,
+  "tokenizer": "intfloat/multilingual-e5-large"
+ },
+ "files": {
+  "corpus_en.json": "908ab178bd5749d13b3ded95473512f9aae95d1513190e563d5a651fafe1e7a7",
+  "corpus_it.json": "3961dce6af6ffa6156a3162f999f5b2967a96c66cc1f643398eee02e9473ca6d",
+  "glossary.json": "0ffc05dc6ab19f2dbe34b46c9bdbce3625c2939dfa02b94abc165ee123638a06",
+  "xrefs.json": "23acee07a75333a6903dbbe612c7fc69b0c5212ba76df830b885180d9c10f3cc",
+  "chunks_paragraph.jsonl": "a181115bbb4c2e6c91b8c2b7d3f3e8768eb0ac6033876616ba79cac83a7af2ed"
+ },
+ "counts": {
+  "en": {
+   "AIA": {
+    "articles": 119,
+    "recitals": 180,
+    "annexes": 14
+   },
+   "GDPR": {
+    "articles": 99,
+    "recitals": 173,
+    "annexes": 0
+   }
+  },
+  "it": {
+   "AIA": {
+    "articles": 119,
+    "recitals": 180,
+    "annexes": 14
+   },
+   "GDPR": {
+    "articles": 99,
+    "recitals": 173,
+    "annexes": 0
+   }
+  }
+ },
+ "glossary_entries": 96,
+ "xrefs": {
+  "citing_units": 417,
+  "pairs": 997,
+  "en_it_jaccard": 0.9851
+ },
+ "chunks": {
+  "n": 2814,
+  "by_lang": {
+   "en": 1402,
+   "it": 1412
+  },
+  "by_type": {
+   "article": 1985,
+   "recital": 767,
+   "annex": 62
+  },
+  "split_units": 115,
+  "tokens": {
+   "min": 9.0,
+   "p50": 100.0,
+   "p95": 443.0,
+   "max": 500.0,
+   "mean": 147.15
+  },
+  "tokens_histogram": {
+   "0-63": 802,
+   "64-127": 895,
+   "128-255": 616,
+   "256-383": 283,
+   "384-511": 218,
+   ">=512": 0
+  }
+ },
+ "index": null
+}

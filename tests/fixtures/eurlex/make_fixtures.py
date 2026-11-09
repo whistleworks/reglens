@@ -43,7 +43,8 @@ for lang in ("en", "it"):
     r = html.parse(str(raw / f"aia_consolidated_{lang}.html")).getroot()
     nodes = [trimmed_chapter(r, "cpt_III", "cpt_III.sct_1", "art_6")]
     nodes += [
-        copy.deepcopy(r.get_element_by_id(i)) for i in ("art_4a", "art_51", "art_105", "anx_III")
+        copy.deepcopy(r.get_element_by_id(i))
+        for i in ("art_3", "art_4a", "art_51", "art_105", "anx_III")
     ]
     write(f"aia_consolidated_{lang}.html", nodes)
     o = html.parse(str(raw / f"aia_oj_{lang}.html")).getroot()

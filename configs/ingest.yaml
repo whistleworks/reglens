@@ -1,0 +1,5 @@
+# Ingestion configuration (M1 baseline). Changing it changes the manifest content_hash.
+chunking:
+  strategy: paragraph
+  max_tokens: 500          # e5 accepts 512 tokens incl. special tokens and the "passage: " prefix
+  tokenizer: intfloat/multilingual-e5-large

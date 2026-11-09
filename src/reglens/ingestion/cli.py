@@ -5,14 +5,11 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from pathlib import Path
 
-from reglens.config import get_settings
+from reglens.config import REPO_ROOT, get_settings
+from reglens.ingestion.chunk import ChunkingConfig, hf_token_counter
 from reglens.ingestion.fetch import Fetcher, FetchError, default_client
-from reglens.ingestion.glossary import build_glossary
-from reglens.ingestion.parse import Corpus, build_corpus
-from reglens.ingestion.sources import LANGS
-from reglens.ingestion.xrefs import build_xrefs
+from reglens.ingestion.pipeline import git_sha, run_ingest
 from reglens.observability.logging import configure_logging, get_logger
 
 log = get_logger(__name__)
@@ -36,47 +33,19 @@ def cmd_fetch(update_lock: bool) -> int:
     return 0
 
 
-def _write_json(path: Path, payload: object) -> None:
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-
-
 def cmd_parse() -> int:
     settings = get_settings()
-    settings.processed_dir.mkdir(parents=True, exist_ok=True)
-    corpora: dict[str, Corpus] = {}
-    for lang in LANGS:
-        corpus = build_corpus(settings.raw_dir, lang)
-        corpora[lang] = corpus
-        path = settings.processed_dir / f"corpus_{lang}.json"
-        path.write_text(corpus.model_dump_json(indent=1) + "\n", encoding="utf-8")
-        log.info(
-            "parse.done",
-            lang=lang,
-            path=str(path),
-            **{
-                f"{doc.regulation.lower()}_{kind}": len(getattr(doc, kind))
-                for doc in corpus.regulations
-                for kind in ("articles", "recitals", "annexes")
-            },
-        )
-
-    glossary = build_glossary(corpora["en"], corpora["it"])
-    _write_json(settings.processed_dir / "glossary.json", [e.model_dump() for e in glossary])
-
-    # Ids are identical across languages (tested), so xrefs are extracted from the EN text.
-    en = corpora["en"]
-    known = {
-        unit_id
-        for d in en.regulations
-        for unit_id in (
-            *(a.id for a in d.articles),
-            *(r.id for r in d.recitals),
-            *(a.id for a in d.annexes),
-        )
-    }
-    xrefs = build_xrefs(en, known)
-    _write_json(settings.processed_dir / "xrefs.json", xrefs)
-    log.info("parse.glossary_xrefs", definitions=len(glossary), citing_units=len(xrefs))
+    config = ChunkingConfig.from_yaml(REPO_ROOT / "configs" / "ingest.yaml")
+    lock = json.loads((settings.data_dir / "sources.lock.json").read_text())
+    sha = settings.git_sha if settings.git_sha != "unknown" else git_sha()
+    run_ingest(
+        settings.raw_dir,
+        settings.processed_dir,
+        config,
+        hf_token_counter(config.tokenizer),
+        sources_lock=lock,
+        sha=sha,
+    )
     return 0
 
 
