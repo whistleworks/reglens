@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import UTC, datetime
 
 from reglens.config import REPO_ROOT, get_settings
 from reglens.ingestion.chunk import ChunkingConfig, hf_token_counter
@@ -49,12 +50,47 @@ def cmd_parse() -> int:
     return 0
 
 
+def cmd_index(recreate: bool) -> int:
+    from reglens.ingestion.chunk import Chunk
+    from reglens.ingestion.embed import FastEmbedBM25, FastEmbedDense
+    from reglens.ingestion.index import collection_name, index_chunks
+    from reglens.retrieval.qdrant import make_client
+
+    settings = get_settings()
+    manifest_path = settings.processed_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    strategy = manifest["chunking"]["strategy"]
+    chunks = [
+        Chunk.model_validate_json(line)
+        for line in (settings.processed_dir / f"chunks_{strategy}.jsonl").read_text().splitlines()
+    ]
+    name = settings.qdrant_collection or collection_name(
+        manifest["content_hash"], settings.embedding_model, strategy, "none"
+    )
+    info = index_chunks(
+        make_client(settings),
+        name,
+        chunks,
+        FastEmbedDense(settings.embedding_model),
+        FastEmbedBM25(settings.sparse_model),
+        recreate=recreate,
+    )
+    info["created_at"] = datetime.now(UTC).isoformat(timespec="seconds")
+    info["content_hash"] = manifest["content_hash"]
+    manifest["index"] = info
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n")
+    log.info("index.done", **{k: v for k, v in info.items() if k != "bm25_avg_len"})
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="reglens-ingest")
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("fetch", "ingest"):
         p = sub.add_parser(name)
         p.add_argument("--update-lock", action="store_true", help="accept changed source hashes")
+    index = sub.add_parser("index")
+    index.add_argument("--recreate", action="store_true", help="drop the collection if it exists")
     args = parser.parse_args(argv)
 
     configure_logging(get_settings().log_level)
@@ -62,6 +98,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_fetch(args.update_lock)
     if args.command == "ingest":
         return cmd_fetch(args.update_lock) or cmd_parse()
+    if args.command == "index":
+        return cmd_index(args.recreate)
     return 1  # pragma: no cover - argparse enforces the choices
 
 

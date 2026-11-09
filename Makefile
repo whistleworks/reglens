@@ -37,8 +37,8 @@ check: lint typecheck test ## lint + typecheck + test (mandatory before each com
 ingest: ## Fetch, parse and chunk the corpus into data/processed/
 	uv run python -m reglens.ingestion.cli ingest
 
-index: ## Embed and index the chunks into Qdrant
-	uv run python -m reglens.ingestion.cli index
+index: ## Embed and index the chunks into Qdrant (RECREATE=1 to rebuild)
+	uv run python -m reglens.ingestion.cli index $(if $(RECREATE),--recreate,)
 
 qdrant: ## Start local Qdrant
 	docker compose up -d qdrant

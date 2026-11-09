@@ -14,7 +14,7 @@
 - [x] 5. parse.py
 - [x] 6. xrefs.py + glossario
 - [x] 7. chunk + manifest + idempotenza
-- [ ] 8. Qdrant + indicizzazione dense/sparse
+- [~] 8. Qdrant + indicizzazione dense/sparse — codice e unit test (Qdrant in-memory) fatti; integration test e `make index` in attesa di Docker
 - [ ] 9. Metriche retrieval + run_eval + BEIR sanity
 - [ ] 10. Dataset v0 (50 dev, revisione umana) + baseline
 
