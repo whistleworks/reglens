@@ -16,10 +16,10 @@
 - [x] 7. chunk + manifest + idempotenza
 - [~] 8. Qdrant + indicizzazione dense/sparse — codice e unit test (Qdrant in-memory) fatti; integration test e `make index` in attesa di Docker
 - [x] 9. Metriche retrieval + run_eval + BEIR sanity (BEIR fuori tolleranza, vedi Problemi aperti)
-- [ ] 10. Dataset v0 (50 dev, revisione umana) + baseline
+- [~] 10. Dataset v0: 50 candidati dev scritti (`reviewed: false`), schema, CHANGELOG e foglio di revisione fatti; **mancano la tua revisione e i run baseline** (servono Docker e `make index`)
 
 ### Metriche attuali
-- BEIR SciFact BM25 (backend Qdrant in-memory): nDCG@10 = 0.6886, CI95 [vedi JSON], n = 300 → `evals/results/20261109-1432_d425b8574451_beir-scifact.json`. Riferimento 0.665 (arXiv:2104.08663v4, Tab. 2): Δ = +0.0236, **fuori dalla tolleranza ±0.02** (più alto del valore pubblicato).
+- BEIR SciFact BM25 (backend Qdrant in-memory): nDCG@10 = 0.6886, CI95 [0.6472, 0.7317], n = 300 (il CI contiene 0.665) → `evals/results/20261109-1432_d425b8574451_beir-scifact.json`. Riferimento 0.665 (arXiv:2104.08663v4, Tab. 2): Δ = +0.0236, **fuori dalla tolleranza ±0.02** (più alto del valore pubblicato).
 - Nessun run sul dataset RegLens ancora (serve il dataset v0 e l'indice).
 
 ### Decisioni prese (con data)

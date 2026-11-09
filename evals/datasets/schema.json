@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/reglens/evals/datasets/schema.json",
+  "title": "RegLens evaluation record",
+  "description": "One JSON object per line of evals/datasets/*.jsonl. gold_ids use the canonical ids of src/reglens/ids.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "split", "lang", "category", "question", "gold_ids", "reference_answer",
+               "key_facts", "should_refuse", "expected_behavior", "difficulty", "source", "reviewed"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^q[0-9]{3,4}$"},
+    "split": {"enum": ["dev", "test"]},
+    "lang": {"enum": ["en", "it"]},
+    "category": {"enum": ["single_hop", "multi_hop", "definitional", "scenario", "unanswerable", "adversarial", "ambiguous"]},
+    "question": {"type": "string", "minLength": 5},
+    "gold_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(AIA|GDPR):(art:[1-9][0-9]{0,2}[a-z]?(:def:[1-9][0-9]{0,2}[a-z]?|(:par:[1-9][0-9]{0,2}[a-z]?)?(:pt:([a-z]{1,3}|[1-9][0-9]{0,2}[a-z]?))?)|rec:[1-9][0-9]{0,2}|annex:[IVXL]+(:pt:([a-z]{1,3}|[1-9][0-9]{0,2}[a-z]?))?)$"}
+    },
+    "reference_answer": {"type": "string"},
+    "key_facts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "should_refuse": {"type": "boolean"},
+    "expected_behavior": {"enum": ["answer", "refuse", "clarify"]},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "source": {"enum": ["synthetic_reviewed", "handwritten"]},
+    "reviewed": {"type": "boolean"}
+  },
+  "allOf": [
+    {"if": {"properties": {"expected_behavior": {"const": "refuse"}}},
+     "then": {"properties": {"should_refuse": {"const": true}}}},
+    {"if": {"properties": {"expected_behavior": {"const": "answer"}}},
+     "then": {"properties": {"should_refuse": {"const": false}, "gold_ids": {"minItems": 1}, "key_facts": {"minItems": 1}}}}
+  ]
+}

@@ -46,11 +46,14 @@ qdrant: ## Start local Qdrant
 eval: ## Run eval (SPLIT=dev STAGE=retrieval CONFIG=configs/bm25.yaml)
 	uv run python -m evals.run_eval --split $(SPLIT) --stage $(STAGE) --config $(CONFIG)
 
+review-sheet: ## Markdown review sheet for a dataset (DATASET=evals/datasets/reglens_v0.jsonl)
+	PYTHONPATH=. uv run python scripts/review_sheet.py $(or $(DATASET),evals/datasets/reglens_v0.jsonl)
+
 beir: ## BEIR SciFact BM25 sanity check (MEMORY=1 for in-process Qdrant)
 	uv run python -m evals.beir_sanity $(if $(MEMORY),--memory,)
 
 eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
-.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval beir \
+.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval beir review-sheet \
 	eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test
