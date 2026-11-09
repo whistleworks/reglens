@@ -3,7 +3,7 @@
 Grammar (tokens separated by ``:``)::
 
     <REG>:art:<N>[:par:<P>][:pt:<X>]     article, paragraph, point
-    <REG>:art:<N>:def:<D>                 numbered definition (AIA art. 3, GDPR art. 4)
+    <REG>:art:<N>:def:<N>                 numbered definition (AIA art. 3, GDPR art. 4)
     <REG>:rec:<N>                         recital
     <REG>:annex:<ROMAN>[:pt:<X>]          annex and annex point
 
@@ -35,7 +35,7 @@ _ROMAN = r"[IVXL]+"
 _PATTERN = re.compile(
     rf"""^(?P<reg>{"|".join(REGULATIONS)}):(?:
         art:(?P<art>{_NUM_SUFFIX})
-            (?::def:(?P<def>{_NUM})
+            (?::def:(?P<def>{_NUM_SUFFIX})
             |(?::par:(?P<par>{_NUM_SUFFIX}))?(?::pt:(?P<art_pt>{_POINT}))?)
         |rec:(?P<rec>{_NUM})
         |annex:(?P<annex>{_ROMAN})(?::pt:(?P<annex_pt>{_POINT}))?
@@ -95,7 +95,7 @@ class CanonicalId:
     number: str
     paragraph: str | None = None
     point: str | None = None
-    definition: int | None = None
+    definition: str | None = None
 
     def __post_init__(self) -> None:
         # Re-validate through the grammar so that hand-built ids obey the same rules.
@@ -104,7 +104,7 @@ class CanonicalId:
     def _render(self) -> str:
         parts = [self.regulation, self.kind, self.number]
         if self.definition is not None:
-            parts += ["def", str(self.definition)]
+            parts += ["def", self.definition]
         if self.paragraph is not None:
             parts += ["par", self.paragraph]
         if self.point is not None:
@@ -131,7 +131,7 @@ class CanonicalId:
             REGULATIONS.index(self.regulation),
             _KIND_ORDER[self.kind],
             number,
-            self.definition or 0,
+            _num_key(self.definition) if self.definition else (0, ""),
             _num_key(self.paragraph) if self.paragraph else (0, ""),
             _num_key(self.point) if self.point else (0, ""),
         )
@@ -155,7 +155,7 @@ def parse_id(raw: str) -> CanonicalId:
             groups["art"],
             paragraph=groups["par"],
             point=groups["art_pt"],
-            definition=int(groups["def"]) if groups["def"] else None,
+            definition=groups["def"],
         )
     if groups["rec"] is not None:
         return _unchecked(regulation, "rec", groups["rec"])
@@ -172,7 +172,7 @@ def _unchecked(
     number: str,
     paragraph: str | None = None,
     point: str | None = None,
-    definition: int | None = None,
+    definition: str | None = None,
 ) -> CanonicalId:
     """Build without re-running ``__post_init__`` (the caller already validated)."""
     obj = object.__new__(CanonicalId)
@@ -194,7 +194,7 @@ def article_id(
     *,
     paragraph: str | None = None,
     point: str | None = None,
-    definition: int | None = None,
+    definition: str | None = None,
 ) -> CanonicalId:
     return CanonicalId(regulation, "art", number, paragraph, point, definition)
 

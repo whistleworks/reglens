@@ -7,6 +7,8 @@ import sys
 
 from reglens.config import get_settings
 from reglens.ingestion.fetch import Fetcher, FetchError, default_client
+from reglens.ingestion.parse import build_corpus
+from reglens.ingestion.sources import LANGS
 from reglens.observability.logging import configure_logging, get_logger
 
 log = get_logger(__name__)
@@ -30,6 +32,26 @@ def cmd_fetch(update_lock: bool) -> int:
     return 0
 
 
+def cmd_parse() -> int:
+    settings = get_settings()
+    settings.processed_dir.mkdir(parents=True, exist_ok=True)
+    for lang in LANGS:
+        corpus = build_corpus(settings.raw_dir, lang)
+        path = settings.processed_dir / f"corpus_{lang}.json"
+        path.write_text(corpus.model_dump_json(indent=1) + "\n", encoding="utf-8")
+        log.info(
+            "parse.done",
+            lang=lang,
+            path=str(path),
+            **{
+                f"{doc.regulation.lower()}_{kind}": len(getattr(doc, kind))
+                for doc in corpus.regulations
+                for kind in ("articles", "recitals", "annexes")
+            },
+        )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="reglens-ingest")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -39,8 +61,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     configure_logging(get_settings().log_level)
-    if args.command in ("fetch", "ingest"):
+    if args.command == "fetch":
         return cmd_fetch(args.update_lock)
+    if args.command == "ingest":
+        return cmd_fetch(args.update_lock) or cmd_parse()
     return 1  # pragma: no cover - argparse enforces the choices
 
 

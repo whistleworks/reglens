@@ -11,7 +11,7 @@
 - [x] 2. ADR-0001 stack e free tier
 - [x] 3. ids.py
 - [x] 4. fetch.py (Cellar)
-- [ ] 5. parse.py
+- [x] 5. parse.py
 - [ ] 6. xrefs.py + glossario
 - [ ] 7. chunk + manifest + idempotenza
 - [ ] 8. Qdrant + indicizzazione dense/sparse

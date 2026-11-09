@@ -25,6 +25,7 @@ VALID = [
     "AIA:art:5:par:1:pt:ha",
     "AIA:art:3:def:1",
     "GDPR:art:4:def:11",
+    "AIA:art:3:def:14a",
     "AIA:art:3:pt:44",
     "AIA:rec:53",
     "GDPR:rec:173",
@@ -114,11 +115,11 @@ def test_natural_sort() -> None:
 
 def test_builders() -> None:
     assert str(article_id("AIA", "6", paragraph="2")) == "AIA:art:6:par:2"
-    assert str(article_id("GDPR", "4", definition=11)) == "GDPR:art:4:def:11"
+    assert str(article_id("GDPR", "4", definition="11")) == "GDPR:art:4:def:11"
     assert str(recital_id("AIA", 53)) == "AIA:rec:53"
     assert str(annex_id("AIA", "III", point="4")) == "AIA:annex:III:pt:4"
     with pytest.raises(InvalidIdError):
-        article_id("AIA", "6", paragraph="1", definition=2)
+        article_id("AIA", "6", paragraph="1", definition="2")
 
 
 @pytest.mark.parametrize(

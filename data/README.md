@@ -39,6 +39,22 @@ Pinned in [`sources.lock.json`](sources.lock.json) (sha256 of the raw XHTML and 
 - Attribution used in this project: **Source: EUR-Lex / Publications Office of the European Union, © European Union, 1998–2026. Texts parsed and restructured by RegLens; the original wording is not altered.**
 - Verified 2026-11-09 through the Commission legal notice (https://commission.europa.eu/legal-notice_en) and the Interoperable Europe summary of the Europa legal notice (https://interoperable-europe.ec.europa.eu/licence/europa-legal-notice). The EUR-Lex HTML pages could not be fetched automatically (WAF), so the decision's text is linked and not quoted.
 
+## Parsed corpus (`make ingest`)
+
+Counts, verified by `make test-data`:
+
+| | Articles | Recitals | Annexes |
+|---|---|---|---|
+| AI Act | 119 (113 + inserted 4a, 60a, 75a–75d) | 180 | 14 (Annex XIV added by 2026/1744) |
+| GDPR | 99 | 173 | — |
+
+- EN and IT expose exactly the same ids at article, paragraph and point level (also tested).
+- Italian latin suffixes are mapped to the EN letter convention: `4 bis` → `4a`, `1 ter` → `1b`.
+- Known simplifications:
+  - Canonical ids have no "section" level. Where a unit repeats point labels (Annex VII, VIII and X sections; two lists in AIA art. 43(1)), the repeated points are merged under the first id.
+  - Paragraphs quoted from amended acts (AIA arts. 102–110, e.g. `‘5. …`) are kept as text of the amending article, not as its paragraphs.
+  - Footnotes and amendment markers (`▼B`, `▼M1`) are removed. Exponents are rendered as `10^25`.
+
 ## Layout
 
 ```
