@@ -46,8 +46,8 @@ qdrant: ## Start local Qdrant
 eval: ## Run eval (SPLIT=dev STAGE=retrieval CONFIG=configs/bm25.yaml)
 	uv run python -m evals.run_eval --split $(SPLIT) --stage $(STAGE) --config $(CONFIG)
 
-beir: ## BEIR SciFact BM25 sanity check
-	uv run python -m evals.beir_sanity
+beir: ## BEIR SciFact BM25 sanity check (MEMORY=1 for in-process Qdrant)
+	uv run python -m evals.beir_sanity $(if $(MEMORY),--memory,)
 
 eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1

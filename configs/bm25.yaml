@@ -1,0 +1,5 @@
+# M1 baseline: BM25 only (sparse vectors in Qdrant, per-language stemming of the query)
+name: bm25
+retriever: bm25
+candidates: 50
+ks: [5, 10]

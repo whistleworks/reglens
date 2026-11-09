@@ -1,0 +1,5 @@
+# M1 baseline: dense only (multilingual-e5-large, cosine)
+name: dense
+retriever: dense
+candidates: 50
+ks: [5, 10]
