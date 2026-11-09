@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": ["Bash(make:*)", "Bash(uv run:*)", "Bash(uv sync:*)", "Bash(git status)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(docker compose:*)"],
+    "deny": ["Read(./.env)", "Read(./.env.*)", "Bash(git push --force:*)", "Bash(rm -rf:*)"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {"matcher": "Edit|Write", "hooks": [{"type": "command", "command": "uv run ruff format --quiet . && uv run ruff check --fix --quiet . || true"}]}
+    ]
+  }
+}
