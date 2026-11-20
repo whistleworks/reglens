@@ -1,0 +1,8 @@
+# Ablation: hybrid_fixed
+name: hybrid_fixed
+retriever: hybrid
+strategy: fixed
+enrich: none
+rerank: false
+candidates: 50
+ks: [5, 10]

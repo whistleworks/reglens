@@ -99,7 +99,11 @@ def main(argv: list[str] | None = None) -> int:
         p = sub.add_parser(name)
         p.add_argument("--update-lock", action="store_true", help="accept changed source hashes")
     index = sub.add_parser("index")
-    index.add_argument("--strategy", default="paragraph", choices=["paragraph", "article", "fixed"])
+    index.add_argument(
+        "--strategy",
+        default="paragraph",
+        choices=["paragraph", "paragraph_defs", "article", "fixed"],
+    )
     index.add_argument("--enrich", default="none", choices=["none", "hierarchy"])
     index.add_argument("--recreate", action="store_true", help="drop the collection if it exists")
     args = parser.parse_args(argv)

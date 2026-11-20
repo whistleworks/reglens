@@ -108,3 +108,17 @@ def test_make_client_local_snapshot_mode(tmp_path) -> None:  # type: ignore[no-u
     index_chunks(client, "snap", CHUNKS, FakeDense(), FakeSparse())
     assert client.count("snap", exact=True).count == len(CHUNKS)
     client.close()
+
+
+def test_exclude_types_filter_in_qdrant(client: QdrantClient) -> None:
+    from reglens.ingestion.chunk import Chunk as _Chunk
+
+    recital = make_chunk("GDPR:rec:39", "en", "right to erasure explained", "GDPR")
+    recital = _Chunk.model_validate(
+        {**recital.model_dump(), "type": "recital", "article_id": "GDPR:rec:39"}
+    )
+    index_chunks(client, "with_rec", [*CHUNKS, recital], FakeDense(), FakeSparse())
+    retriever = SparseRetriever(client, "with_rec", FakeSparse())
+    assert any(h.unit_id == "GDPR:rec:39" for h in retriever.search("erasure", 5))
+    hits = retriever.search("erasure", 5, SearchFilters(exclude_types=["recital"]))
+    assert all(h.payload["type"] != "recital" for h in hits)

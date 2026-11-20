@@ -98,3 +98,23 @@ def test_single_mode_pipelines() -> None:
 )
 def test_detect_lang(text: str, lang: str) -> None:
     assert detect_lang(text) == lang
+
+
+def test_weighted_rrf() -> None:
+    # dense: A B ; sparse: B A ; dense weight 1, sparse weight 0.5
+    fused = rrf([[hit("A"), hit("B")], [hit("B"), hit("A")]], weights=[1.0, 0.5])
+    assert [h.chunk_id for h in fused] == ["A", "B"]
+    assert fused[0].score == pytest.approx(1 / 61 + 0.5 / 62)
+    with pytest.raises(ValueError, match="weight"):
+        rrf([[hit("A")]], weights=[1.0, 2.0])
+
+
+def test_filters_exclude_types_and_merge() -> None:
+    base = SearchFilters(exclude_types=["recital"])
+    merged = base.merged(SearchFilters(regulation="GDPR"))
+    assert merged.regulation == "GDPR"
+    assert merged.exclude_types == ["recital"]
+    qf = merged.to_qdrant()
+    assert qf is not None
+    assert qf.must_not is not None
+    assert qf.must is not None

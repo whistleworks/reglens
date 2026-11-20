@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient, models
 
 from reglens.config import Settings
@@ -25,14 +25,33 @@ class SearchFilters(BaseModel):
     regulation: Regulation | None = None
     lang: Lang | None = None
     type: UnitType | None = None
+    exclude_types: list[UnitType] = Field(default_factory=list)
 
     def to_qdrant(self) -> models.Filter | None:
         conditions: list[models.Condition] = [
             models.FieldCondition(key=key, match=models.MatchValue(value=value))
-            for key, value in self.model_dump().items()
+            for key, value in self.model_dump(exclude={"exclude_types"}).items()
             if value is not None
         ]
-        return models.Filter(must=conditions) if conditions else None
+        excluded: list[models.Condition] = (
+            [models.FieldCondition(key="type", match=models.MatchAny(any=self.exclude_types))]
+            if self.exclude_types
+            else []
+        )
+        if not conditions and not excluded:
+            return None
+        return models.Filter(must=conditions or None, must_not=excluded or None)
+
+    def merged(self, other: SearchFilters | None) -> SearchFilters:
+        """``other`` (e.g. a tool call) wins on explicit fields; exclusions are unioned."""
+        if other is None:
+            return self
+        data = self.model_dump()
+        for key, value in other.model_dump(exclude={"exclude_types"}).items():
+            if value is not None:
+                data[key] = value
+        data["exclude_types"] = sorted(set(self.exclude_types) | set(other.exclude_types))
+        return SearchFilters.model_validate(data)
 
 
 LOCAL_PREFIX = "path:"

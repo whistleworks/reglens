@@ -25,7 +25,7 @@ def manifest() -> dict[str, Any]:
     return data
 
 
-STRATEGIES = ["paragraph", "article", "fixed"]
+STRATEGIES = ["paragraph", "paragraph_defs", "article", "fixed"]
 
 
 @pytest.fixture(scope="module", params=STRATEGIES)

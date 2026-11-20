@@ -51,6 +51,9 @@ class RetrievalPipeline:
         candidates: int = 50,
         rerank_top_n: int = 20,
         rrf_k: int = RRF_K,
+        dense_weight: float = 1.0,
+        sparse_weight: float = 1.0,
+        base_filters: SearchFilters | None = None,
     ) -> None:
         if mode in ("dense", "hybrid") and dense is None:
             raise ValueError(f"mode {mode!r} needs a dense retriever")
@@ -63,6 +66,8 @@ class RetrievalPipeline:
         self.candidates = candidates
         self.rerank_top_n = rerank_top_n
         self.rrf_k = rrf_k
+        self.weights = (dense_weight, sparse_weight)
+        self.base_filters = base_filters or SearchFilters()
 
     def search(
         self,
@@ -74,6 +79,7 @@ class RetrievalPipeline:
         latency: dict[str, float] = {}
         started_total = time.perf_counter()
         lang = query_lang or detect_lang(query)
+        filters = self.base_filters.merged(filters)
 
         rankings: list[list[Hit]] = []
         if self.mode in ("dense", "hybrid"):
@@ -93,7 +99,7 @@ class RetrievalPipeline:
 
         if len(rankings) > 1:
             t = time.perf_counter()
-            hits = rrf(rankings, k=self.rrf_k, limit=self.candidates)
+            hits = rrf(rankings, k=self.rrf_k, limit=self.candidates, weights=self.weights)
             latency["fusion"] = _ms(t)
         else:
             hits = rankings[0]

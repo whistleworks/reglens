@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from reglens.config import Settings, get_settings
 from reglens.retrieval.pipeline import RetrievalPipeline
+from reglens.retrieval.qdrant import SearchFilters
 
 
 class IndexNotFoundError(LookupError):
@@ -17,7 +18,7 @@ class IndexNotFoundError(LookupError):
 
 class PipelineConfig(BaseModel):
     retriever: Literal["bm25", "dense", "hybrid"] = "hybrid"
-    strategy: Literal["paragraph", "article", "fixed"] = "paragraph"
+    strategy: Literal["paragraph", "paragraph_defs", "article", "fixed"] = "paragraph"
     enrich: Literal["none", "hierarchy"] = "none"
     rerank: bool = False
     rerank_model: str = "BAAI/bge-reranker-v2-m3-int8"
@@ -26,6 +27,11 @@ class PipelineConfig(BaseModel):
         default=50, description="Chunks retrieved before projecting to article level"
     )
     collection: str | None = Field(default=None, description="None = from data manifest")
+    dense_weight: float = Field(default=1.0, description="RRF weight of the dense ranking")
+    sparse_weight: float = Field(default=1.0, description="RRF weight of the BM25 ranking")
+    exclude_types: list[Literal["article", "recital", "annex"]] = Field(
+        default_factory=list, description="Unit types never retrieved (e.g. recitals)"
+    )
 
 
 def resolve_index(
@@ -84,5 +90,8 @@ def build_pipeline(
         reranker=reranker,
         candidates=config.candidates,
         rerank_top_n=config.rerank_top_n,
+        dense_weight=config.dense_weight,
+        sparse_weight=config.sparse_weight,
+        base_filters=SearchFilters(exclude_types=list(config.exclude_types)),
     )
     return pipeline, model_ids, collection

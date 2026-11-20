@@ -56,7 +56,11 @@ _LABELS: dict[Lang, dict[str, str]] = {
 }
 
 
-Strategy = Literal["paragraph", "article", "fixed"]
+Strategy = Literal["paragraph", "paragraph_defs", "article", "fixed"]
+
+# Articles whose numbered points are legal definitions (one chunk per definition in
+# the ``paragraph_defs`` strategy, M2 experiment E3).
+DEFINITION_ARTICLES = {"AIA:art:3", "GDPR:art:4"}
 
 
 class ChunkingConfig(BaseModel):
@@ -214,10 +218,28 @@ class ParagraphChunker:
             )
         parts.append(f"{article.heading} {article.title}".strip())
         out: list[Chunk] = []
+        split_defs = self.config.strategy == "paragraph_defs" and article.id in DEFINITION_ARTICLES
         for paragraph in article.paragraphs:
             path = " > ".join(
                 parts + ([f"{labels['par']} {paragraph.number}"] if paragraph.number else [])
             )
+            if split_defs and paragraph.points:
+                for point in paragraph.points:
+                    out.extend(
+                        self._make(
+                            doc,
+                            unit_id=f"{article.id}:def:{point.label}",
+                            article_id=article.id,
+                            unit_type="article",
+                            title=f"{article.heading} {article.title}".strip(),
+                            path=f"{path} > ({point.label})",
+                            anchor=f"art_{article.number}",
+                            text=point.text,
+                            article=article.number,
+                            paragraph=paragraph.number,
+                        )
+                    )
+                continue
             out.extend(
                 self._make(
                     doc,
@@ -381,7 +403,7 @@ class FixedChunker:
 
 
 def make_chunker(config: ChunkingConfig, count_tokens: TokenCounter) -> Chunker:
-    if config.strategy == "paragraph":
+    if config.strategy in ("paragraph", "paragraph_defs"):
         return ParagraphChunker(config, count_tokens)
     if config.strategy == "article":
         return ArticleChunker(config, count_tokens)

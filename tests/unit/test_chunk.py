@@ -188,3 +188,21 @@ def test_all_strategies_from_yaml(tmp_path: Path) -> None:
     configs = ChunkingConfig.all_from_yaml(path)
     assert [c.strategy for c in configs] == ["paragraph", "fixed"]
     assert ChunkingConfig.from_yaml(path).strategy == "paragraph"
+
+
+def test_paragraph_defs_strategy_one_chunk_per_definition() -> None:
+    corpus = build_corpus(FIXTURES, "en")
+    chunks = make_chunker(ChunkingConfig(strategy="paragraph_defs", max_tokens=500), words).chunk(
+        corpus
+    )
+    defs = [c for c in chunks if c.article_id == "AIA:art:3"]
+    assert len(defs) == 70
+    assert defs[0].unit_id == "AIA:art:3:def:1"
+    assert defs[0].text.startswith("(1) ‘AI system’ means")
+    gdpr = [c for c in chunks if c.article_id == "GDPR:art:4"]
+    assert len(gdpr) == 26
+    # other articles are chunked exactly as in the paragraph strategy
+    para = make_chunker(ChunkingConfig(strategy="paragraph", max_tokens=500), words).chunk(corpus)
+    assert [c.id for c in chunks if c.article_id == "AIA:art:6"] == [
+        c.id for c in para if c.article_id == "AIA:art:6"
+    ]
