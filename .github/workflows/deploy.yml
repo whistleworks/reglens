@@ -21,7 +21,7 @@ jobs:
     env:
       IMAGE: ghcr.io/${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
@@ -60,7 +60,7 @@ jobs:
     if: vars.HF_SPACE != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Point the Space at the new image tag
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
