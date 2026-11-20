@@ -20,7 +20,7 @@ jobs:
           python-version: "3.12"
       - name: Audit locked dependencies
         run: |
-          uv export --frozen --no-dev --no-hashes -o requirements.txt
+          uv export --frozen --no-dev --no-hashes --no-emit-project -o requirements.txt
           uvx pip-audit -r requirements.txt --strict
 
   gitleaks:
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@0.28.0
+      - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25  # v0.36.0, pinned by sha
         with:
           scan-type: fs
           scan-ref: .
