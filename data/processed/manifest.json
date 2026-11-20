@@ -230,6 +230,22 @@
    "strategy": "paragraph",
    "chunks_sha256": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
    "created_at": "2026-11-20T08:28:40+00:00"
+  },
+  "reglens_1224e4bc_e5large_fixed": {
+   "collection": "reglens_1224e4bc_e5large_fixed",
+   "points": 947,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 213.55,
+    "it": 208.13
+   },
+   "enrich": "none",
+   "seconds": 374.7,
+   "strategy": "fixed",
+   "chunks_sha256": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b",
+   "created_at": "2026-11-20T08:34:57+00:00"
   }
  }
 }

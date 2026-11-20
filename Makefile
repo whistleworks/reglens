@@ -59,7 +59,13 @@ compare: ## Paired comparison of two runs (A=<json> B=<json>)
 report: ## Ablation table from runs (RUNS="a.json b.json" OUT=docs/ablation.md)
 	uv run python -m evals.report $(RUNS) $(if $(OUT),--out $(OUT),)
 
-eval-smoke eval-final calibrate serve demo docker-build docker-run load-test: ## Later milestones
+serve: ## Run the API + UI on http://localhost:8000 (QDRANT_URL and LLM keys from .env)
+	uv run uvicorn reglens.api.main:create_app --factory --host 0.0.0.0 --port $(or $(PORT),8000)
+
+calibrate: ## Judge calibration (LABELS=evals/human_labels/calibration.jsonl RUN=<judged e2e json>)
+	uv run python -m evals.calibrate_judge $(or $(LABELS),evals/human_labels/calibration.jsonl) $(RUN)
+
+eval-smoke eval-final demo docker-build docker-run load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
 .PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \

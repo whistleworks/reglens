@@ -27,6 +27,9 @@ from evals.metrics.stats import bootstrap_ci, percentiles
 from reglens.config import REPO_ROOT, get_settings
 from reglens.ingestion.sources import Lang
 from reglens.observability.logging import configure_logging, get_logger
+from reglens.retrieval.factory import IndexNotFoundError, PipelineConfig
+from reglens.retrieval.factory import build_pipeline as _build_pipeline
+from reglens.retrieval.factory import resolve_index as _resolve_index
 from reglens.retrieval.pipeline import RetrievalResult
 
 log = get_logger(__name__)
@@ -41,22 +44,12 @@ TEST_ACCESS_LOG = RESULTS_DIR / "test_access.log"
 SearchFn = Callable[[str, Lang | None], RetrievalResult]
 
 
-class RetrievalConfig(BaseModel):
+class RetrievalConfig(PipelineConfig):
     name: str
-    retriever: Literal["bm25", "dense", "hybrid"]
-    strategy: Literal["paragraph", "article", "fixed"] = "paragraph"
-    enrich: Literal["none", "hierarchy"] = "none"
-    rerank: bool = False
-    rerank_model: str = "BAAI/bge-reranker-v2-m3-int8"
-    rerank_top_n: int = 20
     query_lang: Literal["detect", "dataset"] = Field(
         default="detect", description="BM25 stemmer from a detector (as in production) or gold"
     )
-    candidates: int = Field(
-        default=50, description="Chunks retrieved before projecting to article level"
-    )
     ks: list[int] = Field(default_factory=lambda: [5, 10])
-    collection: str | None = Field(default=None, description="None = from data manifest")
 
     @classmethod
     def from_yaml(cls, path: Path) -> RetrievalConfig:
@@ -227,60 +220,17 @@ def write_result(result: RunResult, results_dir: Path = RESULTS_DIR) -> Path:
 def resolve_index(
     config: RetrievalConfig, manifest: dict[str, Any], dense_model: str
 ) -> dict[str, Any]:
-    """The manifest index built from ``config.strategy``/``config.enrich`` (or ``collection``)."""
-    indexes: dict[str, dict[str, Any]] = manifest.get("indexes") or {}
-    if config.collection:
-        if config.collection not in indexes:
-            raise SystemExit(f"collection {config.collection} not in the data manifest")
-        return indexes[config.collection]
-    matches = [
-        info
-        for info in indexes.values()
-        if info.get("strategy") == config.strategy
-        and info.get("enrich") == config.enrich
-        and info.get("dense_model") == dense_model
-    ]
-    if not matches:
-        raise SystemExit(
-            f"no index for strategy={config.strategy} enrich={config.enrich}: run "
-            f"`make index STRATEGY={config.strategy} ENRICH={config.enrich}`"
-        )
-    return max(matches, key=lambda info: str(info.get("created_at", "")))
+    try:
+        return _resolve_index(config, manifest, dense_model)
+    except IndexNotFoundError as exc:
+        raise SystemExit(str(exc)) from exc
 
 
 def build_pipeline(config: RetrievalConfig) -> tuple[Any, dict[str, str], str]:
-    from reglens.ingestion.embed import FastEmbedBM25, FastEmbedDense
-    from reglens.retrieval.dense import DenseRetriever
-    from reglens.retrieval.pipeline import RetrievalPipeline
-    from reglens.retrieval.qdrant import make_client
-    from reglens.retrieval.rerank import FastEmbedReranker
-    from reglens.retrieval.sparse import SparseRetriever
-
-    settings = get_settings()
-    manifest = json.loads((settings.processed_dir / "manifest.json").read_text())
-    index = resolve_index(config, manifest, settings.embedding_model)
-    collection = str(index["collection"])
-    client = make_client(settings)
-    model_ids: dict[str, str] = {}
-    dense = sparse = None
-    if config.retriever in ("dense", "hybrid"):
-        dense = DenseRetriever(client, collection, FastEmbedDense(index["dense_model"]))
-        model_ids["dense"] = index["dense_model"]
-    if config.retriever in ("bm25", "hybrid"):
-        sparse = SparseRetriever(client, collection, FastEmbedBM25(index["sparse_model"]))
-        model_ids["sparse"] = index["sparse_model"]
-    reranker = FastEmbedReranker(config.rerank_model) if config.rerank else None
-    if reranker is not None:
-        model_ids["reranker"] = config.rerank_model
-    pipeline = RetrievalPipeline(
-        config.retriever,
-        dense=dense,
-        sparse=sparse,
-        reranker=reranker,
-        candidates=config.candidates,
-        rerank_top_n=config.rerank_top_n,
-    )
-    return pipeline, model_ids, collection
+    try:
+        return _build_pipeline(config)
+    except IndexNotFoundError as exc:
+        raise SystemExit(str(exc)) from exc
 
 
 def _real_search(config: RetrievalConfig) -> tuple[SearchFn, dict[str, str], str]:

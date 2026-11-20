@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RegLens</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>RegLens</h1>
+    <p class="tagline">Domande su <strong>AI Act</strong> e <strong>GDPR</strong> con citazioni verificabili · Questions on the AI Act &amp; GDPR</p>
+  </header>
+  <main>
+    <form id="ask-form">
+      <label for="question" class="sr-only">Domanda</label>
+      <textarea id="question" name="question" rows="3" maxlength="2000" required
+        placeholder="Es. Un chatbot usato per selezionare i candidati è ad alto rischio?"></textarea>
+      <button type="submit" id="ask-btn">Chiedi</button>
+    </form>
+    <p id="status" role="status" aria-live="polite"></p>
+    <section id="result" hidden>
+      <div id="degraded" class="notice" hidden></div>
+      <div id="answer"></div>
+      <h2 id="citations-title" hidden>Citazioni</h2>
+      <ul id="citations"></ul>
+      <details id="sources-box" hidden>
+        <summary>Passaggi recuperati</summary>
+        <ul id="sources"></ul>
+      </details>
+      <div id="feedback">
+        <span>La risposta è utile?</span>
+        <button type="button" data-value="up" aria-label="Utile">👍</button>
+        <button type="button" data-value="down" aria-label="Non utile">👎</button>
+        <span id="feedback-status"></span>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p id="disclaimer">Solo informazione, non consulenza legale. Verifica sempre il testo ufficiale su EUR-Lex.</p>
+    <p class="privacy">Privacy: le domande vengono inviate a fornitori di modelli linguistici (piani gratuiti, che possono usarle per migliorare i loro servizi). Non inserire dati personali. Email e numeri di telefono vengono mascherati nei log.</p>
+    <p class="source">Fonte dei testi: EUR-Lex, © Unione europea. Riuso ai sensi della Decisione 2011/833/UE.</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

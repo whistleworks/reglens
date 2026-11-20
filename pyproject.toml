@@ -17,6 +17,8 @@ dependencies = [
     "tokenizers>=0.23.3",
     "qdrant-client>=1.20.0",
     "fastembed>=0.9.1",
+    "fastapi==0.162.0",
+    "uvicorn[standard]>=0.54.0",
 ]
 
 [dependency-groups]
@@ -30,6 +32,7 @@ dev = [
     "lxml-stubs>=0.5",
     "pyarrow>=26.0.1",
     "jsonschema>=4.26.0",
+    "httpx>=0.28.1",
 ]
 
 [build-system]

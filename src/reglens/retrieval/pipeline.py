@@ -10,10 +10,13 @@ from dataclasses import dataclass, field
 from typing import Literal, Protocol
 
 from reglens.ingestion.sources import Lang
+from reglens.observability.logging import get_logger
 from reglens.retrieval.fusion import RRF_K, rrf
 from reglens.retrieval.lang import detect_lang
 from reglens.retrieval.qdrant import Hit, SearchFilters
 from reglens.retrieval.rerank import Reranker, rerank
+
+log = get_logger(__name__)
 
 Mode = Literal["bm25", "dense", "hybrid"]
 
@@ -33,6 +36,7 @@ class RetrievalResult:
     hits: list[Hit]
     latency_ms: dict[str, float] = field(default_factory=dict)
     query_lang: Lang = "en"
+    degraded: list[str] = field(default_factory=list)
 
 
 class RetrievalPipeline:
@@ -89,13 +93,18 @@ class RetrievalPipeline:
         else:
             hits = rankings[0]
 
+        degraded: list[str] = []
         if self.reranker is not None:
             t = time.perf_counter()
-            hits = rerank(query, hits, self.reranker, self.rerank_top_n)
+            try:
+                hits = rerank(query, hits, self.reranker, self.rerank_top_n)
+            except Exception as exc:  # degrade to fused order rather than failing the request
+                log.warning("retrieval.rerank_failed", error_type=type(exc).__name__)
+                degraded.append("rerank_unavailable")
             latency["rerank"] = _ms(t)
 
         latency["total"] = _ms(started_total)
-        return RetrievalResult(hits=hits, latency_ms=latency, query_lang=lang)
+        return RetrievalResult(hits=hits, latency_ms=latency, query_lang=lang, degraded=degraded)
 
 
 def _ms(start: float) -> float:
