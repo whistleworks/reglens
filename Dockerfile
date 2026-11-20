@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # Multi-stage image: builder (uv + deps + model weights) -> slim runtime, non-root uid 1000.
 
-FROM python:3.12-slim AS builder
+FROM python:3.15-slim AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.13.7 /uv /usr/local/bin/uv
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never
 WORKDIR /app
@@ -25,7 +25,7 @@ from tokenizers import Tokenizer
 Tokenizer.from_pretrained("${EMBEDDING_MODEL}")
 PY
 
-FROM python:3.12-slim AS runtime
+FROM python:3.15-slim AS runtime
 ARG GIT_SHA=unknown
 ENV PATH=/app/.venv/bin:$PATH PYTHONUNBUFFERED=1 HF_HOME=/models \
     FASTEMBED_CACHE_PATH=/models/fastembed HF_HUB_OFFLINE=1 \
