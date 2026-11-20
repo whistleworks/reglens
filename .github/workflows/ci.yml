@@ -70,7 +70,7 @@ jobs:
       - run: uv sync --all-groups --frozen
       - name: Smoke eval + regression gate (fails if recall@5 drops > 0.03 vs baseline)
         run: uv run python -m evals.smoke --write-candidate smoke.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: smoke-eval
