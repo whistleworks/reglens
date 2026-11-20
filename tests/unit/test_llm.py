@@ -219,3 +219,23 @@ def test_parse_model_ref() -> None:
     assert parse_model_ref("groq/openai/gpt-oss-120b") == ("groq", "openai/gpt-oss-120b")
     with pytest.raises(ValueError, match="provider"):
         parse_model_ref("unknown/x")
+
+
+def test_ollama_is_a_local_keyless_provider(tmp_path: Path) -> None:
+    from reglens.config import Settings
+    from reglens.llm.factory import make_client
+
+    assert parse_model_ref("ollama/qwen3.5:9b") == ("ollama", "qwen3.5:9b")
+    settings = Settings(
+        llm_cache_dir=tmp_path, ollama_base_url="http://127.0.0.1:9/v1", llm_cache_mode="off"
+    )
+    made = make_client(settings, "ollama/qwen3.5:9b")  # no API key needed
+    assert made is not None
+    assert made.provider == "ollama"
+    assert made.model == "qwen3.5:9b"
+
+
+def test_local_models_have_zero_shadow_cost() -> None:
+    usage = Usage(prompt_tokens=1_000_000, completion_tokens=1_000_000)
+    assert shadow_cost_usd("ollama/qwen3.5:9b", usage) == 0.0
+    assert "self-hosted" in price_of("ollama/anything").source

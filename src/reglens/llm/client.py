@@ -201,7 +201,12 @@ PROVIDER_BASE_URLS: dict[str, str] = {
     "groq": "https://api.groq.com/openai/v1",
     "gemini": "https://generativelanguage.googleapis.com/v1beta/openai",
     "openrouter": "https://openrouter.ai/api/v1",
+    # Self-hosted, keyless (Ollama's OpenAI-compatible API); overridable via OLLAMA_BASE_URL.
+    "ollama": "http://127.0.0.1:11434/v1",
 }
+
+# Providers that run locally and need no API key.
+LOCAL_PROVIDERS = frozenset({"ollama"})
 
 
 def parse_model_ref(ref: str) -> tuple[str, str]:

@@ -4,7 +4,13 @@ from __future__ import annotations
 
 from reglens.config import Settings
 from reglens.llm.cache import CachedClient
-from reglens.llm.client import PROVIDER_BASE_URLS, ChatClient, OpenAICompatClient, parse_model_ref
+from reglens.llm.client import (
+    LOCAL_PROVIDERS,
+    PROVIDER_BASE_URLS,
+    ChatClient,
+    OpenAICompatClient,
+    parse_model_ref,
+)
 from reglens.llm.fallback import FallbackChain
 
 
@@ -14,14 +20,15 @@ class MissingAPIKeyError(RuntimeError):
 
 def make_client(settings: Settings, model_ref: str, *, required: bool = True) -> ChatClient | None:
     provider, model = parse_model_ref(model_ref)
-    key = settings.provider_key(provider)
+    key = "local" if provider in LOCAL_PROVIDERS else settings.provider_key(provider)
     if key is None and settings.llm_cache_mode != "replay":
         if required:
             raise MissingAPIKeyError(f"set {provider.upper()}_API_KEY to use {model_ref}")
         return None
+    base_url = settings.ollama_base_url if provider == "ollama" else PROVIDER_BASE_URLS[provider]
     inner = OpenAICompatClient(
         provider=provider,
-        base_url=PROVIDER_BASE_URLS[provider],
+        base_url=base_url,
         model=model,
         api_key=key or "replay-only",
         timeout_s=settings.llm_timeout_s,

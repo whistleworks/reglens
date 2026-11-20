@@ -65,6 +65,12 @@ serve: ## Run the API + UI on http://localhost:8000 (QDRANT_URL and LLM keys fro
 calibrate: ## Judge calibration (LABELS=evals/human_labels/calibration.jsonl RUN=<judged e2e json>)
 	uv run python -m evals.calibrate_judge $(or $(LABELS),evals/human_labels/calibration.jsonl) $(RUN)
 
+e2e-local: ## e2e on dev with local Ollama models, no keys (GEN, JUDGE, E2E_CONFIG, LIMIT); needs `ollama serve`
+	QDRANT_URL=$(or $(QDRANT_URL),path:qdrant_local) LLM_PRIMARY_MODEL=ollama/$(or $(GEN),qwen3.5:9b) \
+	LLM_FALLBACK_MODELS= JUDGE_MODEL=ollama/$(or $(JUDGE),gemma4:e4b) LLM_TIMEOUT_S=180 AGENT_TIMEOUT_S=300 \
+	uv run python -m evals.run_eval --split dev --stage e2e --config $(or $(E2E_CONFIG),configs/e2e_hybrid.yaml) \
+	$(if $(LIMIT),--limit $(LIMIT))
+
 eval-smoke: ## CI smoke eval + regression gate (BM25, 20 dev queries, no secrets)
 	uv run python -m evals.smoke
 
@@ -81,6 +87,6 @@ docker-run: ## Run the image on http://localhost:7860 with .env
 eval-final demo load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
-.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \
+.PHONY: e2e-local help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \
 	beir review-sheet compare report eval-smoke eval-final calibrate serve demo docker-build export-index \
 	docker-run load-test

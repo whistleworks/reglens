@@ -39,7 +39,13 @@ PRICES: dict[str, Price] = {
 _FALLBACK = max(PRICES.values(), key=lambda p: p.input_per_m + p.output_per_m)
 
 
+# Self-hosted models have no per-token list price; hardware and energy are not modelled.
+_LOCAL = Price(0.0, 0.0, "self-hosted (Ollama): no per-token price", "2026-11-20", "n/a")
+
+
 def price_of(model_ref: str) -> Price:
+    if model_ref.startswith("ollama/"):
+        return _LOCAL
     return PRICES.get(model_ref, _FALLBACK)
 
 
