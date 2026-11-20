@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "content_hash": "36687cc56ba7b875c6c8895f8463c7e607d47b48b8ac11782400a55525f62785",
- "created_at": "2026-11-20T08:01:01+00:00",
- "git_sha": "a3960be3851a",
+ "content_hash": "4021c408c2403d274d50e3f37b6a24ded8996ca418a39e30ed10d271cbef5a19",
+ "created_at": "2026-11-20T09:21:54+00:00",
+ "git_sha": "28c7d8af9d18",
  "sources": {
   "aia_consolidated_en": {
    "celex": "02024R1689-20260727",
@@ -42,6 +42,18 @@
    "overlap_tokens": 64,
    "tokenizer": "intfloat/multilingual-e5-large"
   },
+  "paragraph_defs": {
+   "strategy": "paragraph_defs",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "units": {
+   "strategy": "units",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
   "article": {
    "strategy": "article",
    "max_tokens": 500,
@@ -61,6 +73,8 @@
   "glossary.json": "0ffc05dc6ab19f2dbe34b46c9bdbce3625c2939dfa02b94abc165ee123638a06",
   "xrefs.json": "23acee07a75333a6903dbbe612c7fc69b0c5212ba76df830b885180d9c10f3cc",
   "chunks_paragraph.jsonl": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
+  "chunks_paragraph_defs.jsonl": "8261176fec1b8fa2b2520611f46f055ec49e48b456cf67a810902ed26f92a4a0",
+  "chunks_units.jsonl": "2625ef22edeac33b984d08d6d12e207f209dace4c37c73e589297df9a687fa74",
   "chunks_article.jsonl": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
   "chunks_fixed.jsonl": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b"
  },
@@ -122,6 +136,62 @@
     "128-255": 616,
     "256-383": 283,
     "384-511": 218,
+    ">=512": 0
+   }
+  },
+  "paragraph_defs": {
+   "n": 2978,
+   "by_lang": {
+    "en": 1484,
+    "it": 1494
+   },
+   "by_type": {
+    "article": 2149,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 111,
+   "tokens": {
+    "min": 9.0,
+    "p50": 95.0,
+    "p95": 421.1500000000001,
+    "max": 500.0,
+    "mean": 139.14
+   },
+   "tokens_histogram": {
+    "0-63": 917,
+    "64-127": 961,
+    "128-255": 624,
+    "256-383": 283,
+    "384-511": 193,
+    ">=512": 0
+   }
+  },
+  "units": {
+   "n": 3090,
+   "by_lang": {
+    "en": 1540,
+    "it": 1550
+   },
+   "by_type": {
+    "article": 2149,
+    "recital": 767,
+    "annex": 174
+   },
+   "split_units": 106,
+   "tokens": {
+    "min": 6.0,
+    "p50": 91.0,
+    "p95": 410.5499999999997,
+    "max": 500.0,
+    "mean": 134.17
+   },
+   "tokens_histogram": {
+    "0-63": 1016,
+    "64-127": 977,
+    "128-255": 635,
+    "256-383": 279,
+    "384-511": 183,
     ">=512": 0
    }
   },
@@ -246,6 +316,54 @@
    "strategy": "fixed",
    "chunks_sha256": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b",
    "created_at": "2026-11-20T08:34:57+00:00"
+  },
+  "reglens_e1912678_e5large_article_hierarchy": {
+   "collection": "reglens_e1912678_e5large_article_hierarchy",
+   "points": 1539,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 120.78,
+    "it": 124.9
+   },
+   "enrich": "hierarchy",
+   "seconds": 576.3,
+   "strategy": "article",
+   "chunks_sha256": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
+   "created_at": "2026-11-20T08:44:37+00:00"
+  },
+  "reglens_8261176f_e5large_paragraph_defs_hierarchy": {
+   "collection": "reglens_8261176f_e5large_paragraph_defs_hierarchy",
+   "points": 2978,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 70.76,
+    "it": 74.68
+   },
+   "enrich": "hierarchy",
+   "seconds": 871.7,
+   "strategy": "paragraph_defs",
+   "chunks_sha256": "8261176fec1b8fa2b2520611f46f055ec49e48b456cf67a810902ed26f92a4a0",
+   "created_at": "2026-11-20T09:09:27+00:00"
+  },
+  "reglens_2625ef22_e5large_units_hierarchy": {
+   "collection": "reglens_2625ef22_e5large_units_hierarchy",
+   "points": 3090,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 68.73,
+    "it": 72.48
+   },
+   "enrich": "hierarchy",
+   "seconds": 1006.7,
+   "strategy": "units",
+   "chunks_sha256": "2625ef22edeac33b984d08d6d12e207f209dace4c37c73e589297df9a687fa74",
+   "created_at": "2026-11-20T09:38:50+00:00"
   }
  }
 }

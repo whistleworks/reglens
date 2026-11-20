@@ -76,6 +76,12 @@ def test_health_version_ready(tmp_path: Path) -> None:
     assert client.get("/ready").status_code == 200
     down = make(tmp_path, ready_checks={"qdrant": lambda: False})
     assert down.get("/ready").status_code == 503
+    no_llm = make(
+        tmp_path, ready_checks={"qdrant": lambda: True}, info_checks={"llm": lambda: False}
+    )
+    response = no_llm.get("/ready")
+    assert response.status_code == 200  # still serves sources-only answers
+    assert response.json() == {"status": "degraded", "checks": {"qdrant": True, "llm": False}}
 
 
 def test_ask_json_with_citations_and_headers(tmp_path: Path) -> None:

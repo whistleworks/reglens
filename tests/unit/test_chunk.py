@@ -206,3 +206,16 @@ def test_paragraph_defs_strategy_one_chunk_per_definition() -> None:
     assert [c.id for c in chunks if c.article_id == "AIA:art:6"] == [
         c.id for c in para if c.article_id == "AIA:art:6"
     ]
+
+
+def test_units_strategy_splits_annex_points_without_losing_text() -> None:
+    corpus = build_corpus(FIXTURES, "en")
+    chunks = make_chunker(ChunkingConfig(strategy="units", max_tokens=500), words).chunk(corpus)
+    annex = [c for c in chunks if c.article_id == "AIA:annex:III"]
+    units = [c.unit_id for c in annex]
+    assert units[0] == "AIA:annex:III"  # intro
+    assert "AIA:annex:III:pt:4" in units
+    point4 = next(c for c in annex if c.unit_id == "AIA:annex:III:pt:4")
+    assert point4.text.startswith("4. Employment")
+    original = next(a for a in corpus.regulations[0].annexes if a.id == "AIA:annex:III")
+    assert " ".join(c.text for c in annex).split() == original.text.split()

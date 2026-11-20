@@ -22,7 +22,7 @@ import yaml
 from pydantic import BaseModel, Field
 
 from reglens.ids import Regulation
-from reglens.ingestion.parse import Article, Corpus, RegulationDoc
+from reglens.ingestion.parse import Annex, Article, Corpus, RegulationDoc
 from reglens.ingestion.sources import EURLEX_BASE, Lang
 
 UnitType = Literal["article", "recital", "annex"]
@@ -56,7 +56,7 @@ _LABELS: dict[Lang, dict[str, str]] = {
 }
 
 
-Strategy = Literal["paragraph", "paragraph_defs", "article", "fixed"]
+Strategy = Literal["paragraph", "paragraph_defs", "units", "article", "fixed"]
 
 # Articles whose numbered points are legal definitions (one chunk per definition in
 # the ``paragraph_defs`` strategy, M2 experiment E3).
@@ -186,6 +186,9 @@ class ParagraphChunker:
                     )
                 )
             for annex in doc.annexes:
+                if self.config.strategy == "units" and annex.points:
+                    chunks.extend(self._annex_point_chunks(doc, annex))
+                    continue
                 # Whole annex text, packed on line boundaries up to the budget: annexes mix
                 # points, section headings and free text, and nothing must be dropped.
                 chunks.extend(
@@ -205,6 +208,41 @@ class ParagraphChunker:
                 )
         return chunks
 
+    def _annex_point_chunks(self, doc: RegulationDoc, annex: Annex) -> list[Chunk]:
+        """One unit per top-level annex point (plus the intro); no text is dropped.
+
+        Boundaries are the lines that start with the raw label of the next expected
+        top-level point, in document order (experiment E4).
+        """
+        labels = _LABELS[doc.lang]
+        expected = list(annex.points)
+        segments: list[tuple[str, list[str]]] = [(annex.id, [])]
+        for line in annex.text.split("\n"):
+            if expected and line.startswith(f"{expected[0].raw_label} "):
+                point = expected.pop(0)
+                segments.append((f"{annex.id}:pt:{point.label}", []))
+            segments[-1][1].append(line)
+        base_path = f"{_REG_LABEL[doc.regulation]} > {labels['annex']} {annex.number} {annex.title}"
+        out: list[Chunk] = []
+        for unit_id, lines in segments:
+            text = "\n".join(lines).strip()
+            if not text:
+                continue
+            label = unit_id.rsplit(":pt:", 1)[1] if ":pt:" in unit_id else None
+            out.extend(
+                self._make(
+                    doc,
+                    unit_id=unit_id,
+                    article_id=annex.id,
+                    unit_type="annex",
+                    title=f"{labels['annex']} {annex.number}: {annex.title}",
+                    path=f"{base_path} > {label}" if label else base_path,
+                    anchor=f"anx_{annex.number}",
+                    text=text,
+                )
+            )
+        return out
+
     def _article_chunks(self, doc: RegulationDoc, article: Article) -> list[Chunk]:
         labels = _LABELS[doc.lang]
         parts = [_REG_LABEL[doc.regulation]]
@@ -218,7 +256,10 @@ class ParagraphChunker:
             )
         parts.append(f"{article.heading} {article.title}".strip())
         out: list[Chunk] = []
-        split_defs = self.config.strategy == "paragraph_defs" and article.id in DEFINITION_ARTICLES
+        split_defs = (
+            self.config.strategy in ("paragraph_defs", "units")
+            and article.id in DEFINITION_ARTICLES
+        )
         for paragraph in article.paragraphs:
             path = " > ".join(
                 parts + ([f"{labels['par']} {paragraph.number}"] if paragraph.number else [])
@@ -308,6 +349,41 @@ def hf_token_counter(tokenizer_name: str) -> TokenCounter:
 
 class ArticleChunker(ParagraphChunker):
     """Whole articles; recitals and annexes as in the paragraph strategy."""
+
+    def _annex_point_chunks(self, doc: RegulationDoc, annex: Annex) -> list[Chunk]:
+        """One unit per top-level annex point (plus the intro); no text is dropped.
+
+        Boundaries are the lines that start with the raw label of the next expected
+        top-level point, in document order (experiment E4).
+        """
+        labels = _LABELS[doc.lang]
+        expected = list(annex.points)
+        segments: list[tuple[str, list[str]]] = [(annex.id, [])]
+        for line in annex.text.split("\n"):
+            if expected and line.startswith(f"{expected[0].raw_label} "):
+                point = expected.pop(0)
+                segments.append((f"{annex.id}:pt:{point.label}", []))
+            segments[-1][1].append(line)
+        base_path = f"{_REG_LABEL[doc.regulation]} > {labels['annex']} {annex.number} {annex.title}"
+        out: list[Chunk] = []
+        for unit_id, lines in segments:
+            text = "\n".join(lines).strip()
+            if not text:
+                continue
+            label = unit_id.rsplit(":pt:", 1)[1] if ":pt:" in unit_id else None
+            out.extend(
+                self._make(
+                    doc,
+                    unit_id=unit_id,
+                    article_id=annex.id,
+                    unit_type="annex",
+                    title=f"{labels['annex']} {annex.number}: {annex.title}",
+                    path=f"{base_path} > {label}" if label else base_path,
+                    anchor=f"anx_{annex.number}",
+                    text=text,
+                )
+            )
+        return out
 
     def _article_chunks(self, doc: RegulationDoc, article: Article) -> list[Chunk]:
         labels = _LABELS[doc.lang]
@@ -403,7 +479,7 @@ class FixedChunker:
 
 
 def make_chunker(config: ChunkingConfig, count_tokens: TokenCounter) -> Chunker:
-    if config.strategy in ("paragraph", "paragraph_defs"):
+    if config.strategy in ("paragraph", "paragraph_defs", "units"):
         return ParagraphChunker(config, count_tokens)
     if config.strategy == "article":
         return ArticleChunker(config, count_tokens)

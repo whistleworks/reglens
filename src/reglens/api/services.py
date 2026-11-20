@@ -62,6 +62,7 @@ class Services:
     feedback_path: Path
     versions: dict[str, str] = field(default_factory=dict)
     ready_checks: dict[str, Any] = field(default_factory=dict)
+    info_checks: dict[str, Any] = field(default_factory=dict)
     _feedback_lock: threading.Lock = field(default_factory=threading.Lock)
 
     def sources_from(self, hits: list[Hit], limit: int = 5) -> list[SourceOut]:
@@ -209,11 +210,17 @@ def build_services() -> Services:  # pragma: no cover - wiring of real component
     from reglens.retrieval.factory import PipelineConfig, build_pipeline
 
     settings = get_settings()
-    retrieval = PipelineConfig(
-        retriever="hybrid",
-        strategy="paragraph",
-        rerank=settings.rerank_enabled,
-        rerank_model=settings.reranker_model,
+    import yaml
+
+    from reglens.config import REPO_ROOT
+
+    serving = yaml.safe_load((REPO_ROOT / "configs" / "serving.yaml").read_text())
+    retrieval = PipelineConfig.model_validate(
+        {
+            **serving,
+            "rerank": settings.rerank_enabled or serving.get("rerank", False),
+            "rerank_model": settings.reranker_model,
+        }
     )
     pipeline, model_ids, collection = build_pipeline(retrieval)
     store = ArticleStore.from_dir(settings.processed_dir)
@@ -252,6 +259,6 @@ def build_services() -> Services:  # pragma: no cover - wiring of real component
         },
         ready_checks={
             "qdrant": lambda: pipeline.search("health check", None).hits is not None,
-            "llm": lambda: answer is not None,
         },
+        info_checks={"llm": lambda: answer is not None},
     )

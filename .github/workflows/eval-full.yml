@@ -33,11 +33,11 @@ jobs:
           path: |
             ~/.cache/fastembed
             qdrant_local
-          key: index-${{ hashFiles('data/processed/chunks_paragraph.jsonl') }}
+          key: index-${{ hashFiles('data/processed/chunks_units.jsonl') }}
       - name: Build index (cached between runs)
-        run: test -d qdrant_local/collection || make index
+        run: test -d qdrant_local/collection || make index STRATEGY=units ENRICH=hierarchy
       - name: Retrieval eval on dev
-        run: make eval SPLIT=dev CONFIG=configs/hybrid.yaml
+        run: make eval SPLIT=dev CONFIG=configs/exp_units_norec_w05.yaml
       - name: End-to-end eval on dev (agent + judge)
         if: env.GROQ_API_KEY != ''
         run: make eval SPLIT=dev STAGE=e2e CONFIG=configs/e2e_hybrid.yaml

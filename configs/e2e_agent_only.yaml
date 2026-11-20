@@ -3,8 +3,11 @@ name: e2e_agent_only
 router: false
 judge: true
 retrieval:
-  name: hybrid
+  name: serving
   retriever: hybrid
-  strategy: paragraph
-  enrich: none
+  strategy: units
+  enrich: hierarchy
+  dense_weight: 1.0
+  sparse_weight: 0.5
+  exclude_types: [recital]
   candidates: 50

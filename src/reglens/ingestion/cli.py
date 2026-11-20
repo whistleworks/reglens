@@ -102,7 +102,7 @@ def main(argv: list[str] | None = None) -> int:
     index.add_argument(
         "--strategy",
         default="paragraph",
-        choices=["paragraph", "paragraph_defs", "article", "fixed"],
+        choices=["paragraph", "paragraph_defs", "units", "article", "fixed"],
     )
     index.add_argument("--enrich", default="none", choices=["none", "hierarchy"])
     index.add_argument("--recreate", action="store_true", help="drop the collection if it exists")

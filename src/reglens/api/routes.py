@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import time
 from collections.abc import AsyncIterator
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse, PlainTextResponse, StreamingResponse
@@ -175,15 +175,24 @@ async def health() -> dict[str, str]:
 
 @router.get("/ready")
 async def ready(svc: ServicesDep) -> JSONResponse:
-    checks: dict[str, bool] = {}
-    for name, check in svc.ready_checks.items():
-        try:
-            checks[name] = bool(await run_in_threadpool(check))
-        except Exception:
-            checks[name] = False
-    ok = all(checks.values()) if checks else True
+    """Ready when the index answers. Optional dependencies (LLM) are reported, not required:
+    without them the API still serves "sources only" answers."""
+
+    async def run(checks: dict[str, Any]) -> dict[str, bool]:
+        out: dict[str, bool] = {}
+        for name, check in checks.items():
+            try:
+                out[name] = bool(await run_in_threadpool(check))
+            except Exception:
+                out[name] = False
+        return out
+
+    required = await run(svc.ready_checks)
+    optional = await run(svc.info_checks)
+    ok = all(required.values())
+    status = "ready" if ok and all(optional.values()) else ("degraded" if ok else "not_ready")
     return JSONResponse(
-        {"status": "ready" if ok else "degraded", "checks": checks}, status_code=200 if ok else 503
+        {"status": status, "checks": {**required, **optional}}, status_code=200 if ok else 503
     )
 
 

@@ -1,0 +1,11 @@
+# Experiment E4: definitions and annex points as units + no recitals
+name: exp_units_norec_w05
+retriever: hybrid
+strategy: units
+enrich: hierarchy
+dense_weight: 1.0
+sparse_weight: 0.5
+exclude_types: [recital]
+rerank: false
+candidates: 50
+ks: [5, 10]

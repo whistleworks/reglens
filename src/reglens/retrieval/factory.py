@@ -18,7 +18,7 @@ class IndexNotFoundError(LookupError):
 
 class PipelineConfig(BaseModel):
     retriever: Literal["bm25", "dense", "hybrid"] = "hybrid"
-    strategy: Literal["paragraph", "paragraph_defs", "article", "fixed"] = "paragraph"
+    strategy: Literal["paragraph", "paragraph_defs", "units", "article", "fixed"] = "paragraph"
     enrich: Literal["none", "hierarchy"] = "none"
     rerank: bool = False
     rerank_model: str = "BAAI/bge-reranker-v2-m3-int8"
