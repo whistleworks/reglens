@@ -12,7 +12,7 @@
 | M3 Agente e valutazione generativa | ✅ gateway LLM, tool, loop, router, citazioni, giudice, stadio e2e (tutto testato con fake); ⏳ chiavi API, run reali, 40 etichette umane per il kappa |
 | M4 API e osservabilità | ✅ FastAPI, SSE, RFC 7807, auth, rate limit, modalità degradate, UI, OTel → Langfuse, metriche, dashboard (14 pannelli), alert e runbook; ⏳ account Langfuse e Grafana |
 | M5 Docker, CI/CD, deploy | ✅ Dockerfile, indice nell'immagine, workflow ci/eval-full/deploy/security/uptime, smoke gate; ⏳ repo GitHub, decisione sull'hosting, deploy, PR di prova bloccata dal gate |
-| M6 Ottimizzazione e packaging | ⏳ run finale sul test (una volta sola), failure analysis, README finale, demo |
+| M6 Ottimizzazione e packaging | 🟡 failure analysis del retrieval su dev (18 errori, `docs/failure-analysis.md`); ⏳ parte generativa, run finale sul test (una volta sola), README finale, demo |
 
 ## Metriche attuali (tutte dev, dataset **non revisionato**: preliminari)
 Dataset `reglens_v1@cdebd13e`, 83 query dev con target di retrieval. Tabella completa in `docs/ablation_v1_draft.md`.

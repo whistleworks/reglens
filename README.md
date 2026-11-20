@@ -116,7 +116,7 @@ Sixteen configurations: [docs/ablation.md](docs/ablation.md). What moved the num
 - **Point ids:** Annex sections and repeated point labels are merged under the first id.
 - **Latency numbers** come from embedded Qdrant on a laptop; production figures come after deployment.
 
-The full 20-error failure analysis will be done on reviewed data (`docs/failure-analysis.md`).
+Retrieval failure analysis of all 18 dev misses, grouped by cause with a hypothesised fix for each: [docs/failure-analysis.md](docs/failure-analysis.md). Generation failures will be added after the e2e run.
 
 ## What I'd do in production
 - Evaluation with domain experts (lawyers, DPOs).
