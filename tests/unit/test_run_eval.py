@@ -154,3 +154,16 @@ def test_resolve_index_by_strategy_and_enrich() -> None:
     assert resolve_index(cfg2, manifest, "m")["collection"] == "c"
     with pytest.raises(SystemExit, match="make index"):
         resolve_index(cfg.model_copy(update={"strategy": "fixed"}), manifest, "m")
+
+
+def test_smoke_gate_logic() -> None:
+    from evals.smoke import gate
+
+    current = {"queries": ["q1"], "metrics": {"recall@5": {"value": 0.70}}}
+    base = {"queries": ["q1"], "metrics": {"recall@5": {"value": 0.72}}}
+    assert gate(current, base) == []  # within tolerance (0.03)
+    worse = {"queries": ["q1"], "metrics": {"recall@5": {"value": 0.68}}}
+    assert "recall@5" in gate(worse, base)[0]
+    assert gate(current, None) == []
+    changed = {"queries": ["q2"], "metrics": {"recall@5": {"value": 0.9}}}
+    assert "query set changed" in gate(changed, base)[0]

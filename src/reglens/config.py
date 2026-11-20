@@ -64,6 +64,7 @@ class Settings(BaseSettings):
     qdrant_api_key: SecretStr | None = None
     qdrant_collection: str = ""
     index_mode: Literal["cloud", "local_snapshot"] = "cloud"
+    index_snapshot_path: Path = REPO_ROOT / "index_snapshot"
 
     @field_validator("api_keys", "cors_origins", "llm_fallback_models", mode="before")
     @classmethod

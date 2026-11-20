@@ -30,3 +30,5 @@ qdrant_storage/
 .vscode/
 .claude/settings.local.json
 qdrant_local/
+index_snapshot/
+data/feedback/

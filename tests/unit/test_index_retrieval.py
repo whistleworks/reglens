@@ -95,3 +95,16 @@ def test_make_client_local_path(tmp_path) -> None:  # type: ignore[no-untyped-de
     index_chunks(client, "local", CHUNKS, FakeDense(), FakeSparse())
     assert client.count("local", exact=True).count == len(CHUNKS)
     client.close()
+
+
+def test_make_client_local_snapshot_mode(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    from reglens.config import Settings
+    from reglens.retrieval.qdrant import make_client
+
+    settings = Settings(  # type: ignore[call-arg]
+        _env_file=None, index_mode="local_snapshot", index_snapshot_path=tmp_path / "snap"
+    )
+    client = make_client(settings)
+    index_chunks(client, "snap", CHUNKS, FakeDense(), FakeSparse())
+    assert client.count("snap", exact=True).count == len(CHUNKS)
+    client.close()

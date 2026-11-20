@@ -65,9 +65,22 @@ serve: ## Run the API + UI on http://localhost:8000 (QDRANT_URL and LLM keys fro
 calibrate: ## Judge calibration (LABELS=evals/human_labels/calibration.jsonl RUN=<judged e2e json>)
 	uv run python -m evals.calibrate_judge $(or $(LABELS),evals/human_labels/calibration.jsonl) $(RUN)
 
-eval-smoke eval-final demo docker-build docker-run load-test: ## Later milestones
+eval-smoke: ## CI smoke eval + regression gate (BM25, 20 dev queries, no secrets)
+	uv run python -m evals.smoke
+
+export-index: ## Copy the serving collection into index_snapshot/ for the Docker image (COLLECTION=...)
+	QDRANT_URL=$(or $(QDRANT_URL),path:qdrant_local) uv run python scripts/export_index.py \
+		--collection $(COLLECTION) --out index_snapshot
+
+docker-build: ## Build the image (needs index_snapshot/: run make export-index first)
+	docker build --build-arg GIT_SHA=$$(git rev-parse --short=12 HEAD) -t reglens:$$(git rev-parse --short=12 HEAD) -t reglens:latest .
+
+docker-run: ## Run the image on http://localhost:7860 with .env
+	docker run --rm -p 7860:7860 --env-file .env reglens:latest
+
+eval-final demo load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
 .PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \
-	beir review-sheet compare report eval-smoke eval-final calibrate serve demo docker-build \
+	beir review-sheet compare report eval-smoke eval-final calibrate serve demo docker-build export-index \
 	docker-run load-test

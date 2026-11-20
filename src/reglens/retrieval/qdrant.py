@@ -41,6 +41,8 @@ LOCAL_PREFIX = "path:"
 def make_client(settings: Settings) -> QdrantClient:
     """``QDRANT_URL=http://...`` for a server; ``QDRANT_URL=path:<dir>`` for embedded local mode
     (no Docker; also the base of the ``local_snapshot`` fallback planned for M5)."""
+    if settings.index_mode == "local_snapshot":
+        return QdrantClient(path=str(settings.index_snapshot_path))
     if settings.qdrant_url.startswith(LOCAL_PREFIX):
         return QdrantClient(path=settings.qdrant_url.removeprefix(LOCAL_PREFIX))
     api_key = settings.qdrant_api_key.get_secret_value() if settings.qdrant_api_key else None
