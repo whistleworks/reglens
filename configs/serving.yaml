@@ -1,0 +1,11 @@
+# Retrieval served by the API and used by the e2e eval. Chosen by the M2 ablation
+# (docs/ablation.md, ADR-0002, ADR-0003): hybrid, definitions and annex points as units, hierarchy prefix,
+# recitals excluded, BM25 weighted 0.5 in RRF, no reranker.
+retriever: hybrid
+strategy: units
+enrich: hierarchy
+dense_weight: 1.0
+sparse_weight: 0.5
+exclude_types: [recital]
+rerank: false
+candidates: 50

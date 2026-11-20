@@ -1,0 +1,10 @@
+# Experiment on hybrid_hier: exp_norec_w05
+name: exp_norec_w05
+retriever: hybrid
+strategy: paragraph
+enrich: hierarchy
+dense_weight: 1.0
+sparse_weight: 0.5
+exclude_types: [recital]
+candidates: 50
+ks: [5, 10]

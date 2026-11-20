@@ -1,0 +1,19 @@
+# Ingestion configuration. Changing it changes the manifest content_hash.
+# The first strategy is the baseline; all of them are written to data/processed/.
+chunking:
+  - strategy: paragraph     # M1 baseline: one chunk per paragraph / recital
+    max_tokens: 500         # e5 accepts 512 tokens incl. special tokens and the "passage: " prefix
+    tokenizer: intfloat/multilingual-e5-large
+  - strategy: paragraph_defs  # as paragraph, but one chunk per legal definition (AIA art. 3, GDPR art. 4)
+    max_tokens: 500
+    tokenizer: intfloat/multilingual-e5-large
+  - strategy: units         # paragraph_defs + one chunk per top-level annex point (E4)
+    max_tokens: 500
+    tokenizer: intfloat/multilingual-e5-large
+  - strategy: article       # whole article, split on lines only if over budget
+    max_tokens: 500
+    tokenizer: intfloat/multilingual-e5-large
+  - strategy: fixed         # structure-blind windows with overlap
+    max_tokens: 500
+    overlap_tokens: 64
+    tokenizer: intfloat/multilingual-e5-large

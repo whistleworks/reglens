@@ -1,0 +1,32 @@
+{
+  "aia_consolidated_en": {
+    "celex": "02024R1689-20260727",
+    "sha256": "5e7719f77e8a606b257dc25958ee3222c4383300a5a34270a5b850a2ce8b8715",
+    "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0001.03/DOC_1"
+  },
+  "aia_consolidated_it": {
+    "celex": "02024R1689-20260727",
+    "sha256": "e551fd4e6b2e29d6ae5f66f22ff945ee06a44bd6f3b7031573fe2eee83f67d4e",
+    "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0015.02/DOC_1"
+  },
+  "aia_oj_en": {
+    "celex": "32024R1689",
+    "sha256": "8f0b656302f9864cc87e040c371f209a9d65ae1a6cecc25ca5eb737e872d721a",
+    "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "aia_oj_it": {
+    "celex": "32024R1689",
+    "sha256": "ba2ca075faa2ccfc19c57185692771db11319ecc3b4e5bb067a90f63aa8b2c86",
+    "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0013.03/DOC_1"
+  },
+  "gdpr_oj_en": {
+    "celex": "32016R0679",
+    "sha256": "962539af03738bf552319ff4ce42d69e5f95a576307c4dfed7bf87e81b646b9d",
+    "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "gdpr_oj_it": {
+    "celex": "32016R0679",
+    "sha256": "52dbf00e8092bbff225158d1ce09ed3e4a6d2712f2bb9d5c6bfdf1d1b61b9f0a",
+    "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0013.03/DOC_1"
+  }
+}

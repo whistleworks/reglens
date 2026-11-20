@@ -1,0 +1,82 @@
+name: deploy
+
+# Runs after CI succeeds on main. The hosting target is decided in M5 (ADR-0001):
+# the image is pushed to GHCR in any case; the HF Space step runs only if configured.
+on:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  image:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --frozen
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/fastembed
+            qdrant_local
+          key: index-${{ hashFiles('data/processed/chunks_units.jsonl') }}
+      - name: Build and export the serving index
+        env:
+          QDRANT_URL: path:qdrant_local
+        run: |
+          test -d qdrant_local/collection || make index
+          test -d qdrant_local/collection/$(uv run python -c "import json; m=json.load(open('data/processed/manifest.json')); print(next(n for n,i in m['indexes'].items() if i['strategy']=='units' and i['enrich']=='hierarchy'))") || make index STRATEGY=units ENRICH=hierarchy
+          COLLECTION=$(uv run python -c "import json; m=json.load(open('data/processed/manifest.json')); print(next(n for n,i in m['indexes'].items() if i['strategy']=='units' and i['enrich']=='hierarchy'))")
+          make export-index COLLECTION=$COLLECTION
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: GIT_SHA=${{ github.sha }}
+          tags: |
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
+
+  hf-space:
+    needs: image
+    if: vars.HF_SPACE != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Point the Space at the new image tag
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install "huggingface_hub>=0.26"
+          printf 'FROM ghcr.io/%s:%s\n' "${{ github.repository }}" "${{ github.sha }}" > Dockerfile.space
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+          HfApi(token=os.environ["HF_TOKEN"]).upload_file(
+              path_or_fileobj="Dockerfile.space", path_in_repo="Dockerfile",
+              repo_id=os.environ.get("HF_SPACE", "${{ vars.HF_SPACE }}"), repo_type="space",
+              commit_message="deploy ${{ github.sha }}")
+          PY
+      - name: Smoke test the live URL
+        if: vars.LIVE_URL != ''
+        run: |
+          pip install httpx
+          python scripts/smoke_live.py --url "${{ vars.LIVE_URL }}"

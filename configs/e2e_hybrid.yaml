@@ -1,0 +1,13 @@
+# End-to-end: serving retrieval (configs/serving.yaml) + router + agent + judge
+name: e2e_hybrid
+router: true
+judge: true
+retrieval:
+  name: serving
+  retriever: hybrid
+  strategy: units
+  enrich: hierarchy
+  dense_weight: 1.0
+  sparse_weight: 0.5
+  exclude_types: [recital]
+  candidates: 50

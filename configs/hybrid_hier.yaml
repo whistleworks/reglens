@@ -1,0 +1,8 @@
+# Ablation: hybrid_hier
+name: hybrid_hier
+retriever: hybrid
+strategy: paragraph
+enrich: hierarchy
+rerank: false
+candidates: 50
+ks: [5, 10]

@@ -1,0 +1,46 @@
+# Alert rules (Prometheus / Grafana-managed rule format). Each alert has a runbook entry.
+groups:
+  - name: reglens
+    rules:
+      - alert: RegLensHighErrorRate
+        expr: sum(rate(reglens_errors_total[10m])) / sum(rate(reglens_requests_total[10m])) > 0.05
+        for: 10m
+        labels: {severity: page}
+        annotations:
+          summary: "Error rate above 5% for 10 minutes"
+          runbook_url: "docs/runbook.md#high-error-rate"
+      - alert: RegLensSlowP95
+        expr: histogram_quantile(0.95, sum by (le) (rate(reglens_latency_seconds_bucket{stage="http",route=~"/v1/ask|/ui/ask"}[15m]))) > 8
+        for: 15m
+        labels: {severity: ticket}
+        annotations:
+          summary: "p95 end-to-end latency above 8 s for 15 minutes"
+          runbook_url: "docs/runbook.md#slow-p95"
+      - alert: RegLensBudget80
+        expr: reglens_budget_remaining_usd < 0.2 * on() vector(${DAILY_BUDGET_USD})
+        for: 5m
+        labels: {severity: ticket}
+        annotations:
+          summary: "Daily shadow cost above 80% of DAILY_BUDGET_USD"
+          runbook_url: "docs/runbook.md#budget"
+      - alert: RegLensProviderThrottling
+        expr: (sum(rate(reglens_provider_429_total[15m])) + sum(rate(reglens_degraded_total{mode="llm_unavailable"}[15m]))) / sum(rate(reglens_requests_total{route=~"/v1/ask|/ui/ask"}[15m])) > 0.2
+        for: 15m
+        labels: {severity: ticket}
+        annotations:
+          summary: "429s or fallbacks above 20% of answers for 15 minutes"
+          runbook_url: "docs/runbook.md#provider-throttling"
+      - alert: RegLensNightlyEvalRegression
+        expr: reglens_eval_regression > 0
+        labels: {severity: ticket}
+        annotations:
+          summary: "Nightly eval regressed beyond tolerance vs baseline"
+          runbook_url: "docs/runbook.md#eval-regression"
+      - alert: RegLensOnlineFaithfulnessLow
+        expr: avg_over_time(reglens_online_faithfulness[7d]) < 0.85
+        labels: {severity: ticket}
+        annotations:
+          summary: "7-day moving average of online faithfulness below 0.85"
+          runbook_url: "docs/runbook.md#online-faithfulness"
+# The /health check (2 consecutive failures) is implemented by .github/workflows/uptime.yml,
+# which opens a GitHub issue: see docs/runbook.md#health-ko.

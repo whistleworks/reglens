@@ -1,0 +1,8 @@
+# Ablation: dense_article
+name: dense_article
+retriever: dense
+strategy: article
+enrich: none
+rerank: false
+candidates: 50
+ks: [5, 10]

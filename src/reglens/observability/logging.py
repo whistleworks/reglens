@@ -29,8 +29,24 @@ def _scrub(_: Any, __: str, event_dict: MutableMapping[str, Any]) -> MutableMapp
     return event_dict
 
 
+class _StderrLogger:
+    """Writes to the *current* ``sys.stderr`` (pytest swaps it between tests)."""
+
+    def msg(self, message: str) -> None:
+        sys.stderr.write(message + "\n")
+        sys.stderr.flush()
+
+    debug = info = warning = warn = error = critical = exception = fatal = log = msg
+
+
+def _stderr_logger_factory(*_: Any) -> _StderrLogger:
+    return _StderrLogger()
+
+
 def configure_logging(level: str = "INFO") -> None:
     logging.basicConfig(format="%(message)s", stream=sys.stderr, level=level)
+    for noisy in ("httpx", "httpcore"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
     structlog.configure(
         processors=[
             structlog.contextvars.merge_contextvars,
@@ -41,7 +57,7 @@ def configure_logging(level: str = "INFO") -> None:
             structlog.processors.JSONRenderer(sort_keys=True),
         ],
         wrapper_class=structlog.make_filtering_bound_logger(logging.getLevelName(level)),
-        logger_factory=structlog.PrintLoggerFactory(file=sys.stderr),
+        logger_factory=_stderr_logger_factory,
         cache_logger_on_first_use=False,
     )
 

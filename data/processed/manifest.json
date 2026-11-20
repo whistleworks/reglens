@@ -1,0 +1,369 @@
+{
+ "schema_version": 2,
+ "content_hash": "4021c408c2403d274d50e3f37b6a24ded8996ca418a39e30ed10d271cbef5a19",
+ "created_at": "2026-11-20T09:21:54+00:00",
+ "git_sha": "28c7d8af9d18",
+ "sources": {
+  "aia_consolidated_en": {
+   "celex": "02024R1689-20260727",
+   "sha256": "5e7719f77e8a606b257dc25958ee3222c4383300a5a34270a5b850a2ce8b8715",
+   "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0001.03/DOC_1"
+  },
+  "aia_consolidated_it": {
+   "celex": "02024R1689-20260727",
+   "sha256": "e551fd4e6b2e29d6ae5f66f22ff945ee06a44bd6f3b7031573fe2eee83f67d4e",
+   "url": "http://publications.europa.eu/resource/cellar/b1730fb2-8f1c-11f1-9262-01aa75ed71a1.0015.02/DOC_1"
+  },
+  "aia_oj_en": {
+   "celex": "32024R1689",
+   "sha256": "8f0b656302f9864cc87e040c371f209a9d65ae1a6cecc25ca5eb737e872d721a",
+   "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "aia_oj_it": {
+   "celex": "32024R1689",
+   "sha256": "ba2ca075faa2ccfc19c57185692771db11319ecc3b4e5bb067a90f63aa8b2c86",
+   "url": "http://publications.europa.eu/resource/cellar/dc8116a1-3fe6-11ef-865a-01aa75ed71a1.0013.03/DOC_1"
+  },
+  "gdpr_oj_en": {
+   "celex": "32016R0679",
+   "sha256": "962539af03738bf552319ff4ce42d69e5f95a576307c4dfed7bf87e81b646b9d",
+   "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0006.03/DOC_1"
+  },
+  "gdpr_oj_it": {
+   "celex": "32016R0679",
+   "sha256": "52dbf00e8092bbff225158d1ce09ed3e4a6d2712f2bb9d5c6bfdf1d1b61b9f0a",
+   "url": "http://publications.europa.eu/resource/cellar/3e485e15-11bd-11e6-ba9a-01aa75ed71a1.0013.03/DOC_1"
+  }
+ },
+ "chunking": {
+  "paragraph": {
+   "strategy": "paragraph",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "paragraph_defs": {
+   "strategy": "paragraph_defs",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "units": {
+   "strategy": "units",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "article": {
+   "strategy": "article",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "fixed": {
+   "strategy": "fixed",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  }
+ },
+ "files": {
+  "corpus_en.json": "908ab178bd5749d13b3ded95473512f9aae95d1513190e563d5a651fafe1e7a7",
+  "corpus_it.json": "3961dce6af6ffa6156a3162f999f5b2967a96c66cc1f643398eee02e9473ca6d",
+  "glossary.json": "0ffc05dc6ab19f2dbe34b46c9bdbce3625c2939dfa02b94abc165ee123638a06",
+  "xrefs.json": "23acee07a75333a6903dbbe612c7fc69b0c5212ba76df830b885180d9c10f3cc",
+  "chunks_paragraph.jsonl": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
+  "chunks_paragraph_defs.jsonl": "8261176fec1b8fa2b2520611f46f055ec49e48b456cf67a810902ed26f92a4a0",
+  "chunks_units.jsonl": "2625ef22edeac33b984d08d6d12e207f209dace4c37c73e589297df9a687fa74",
+  "chunks_article.jsonl": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
+  "chunks_fixed.jsonl": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b"
+ },
+ "counts": {
+  "en": {
+   "AIA": {
+    "articles": 119,
+    "recitals": 180,
+    "annexes": 14
+   },
+   "GDPR": {
+    "articles": 99,
+    "recitals": 173,
+    "annexes": 0
+   }
+  },
+  "it": {
+   "AIA": {
+    "articles": 119,
+    "recitals": 180,
+    "annexes": 14
+   },
+   "GDPR": {
+    "articles": 99,
+    "recitals": 173,
+    "annexes": 0
+   }
+  }
+ },
+ "glossary_entries": 96,
+ "xrefs": {
+  "citing_units": 417,
+  "pairs": 997,
+  "en_it_jaccard": 0.9851
+ },
+ "chunks": {
+  "paragraph": {
+   "n": 2814,
+   "by_lang": {
+    "en": 1402,
+    "it": 1412
+   },
+   "by_type": {
+    "article": 1985,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 115,
+   "tokens": {
+    "min": 9.0,
+    "p50": 100.0,
+    "p95": 443.0,
+    "max": 500.0,
+    "mean": 147.15
+   },
+   "tokens_histogram": {
+    "0-63": 802,
+    "64-127": 895,
+    "128-255": 616,
+    "256-383": 283,
+    "384-511": 218,
+    ">=512": 0
+   }
+  },
+  "paragraph_defs": {
+   "n": 2978,
+   "by_lang": {
+    "en": 1484,
+    "it": 1494
+   },
+   "by_type": {
+    "article": 2149,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 111,
+   "tokens": {
+    "min": 9.0,
+    "p50": 95.0,
+    "p95": 421.1500000000001,
+    "max": 500.0,
+    "mean": 139.14
+   },
+   "tokens_histogram": {
+    "0-63": 917,
+    "64-127": 961,
+    "128-255": 624,
+    "256-383": 283,
+    "384-511": 193,
+    ">=512": 0
+   }
+  },
+  "units": {
+   "n": 3090,
+   "by_lang": {
+    "en": 1540,
+    "it": 1550
+   },
+   "by_type": {
+    "article": 2149,
+    "recital": 767,
+    "annex": 174
+   },
+   "split_units": 106,
+   "tokens": {
+    "min": 6.0,
+    "p50": 91.0,
+    "p95": 410.5499999999997,
+    "max": 500.0,
+    "mean": 134.17
+   },
+   "tokens_histogram": {
+    "0-63": 1016,
+    "64-127": 977,
+    "128-255": 635,
+    "256-383": 279,
+    "384-511": 183,
+    ">=512": 0
+   }
+  },
+  "article": {
+   "n": 1539,
+   "by_lang": {
+    "en": 754,
+    "it": 785
+   },
+   "by_type": {
+    "article": 710,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 244,
+   "tokens": {
+    "min": 19.0,
+    "p50": 250.0,
+    "p95": 488.0,
+    "max": 500.0,
+    "mean": 267.4
+   },
+   "tokens_histogram": {
+    "0-63": 95,
+    "64-127": 273,
+    "128-255": 409,
+    "256-383": 308,
+    "384-511": 454,
+    ">=512": 0
+   }
+  },
+  "fixed": {
+   "n": 947,
+   "by_lang": {
+    "en": 449,
+    "it": 498
+   },
+   "by_type": {
+    "article": 518,
+    "recital": 376,
+    "annex": 53
+   },
+   "split_units": 835,
+   "tokens": {
+    "min": 120.0,
+    "p50": 500.0,
+    "p95": 500.0,
+    "max": 500.0,
+    "mean": 497.0
+   },
+   "tokens_histogram": {
+    "0-63": 0,
+    "64-127": 1,
+    "128-255": 5,
+    "256-383": 1,
+    "384-511": 940,
+    ">=512": 0
+   }
+  }
+ },
+ "indexes": {
+  "reglens_7d05c4cd_e5large_paragraph": {
+   "collection": "reglens_7d05c4cd_e5large_paragraph",
+   "points": 2814,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 59.57,
+    "it": 63.94
+   },
+   "enrich": "none",
+   "seconds": 681.9,
+   "created_at": "2026-11-20T07:59:05+00:00",
+   "strategy": "paragraph",
+   "chunks_sha256": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300"
+  },
+  "reglens_e1912678_e5large_article": {
+   "collection": "reglens_e1912678_e5large_article",
+   "points": 1539,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 110.77,
+    "it": 115.01
+   },
+   "enrich": "none",
+   "seconds": 489.3,
+   "strategy": "article",
+   "chunks_sha256": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
+   "created_at": "2026-11-20T08:14:26+00:00"
+  },
+  "reglens_1fffbb2d_e5large_paragraph_hierarchy": {
+   "collection": "reglens_1fffbb2d_e5large_paragraph_hierarchy",
+   "points": 2814,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 74.39,
+    "it": 78.55
+   },
+   "enrich": "hierarchy",
+   "seconds": 852.0,
+   "strategy": "paragraph",
+   "chunks_sha256": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
+   "created_at": "2026-11-20T08:28:40+00:00"
+  },
+  "reglens_1224e4bc_e5large_fixed": {
+   "collection": "reglens_1224e4bc_e5large_fixed",
+   "points": 947,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 213.55,
+    "it": 208.13
+   },
+   "enrich": "none",
+   "seconds": 374.7,
+   "strategy": "fixed",
+   "chunks_sha256": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b",
+   "created_at": "2026-11-20T08:34:57+00:00"
+  },
+  "reglens_e1912678_e5large_article_hierarchy": {
+   "collection": "reglens_e1912678_e5large_article_hierarchy",
+   "points": 1539,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 120.78,
+    "it": 124.9
+   },
+   "enrich": "hierarchy",
+   "seconds": 576.3,
+   "strategy": "article",
+   "chunks_sha256": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
+   "created_at": "2026-11-20T08:44:37+00:00"
+  },
+  "reglens_8261176f_e5large_paragraph_defs_hierarchy": {
+   "collection": "reglens_8261176f_e5large_paragraph_defs_hierarchy",
+   "points": 2978,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 70.76,
+    "it": 74.68
+   },
+   "enrich": "hierarchy",
+   "seconds": 871.7,
+   "strategy": "paragraph_defs",
+   "chunks_sha256": "8261176fec1b8fa2b2520611f46f055ec49e48b456cf67a810902ed26f92a4a0",
+   "created_at": "2026-11-20T09:09:27+00:00"
+  },
+  "reglens_2625ef22_e5large_units_hierarchy": {
+   "collection": "reglens_2625ef22_e5large_units_hierarchy",
+   "points": 3090,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 68.73,
+    "it": 72.48
+   },
+   "enrich": "hierarchy",
+   "seconds": 1006.7,
+   "strategy": "units",
+   "chunks_sha256": "2625ef22edeac33b984d08d6d12e207f209dace4c37c73e589297df9a687fa74",
+   "created_at": "2026-11-20T09:38:50+00:00"
+  }
+ }
+}

@@ -1,0 +1,1833 @@
+{
+ "AIA:art:2:par:2": [
+  "AIA:art:6",
+  "AIA:art:60a",
+  "AIA:art:102",
+  "AIA:art:103",
+  "AIA:art:104",
+  "AIA:art:105",
+  "AIA:art:106",
+  "AIA:art:107",
+  "AIA:art:108",
+  "AIA:art:109",
+  "AIA:art:110",
+  "AIA:art:111",
+  "AIA:art:112",
+  "AIA:art:57",
+  "AIA:art:58",
+  "AIA:art:59",
+  "AIA:annex:I"
+ ],
+ "AIA:art:2:par:7": [
+  "AIA:art:4a",
+  "AIA:art:59"
+ ],
+ "AIA:art:2:par:12": [
+  "AIA:art:5",
+  "AIA:art:50"
+ ],
+ "AIA:art:2:par:13": [
+  "AIA:art:6",
+  "AIA:art:9",
+  "AIA:art:10",
+  "AIA:art:11",
+  "AIA:art:12",
+  "AIA:art:13",
+  "AIA:art:14",
+  "AIA:art:15",
+  "AIA:art:17",
+  "AIA:art:18",
+  "AIA:art:19",
+  "AIA:art:20",
+  "AIA:art:21",
+  "AIA:art:22",
+  "AIA:art:23",
+  "AIA:art:24",
+  "AIA:art:25",
+  "AIA:art:97",
+  "AIA:annex:I"
+ ],
+ "AIA:art:3": [
+  "AIA:art:2",
+  "GDPR:art:9",
+  "GDPR:art:4",
+  "AIA:art:57",
+  "AIA:art:60"
+ ],
+ "AIA:art:4:par:2": [
+  "AIA:art:62"
+ ],
+ "AIA:art:4a:par:1": [
+  "AIA:art:10"
+ ],
+ "AIA:art:5:par:1": [
+  "AIA:art:2",
+  "GDPR:art:9",
+  "AIA:annex:II"
+ ],
+ "AIA:art:5:par:2": [
+  "AIA:art:27",
+  "AIA:art:49"
+ ],
+ "AIA:art:6:par:1": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:6:par:2": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:6:par:3": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:6:par:4": [
+  "AIA:art:49",
+  "AIA:annex:III"
+ ],
+ "AIA:art:6:par:5": [
+  "AIA:art:96"
+ ],
+ "AIA:art:6:par:6": [
+  "AIA:art:97",
+  "AIA:annex:III"
+ ],
+ "AIA:art:6:par:7": [
+  "AIA:art:97"
+ ],
+ "AIA:art:6:par:8": [
+  "AIA:art:7"
+ ],
+ "AIA:art:7:par:1": [
+  "AIA:art:97",
+  "AIA:annex:III"
+ ],
+ "AIA:art:7:par:3": [
+  "AIA:art:97",
+  "AIA:annex:III"
+ ],
+ "AIA:art:8:par:1": [
+  "AIA:art:9"
+ ],
+ "AIA:art:8:par:2": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:9:par:2": [
+  "AIA:art:72"
+ ],
+ "AIA:art:9:par:5": [
+  "AIA:art:13"
+ ],
+ "AIA:art:9:par:7": [
+  "AIA:art:60"
+ ],
+ "AIA:art:10:par:1": [
+  "AIA:art:4a"
+ ],
+ "AIA:art:10:par:6": [
+  "AIA:art:4a"
+ ],
+ "AIA:art:11:par:1": [
+  "AIA:annex:IV"
+ ],
+ "AIA:art:11:par:2": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:11:par:3": [
+  "AIA:art:97",
+  "AIA:annex:IV"
+ ],
+ "AIA:art:12:par:2": [
+  "AIA:art:79",
+  "AIA:art:72",
+  "AIA:art:26"
+ ],
+ "AIA:art:12:par:3": [
+  "AIA:art:14",
+  "AIA:annex:III"
+ ],
+ "AIA:art:13:par:3": [
+  "AIA:art:15",
+  "AIA:art:9",
+  "AIA:art:14",
+  "AIA:art:12"
+ ],
+ "AIA:art:14:par:5": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:16": [
+  "AIA:art:17",
+  "AIA:art:18",
+  "AIA:art:19",
+  "AIA:art:43",
+  "AIA:art:47",
+  "AIA:art:48",
+  "AIA:art:49",
+  "AIA:art:20"
+ ],
+ "AIA:art:17:par:1": [
+  "AIA:art:9",
+  "AIA:art:72",
+  "AIA:art:73"
+ ],
+ "AIA:art:17:par:4": [
+  "AIA:art:40"
+ ],
+ "AIA:art:18:par:1": [
+  "AIA:art:11",
+  "AIA:art:17",
+  "AIA:art:47"
+ ],
+ "AIA:art:19:par:1": [
+  "AIA:art:12"
+ ],
+ "AIA:art:20:par:2": [
+  "AIA:art:79",
+  "AIA:art:44"
+ ],
+ "AIA:art:21:par:2": [
+  "AIA:art:12"
+ ],
+ "AIA:art:21:par:3": [
+  "AIA:art:78"
+ ],
+ "AIA:art:22:par:3": [
+  "AIA:art:47",
+  "AIA:art:11",
+  "AIA:art:74",
+  "AIA:art:12",
+  "AIA:art:49",
+  "AIA:annex:VIII"
+ ],
+ "AIA:art:23:par:1": [
+  "AIA:art:43",
+  "AIA:art:11",
+  "AIA:art:47",
+  "AIA:art:22",
+  "AIA:annex:IV"
+ ],
+ "AIA:art:23:par:2": [
+  "AIA:art:79"
+ ],
+ "AIA:art:23:par:5": [
+  "AIA:art:47"
+ ],
+ "AIA:art:24:par:1": [
+  "AIA:art:47",
+  "AIA:art:16",
+  "AIA:art:23"
+ ],
+ "AIA:art:24:par:2": [
+  "AIA:art:79"
+ ],
+ "AIA:art:24:par:4": [
+  "AIA:art:79"
+ ],
+ "AIA:art:25:par:1": [
+  "AIA:art:16",
+  "AIA:art:6"
+ ],
+ "AIA:art:25:par:2": [
+  "AIA:art:16"
+ ],
+ "AIA:art:25:par:3": [
+  "AIA:art:16",
+  "AIA:annex:I"
+ ],
+ "AIA:art:26:par:5": [
+  "AIA:art:72",
+  "AIA:art:79",
+  "AIA:art:73"
+ ],
+ "AIA:art:26:par:8": [
+  "AIA:art:49",
+  "AIA:art:71"
+ ],
+ "AIA:art:26:par:9": [
+  "AIA:art:13",
+  "GDPR:art:35"
+ ],
+ "AIA:art:26:par:10": [
+  "GDPR:art:9"
+ ],
+ "AIA:art:26:par:11": [
+  "AIA:art:50",
+  "AIA:annex:III"
+ ],
+ "AIA:art:27:par:1": [
+  "AIA:art:6",
+  "AIA:art:13",
+  "AIA:annex:III"
+ ],
+ "AIA:art:27:par:3": [
+  "AIA:art:46"
+ ],
+ "AIA:art:27:par:4": [
+  "GDPR:art:35"
+ ],
+ "AIA:art:28:par:6": [
+  "AIA:art:78"
+ ],
+ "AIA:art:28:par:8": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:28:par:9": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:29:par:2": [
+  "AIA:art:31"
+ ],
+ "AIA:art:29:par:3": [
+  "AIA:art:31"
+ ],
+ "AIA:art:29:par:4": [
+  "AIA:art:28",
+  "AIA:art:31",
+  "AIA:annex:I"
+ ],
+ "AIA:art:30:par:1": [
+  "AIA:art:31"
+ ],
+ "AIA:art:30:par:2": [
+  "AIA:art:97",
+  "AIA:annex:XIV"
+ ],
+ "AIA:art:30:par:3": [
+  "AIA:art:29",
+  "AIA:art:31"
+ ],
+ "AIA:art:30:par:4": [
+  "AIA:art:29"
+ ],
+ "AIA:art:31:par:7": [
+  "AIA:art:78"
+ ],
+ "AIA:art:31:par:12": [
+  "AIA:art:38"
+ ],
+ "AIA:art:32": [
+  "AIA:art:31"
+ ],
+ "AIA:art:33:par:1": [
+  "AIA:art:31"
+ ],
+ "AIA:art:34:par:1": [
+  "AIA:art:43"
+ ],
+ "AIA:art:34:par:3": [
+  "AIA:art:28"
+ ],
+ "AIA:art:36:par:1": [
+  "AIA:art:30"
+ ],
+ "AIA:art:36:par:2": [
+  "AIA:art:29",
+  "AIA:art:30"
+ ],
+ "AIA:art:36:par:4": [
+  "AIA:art:31"
+ ],
+ "AIA:art:37:par:1": [
+  "AIA:art:31"
+ ],
+ "AIA:art:37:par:3": [
+  "AIA:art:78"
+ ],
+ "AIA:art:37:par:4": [
+  "AIA:art:98"
+ ],
+ "AIA:art:39": [
+  "AIA:art:31"
+ ],
+ "AIA:art:40:par:2": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:40:par:3": [
+  "AIA:art:5",
+  "AIA:art:6"
+ ],
+ "AIA:art:41:par:1": [
+  "AIA:art:67",
+  "AIA:art:98"
+ ],
+ "AIA:art:42:par:1": [
+  "AIA:art:10"
+ ],
+ "AIA:art:42:par:2": [
+  "AIA:art:15"
+ ],
+ "AIA:art:42:par:3": [
+  "AIA:art:15"
+ ],
+ "AIA:art:43:par:1": [
+  "AIA:art:40",
+  "AIA:art:41",
+  "AIA:art:74",
+  "AIA:annex:III",
+  "AIA:annex:VI",
+  "AIA:annex:VII"
+ ],
+ "AIA:art:43:par:2": [
+  "AIA:annex:III",
+  "AIA:annex:VI"
+ ],
+ "AIA:art:43:par:3": [
+  "AIA:art:17",
+  "AIA:art:31",
+  "AIA:art:28",
+  "AIA:art:41",
+  "AIA:art:6",
+  "AIA:annex:I",
+  "AIA:annex:VII",
+  "AIA:annex:III"
+ ],
+ "AIA:art:43:par:4": [
+  "AIA:annex:IV"
+ ],
+ "AIA:art:43:par:5": [
+  "AIA:art:97"
+ ],
+ "AIA:art:43:par:6": [
+  "AIA:art:97",
+  "AIA:annex:III",
+  "AIA:annex:VII",
+  "AIA:annex:VI"
+ ],
+ "AIA:art:44:par:1": [
+  "AIA:annex:VII"
+ ],
+ "AIA:art:44:par:2": [
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "AIA:art:45:par:1": [
+  "AIA:annex:VII"
+ ],
+ "AIA:art:45:par:4": [
+  "AIA:art:78"
+ ],
+ "AIA:art:46:par:1": [
+  "AIA:art:43"
+ ],
+ "AIA:art:46:par:7": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:47:par:2": [
+  "AIA:annex:V"
+ ],
+ "AIA:art:47:par:5": [
+  "AIA:art:97",
+  "AIA:annex:V"
+ ],
+ "AIA:art:48:par:4": [
+  "AIA:art:43"
+ ],
+ "AIA:art:49:par:1": [
+  "AIA:art:71",
+  "AIA:annex:III"
+ ],
+ "AIA:art:49:par:2": [
+  "AIA:art:6",
+  "AIA:art:71"
+ ],
+ "AIA:art:49:par:3": [
+  "AIA:art:71",
+  "AIA:annex:III"
+ ],
+ "AIA:art:49:par:4": [
+  "AIA:art:71",
+  "AIA:art:74",
+  "AIA:annex:III",
+  "AIA:annex:VIII",
+  "AIA:annex:IX"
+ ],
+ "AIA:art:49:par:5": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:50:par:7": [
+  "AIA:art:56",
+  "AIA:art:98"
+ ],
+ "AIA:art:51:par:1": [
+  "AIA:annex:XIII"
+ ],
+ "AIA:art:51:par:3": [
+  "AIA:art:97"
+ ],
+ "AIA:art:52:par:1": [
+  "AIA:art:51"
+ ],
+ "AIA:art:52:par:2": [
+  "AIA:art:51"
+ ],
+ "AIA:art:52:par:4": [
+  "AIA:art:90",
+  "AIA:art:97",
+  "AIA:annex:XIII"
+ ],
+ "AIA:art:52:par:5": [
+  "AIA:annex:XIII"
+ ],
+ "AIA:art:53:par:1": [
+  "AIA:annex:XI",
+  "AIA:annex:XII"
+ ],
+ "AIA:art:53:par:4": [
+  "AIA:art:56"
+ ],
+ "AIA:art:53:par:5": [
+  "AIA:art:97",
+  "AIA:annex:XI"
+ ],
+ "AIA:art:53:par:6": [
+  "AIA:art:97"
+ ],
+ "AIA:art:53:par:7": [
+  "AIA:art:78"
+ ],
+ "AIA:art:54:par:3": [
+  "AIA:art:53",
+  "AIA:art:55",
+  "AIA:annex:XI"
+ ],
+ "AIA:art:55:par:1": [
+  "AIA:art:53",
+  "AIA:art:54"
+ ],
+ "AIA:art:55:par:2": [
+  "AIA:art:56"
+ ],
+ "AIA:art:55:par:3": [
+  "AIA:art:78"
+ ],
+ "AIA:art:56:par:2": [
+  "AIA:art:53",
+  "AIA:art:55"
+ ],
+ "AIA:art:56:par:6": [
+  "AIA:art:53",
+  "AIA:art:55"
+ ],
+ "AIA:art:56:par:7": [
+  "AIA:art:53"
+ ],
+ "AIA:art:56:par:9": [
+  "AIA:art:53",
+  "AIA:art:55",
+  "AIA:art:98"
+ ],
+ "AIA:art:57:par:3a": [
+  "AIA:art:75"
+ ],
+ "AIA:art:57:par:5": [
+  "AIA:art:60",
+  "AIA:art:60a"
+ ],
+ "AIA:art:57:par:8": [
+  "AIA:art:78"
+ ],
+ "AIA:art:57:par:17": [
+  "AIA:art:62"
+ ],
+ "AIA:art:58:par:1": [
+  "AIA:art:57",
+  "AIA:art:98"
+ ],
+ "AIA:art:58:par:2": [
+  "AIA:art:95"
+ ],
+ "AIA:art:59:par:1": [
+  "GDPR:art:35",
+  "AIA:annex:IV"
+ ],
+ "AIA:art:60:par:1": [
+  "AIA:art:5",
+  "AIA:art:98",
+  "AIA:annex:III",
+  "AIA:annex:I"
+ ],
+ "AIA:art:60:par:2": [
+  "AIA:annex:III",
+  "AIA:annex:I"
+ ],
+ "AIA:art:60:par:4": [
+  "AIA:art:71",
+  "AIA:art:49",
+  "AIA:art:13",
+  "AIA:art:61",
+  "AIA:annex:III",
+  "AIA:annex:IX"
+ ],
+ "AIA:art:60:par:6": [
+  "AIA:art:75"
+ ],
+ "AIA:art:60:par:7": [
+  "AIA:art:73"
+ ],
+ "AIA:art:60a:par:1": [
+  "AIA:art:8",
+  "AIA:art:9",
+  "AIA:art:10",
+  "AIA:art:11",
+  "AIA:art:12",
+  "AIA:art:13",
+  "AIA:art:14",
+  "AIA:art:15",
+  "AIA:annex:I"
+ ],
+ "AIA:art:60a:par:3": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:60a:par:4": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:60a:par:5": [
+  "AIA:art:60",
+  "AIA:annex:I"
+ ],
+ "AIA:art:60a:par:6": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:61:par:1": [
+  "AIA:art:60"
+ ],
+ "AIA:art:62:par:2": [
+  "AIA:art:43"
+ ],
+ "AIA:art:63:par:1": [
+  "AIA:art:17"
+ ],
+ "AIA:art:63:par:2": [
+  "AIA:art:9",
+  "AIA:art:10",
+  "AIA:art:11",
+  "AIA:art:12",
+  "AIA:art:13",
+  "AIA:art:14",
+  "AIA:art:15",
+  "AIA:art:72",
+  "AIA:art:73"
+ ],
+ "AIA:art:65:par:4": [
+  "AIA:art:66"
+ ],
+ "AIA:art:65:par:6": [
+  "AIA:art:67"
+ ],
+ "AIA:art:66": [
+  "AIA:art:74",
+  "AIA:art:46",
+  "AIA:art:57",
+  "AIA:art:59",
+  "AIA:art:60",
+  "AIA:art:112",
+  "AIA:art:73",
+  "AIA:art:71",
+  "AIA:art:40",
+  "AIA:art:41",
+  "AIA:art:7",
+  "AIA:art:5",
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "AIA:art:68:par:1": [
+  "AIA:art:98"
+ ],
+ "AIA:art:68:par:3": [
+  "AIA:art:90",
+  "AIA:art:74",
+  "AIA:art:81"
+ ],
+ "AIA:art:69:par:2": [
+  "AIA:art:68"
+ ],
+ "AIA:art:69:par:3": [
+  "AIA:art:84"
+ ],
+ "AIA:art:70:par:5": [
+  "AIA:art:78"
+ ],
+ "AIA:art:71:par:1": [
+  "AIA:art:6",
+  "AIA:art:49",
+  "AIA:art:60"
+ ],
+ "AIA:art:71:par:2": [
+  "AIA:annex:VIII"
+ ],
+ "AIA:art:71:par:3": [
+  "AIA:art:49",
+  "AIA:annex:VIII"
+ ],
+ "AIA:art:71:par:4": [
+  "AIA:art:49",
+  "AIA:art:60"
+ ],
+ "AIA:art:72:par:3": [
+  "AIA:annex:IV"
+ ],
+ "AIA:art:72:par:4": [
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "AIA:art:73:par:3": [
+  "AIA:art:3"
+ ],
+ "AIA:art:73:par:7": [
+  "AIA:art:3",
+  "AIA:art:77"
+ ],
+ "AIA:art:73:par:9": [
+  "AIA:art:3",
+  "AIA:annex:III"
+ ],
+ "AIA:art:73:par:10": [
+  "AIA:art:3"
+ ],
+ "AIA:art:74:par:1": [
+  "AIA:art:2"
+ ],
+ "AIA:art:74:par:3": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:74:par:4": [
+  "AIA:art:79",
+  "AIA:art:80",
+  "AIA:art:81",
+  "AIA:art:82",
+  "AIA:art:83",
+  "AIA:annex:I"
+ ],
+ "AIA:art:74:par:5": [
+  "AIA:art:14"
+ ],
+ "AIA:art:74:par:8": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:74:par:10": [
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "AIA:art:74:par:14": [
+  "AIA:art:78"
+ ],
+ "AIA:art:75:par:1": [
+  "AIA:art:74",
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "AIA:art:75:par:1a": [
+  "AIA:art:73"
+ ],
+ "AIA:art:75:par:1e": [
+  "AIA:art:43"
+ ],
+ "AIA:art:75:par:2a": [
+  "AIA:art:70",
+  "AIA:art:75a"
+ ],
+ "AIA:art:75:par:3": [
+  "AIA:art:78"
+ ],
+ "AIA:art:75a:par:1": [
+  "AIA:art:75",
+  "AIA:art:14"
+ ],
+ "AIA:art:75a:par:2": [
+  "AIA:art:75",
+  "AIA:art:85"
+ ],
+ "AIA:art:75a:par:3": [
+  "AIA:art:14",
+  "AIA:art:74",
+  "AIA:art:99"
+ ],
+ "AIA:art:75a:par:4": [
+  "AIA:art:14",
+  "AIA:art:74",
+  "AIA:art:99"
+ ],
+ "AIA:art:75a:par:6": [
+  "AIA:art:75"
+ ],
+ "AIA:art:75a:par:7": [
+  "AIA:art:75"
+ ],
+ "AIA:art:75b": [
+  "AIA:art:75a"
+ ],
+ "AIA:art:75c:par:1": [
+  "AIA:art:75",
+  "AIA:art:75b"
+ ],
+ "AIA:art:75c:par:3": [
+  "AIA:art:75b"
+ ],
+ "AIA:art:75c:par:4": [
+  "AIA:art:99",
+  "AIA:art:75",
+  "AIA:art:14",
+  "AIA:art:75a",
+  "AIA:art:75b"
+ ],
+ "AIA:art:75c:par:5": [
+  "AIA:art:75",
+  "AIA:art:75a",
+  "AIA:art:75b"
+ ],
+ "AIA:art:75c:par:8": [
+  "AIA:art:75d"
+ ],
+ "AIA:art:75d:par:1": [
+  "AIA:art:75"
+ ],
+ "AIA:art:75d:par:2": [
+  "AIA:art:75",
+  "AIA:art:75c"
+ ],
+ "AIA:art:75d:par:4": [
+  "AIA:art:75b",
+  "AIA:art:75c"
+ ],
+ "AIA:art:76:par:1": [
+  "AIA:art:60a",
+  "AIA:art:60",
+  "AIA:annex:I"
+ ],
+ "AIA:art:76:par:2": [
+  "AIA:art:58",
+  "AIA:art:60"
+ ],
+ "AIA:art:76:par:3": [
+  "AIA:art:60",
+  "AIA:art:61"
+ ],
+ "AIA:art:76:par:4": [
+  "AIA:art:60"
+ ],
+ "AIA:art:77:par:4": [
+  "AIA:art:78"
+ ],
+ "AIA:art:78:par:3": [
+  "AIA:art:74",
+  "AIA:annex:III",
+  "AIA:annex:IV"
+ ],
+ "AIA:art:79:par:1": [
+  "AIA:art:3"
+ ],
+ "AIA:art:79:par:2": [
+  "AIA:art:77"
+ ],
+ "AIA:art:79:par:6": [
+  "AIA:art:5",
+  "AIA:art:40",
+  "AIA:art:41",
+  "AIA:art:50"
+ ],
+ "AIA:art:79:par:8": [
+  "AIA:art:5"
+ ],
+ "AIA:art:80:par:1": [
+  "AIA:art:6"
+ ],
+ "AIA:art:80:par:4": [
+  "AIA:art:99"
+ ],
+ "AIA:art:80:par:6": [
+  "AIA:art:79"
+ ],
+ "AIA:art:80:par:7": [
+  "AIA:art:99"
+ ],
+ "AIA:art:80:par:8": [
+  "AIA:art:71"
+ ],
+ "AIA:art:81:par:1": [
+  "AIA:art:79",
+  "AIA:art:5"
+ ],
+ "AIA:art:81:par:3": [
+  "AIA:art:40",
+  "AIA:art:41"
+ ],
+ "AIA:art:82:par:1": [
+  "AIA:art:79",
+  "AIA:art:77"
+ ],
+ "AIA:art:83:par:1": [
+  "AIA:art:48",
+  "AIA:art:47",
+  "AIA:art:71"
+ ],
+ "AIA:art:86:par:1": [
+  "AIA:annex:III"
+ ],
+ "AIA:art:88:par:1": [
+  "AIA:art:94"
+ ],
+ "AIA:art:88:par:2": [
+  "AIA:art:75"
+ ],
+ "AIA:art:90:par:1": [
+  "AIA:art:51"
+ ],
+ "AIA:art:90:par:2": [
+  "AIA:art:91",
+  "AIA:art:92",
+  "AIA:art:93",
+  "AIA:art:94"
+ ],
+ "AIA:art:91:par:1": [
+  "AIA:art:53",
+  "AIA:art:55"
+ ],
+ "AIA:art:91:par:3": [
+  "AIA:art:68"
+ ],
+ "AIA:art:91:par:4": [
+  "AIA:art:101"
+ ],
+ "AIA:art:92:par:1": [
+  "AIA:art:91",
+  "AIA:art:90"
+ ],
+ "AIA:art:92:par:2": [
+  "AIA:art:68"
+ ],
+ "AIA:art:92:par:4": [
+  "AIA:art:101"
+ ],
+ "AIA:art:92:par:6": [
+  "AIA:art:98"
+ ],
+ "AIA:art:93:par:1": [
+  "AIA:art:53",
+  "AIA:art:54",
+  "AIA:art:92"
+ ],
+ "AIA:art:96:par:1": [
+  "AIA:art:8",
+  "AIA:art:9",
+  "AIA:art:10",
+  "AIA:art:11",
+  "AIA:art:12",
+  "AIA:art:13",
+  "AIA:art:14",
+  "AIA:art:15",
+  "AIA:art:25",
+  "AIA:art:26",
+  "AIA:art:5",
+  "AIA:art:50",
+  "AIA:art:3",
+  "AIA:art:17",
+  "AIA:art:40",
+  "AIA:art:41",
+  "AIA:annex:I"
+ ],
+ "AIA:art:97:par:2": [
+  "AIA:art:6",
+  "AIA:art:7",
+  "AIA:art:11",
+  "AIA:art:43",
+  "AIA:art:47",
+  "AIA:art:51",
+  "AIA:art:52",
+  "AIA:art:53",
+  "AIA:art:2",
+  "AIA:art:30"
+ ],
+ "AIA:art:97:par:3": [
+  "AIA:art:2",
+  "AIA:art:6",
+  "AIA:art:7",
+  "AIA:art:11",
+  "AIA:art:30",
+  "AIA:art:43",
+  "AIA:art:47",
+  "AIA:art:51",
+  "AIA:art:52",
+  "AIA:art:53"
+ ],
+ "AIA:art:97:par:6": [
+  "AIA:art:2",
+  "AIA:art:6",
+  "AIA:art:7",
+  "AIA:art:11",
+  "AIA:art:30",
+  "AIA:art:43",
+  "AIA:art:47",
+  "AIA:art:51",
+  "AIA:art:52",
+  "AIA:art:53"
+ ],
+ "AIA:art:99:par:1": [
+  "AIA:art:96"
+ ],
+ "AIA:art:99:par:3": [
+  "AIA:art:5"
+ ],
+ "AIA:art:99:par:4": [
+  "AIA:art:5",
+  "AIA:art:16",
+  "AIA:art:22",
+  "AIA:art:23",
+  "AIA:art:24",
+  "AIA:art:25",
+  "AIA:art:26",
+  "AIA:art:31",
+  "AIA:art:33",
+  "AIA:art:34",
+  "AIA:art:50"
+ ],
+ "AIA:art:100:par:2": [
+  "AIA:art:5"
+ ],
+ "AIA:art:100:par:3": [
+  "AIA:art:5"
+ ],
+ "AIA:art:101:par:1": [
+  "AIA:art:91",
+  "AIA:art:93",
+  "AIA:art:92",
+  "AIA:art:56"
+ ],
+ "AIA:art:101:par:6": [
+  "AIA:art:98"
+ ],
+ "AIA:art:111:par:1": [
+  "AIA:art:5",
+  "AIA:art:113",
+  "AIA:annex:X"
+ ],
+ "AIA:art:111:par:2": [
+  "AIA:art:5",
+  "AIA:art:113"
+ ],
+ "AIA:art:111:par:4": [
+  "AIA:art:50"
+ ],
+ "AIA:art:112:par:1": [
+  "AIA:art:5",
+  "AIA:art:97",
+  "AIA:annex:III"
+ ],
+ "AIA:art:112:par:2": [
+  "AIA:art:50",
+  "AIA:annex:III"
+ ],
+ "AIA:art:112:par:4": [
+  "AIA:art:99"
+ ],
+ "AIA:art:112:par:11": [
+  "AIA:art:5",
+  "AIA:art:50",
+  "AIA:annex:III"
+ ],
+ "AIA:art:112:par:12": [
+  "AIA:annex:I"
+ ],
+ "AIA:art:113": [
+  "AIA:art:5",
+  "AIA:art:78",
+  "AIA:art:101",
+  "AIA:art:6",
+  "AIA:art:102",
+  "AIA:art:103",
+  "AIA:art:104",
+  "AIA:art:105",
+  "AIA:art:106",
+  "AIA:art:107",
+  "AIA:art:108",
+  "AIA:art:109",
+  "AIA:art:110",
+  "AIA:annex:III",
+  "AIA:annex:I"
+ ],
+ "AIA:rec:14": [
+  "GDPR:art:4"
+ ],
+ "AIA:rec:39": [
+  "GDPR:art:9"
+ ],
+ "AIA:rec:40": [
+  "AIA:art:5",
+  "AIA:art:26"
+ ],
+ "AIA:rec:41": [
+  "AIA:art:5",
+  "AIA:art:26"
+ ],
+ "AIA:rec:53": [
+  "GDPR:art:4"
+ ],
+ "AIA:rec:54": [
+  "GDPR:art:9"
+ ],
+ "AIA:rec:70": [
+  "GDPR:art:9"
+ ],
+ "AIA:rec:94": [
+  "AIA:art:4"
+ ],
+ "AIA:rec:121": [
+  "AIA:art:2"
+ ],
+ "AIA:rec:140": [
+  "AIA:art:6",
+  "GDPR:art:9",
+  "AIA:art:4",
+  "GDPR:art:22"
+ ],
+ "AIA:rec:180": [
+  "AIA:art:42"
+ ],
+ "AIA:annex:I": [
+  "AIA:art:2"
+ ],
+ "AIA:annex:II": [
+  "AIA:art:5"
+ ],
+ "AIA:annex:III": [
+  "AIA:art:6"
+ ],
+ "AIA:annex:IV": [
+  "AIA:art:11",
+  "AIA:art:14",
+  "AIA:art:13",
+  "AIA:art:9",
+  "AIA:art:47",
+  "AIA:art:72"
+ ],
+ "AIA:annex:V": [
+  "AIA:art:47"
+ ],
+ "AIA:annex:VI": [
+  "AIA:art:17",
+  "AIA:art:72"
+ ],
+ "AIA:annex:VII": [
+  "AIA:art:17",
+  "AIA:art:43",
+  "AIA:annex:IV"
+ ],
+ "AIA:annex:VIII": [
+  "AIA:art:49",
+  "AIA:art:47",
+  "AIA:art:6",
+  "AIA:art:27",
+  "GDPR:art:35",
+  "AIA:art:26",
+  "AIA:annex:III"
+ ],
+ "AIA:annex:IX": [
+  "AIA:art:60"
+ ],
+ "AIA:annex:XI": [
+  "AIA:art:53"
+ ],
+ "AIA:annex:XII": [
+  "AIA:art:53"
+ ],
+ "AIA:annex:XIII": [
+  "AIA:art:51"
+ ],
+ "AIA:annex:XIV": [
+  "AIA:art:30",
+  "AIA:art:29",
+  "AIA:annex:I",
+  "AIA:annex:III"
+ ],
+ "GDPR:art:2:par:3": [
+  "GDPR:art:98"
+ ],
+ "GDPR:art:4": [
+  "GDPR:art:27",
+  "GDPR:art:51"
+ ],
+ "GDPR:art:5:par:1": [
+  "GDPR:art:89"
+ ],
+ "GDPR:art:6:par:4": [
+  "GDPR:art:23",
+  "GDPR:art:9",
+  "GDPR:art:10"
+ ],
+ "GDPR:art:8:par:1": [
+  "GDPR:art:6"
+ ],
+ "GDPR:art:9:par:2": [
+  "GDPR:art:89"
+ ],
+ "GDPR:art:10": [
+  "GDPR:art:6"
+ ],
+ "GDPR:art:11:par:2": [
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20"
+ ],
+ "GDPR:art:12:par:1": [
+  "GDPR:art:13",
+  "GDPR:art:14",
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22",
+  "GDPR:art:34"
+ ],
+ "GDPR:art:12:par:2": [
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22",
+  "GDPR:art:11"
+ ],
+ "GDPR:art:12:par:3": [
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22"
+ ],
+ "GDPR:art:12:par:5": [
+  "GDPR:art:13",
+  "GDPR:art:14",
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22",
+  "GDPR:art:34"
+ ],
+ "GDPR:art:12:par:6": [
+  "GDPR:art:11",
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21"
+ ],
+ "GDPR:art:12:par:7": [
+  "GDPR:art:13",
+  "GDPR:art:14"
+ ],
+ "GDPR:art:12:par:8": [
+  "GDPR:art:92"
+ ],
+ "GDPR:art:13:par:1": [
+  "GDPR:art:6",
+  "GDPR:art:46",
+  "GDPR:art:47",
+  "GDPR:art:49"
+ ],
+ "GDPR:art:13:par:2": [
+  "GDPR:art:6",
+  "GDPR:art:9",
+  "GDPR:art:22"
+ ],
+ "GDPR:art:14:par:1": [
+  "GDPR:art:46",
+  "GDPR:art:47",
+  "GDPR:art:49"
+ ],
+ "GDPR:art:14:par:2": [
+  "GDPR:art:6",
+  "GDPR:art:9",
+  "GDPR:art:22"
+ ],
+ "GDPR:art:14:par:5": [
+  "GDPR:art:89"
+ ],
+ "GDPR:art:15:par:1": [
+  "GDPR:art:22"
+ ],
+ "GDPR:art:15:par:2": [
+  "GDPR:art:46"
+ ],
+ "GDPR:art:17:par:1": [
+  "GDPR:art:6",
+  "GDPR:art:9",
+  "GDPR:art:21",
+  "GDPR:art:8"
+ ],
+ "GDPR:art:17:par:3": [
+  "GDPR:art:9",
+  "GDPR:art:89"
+ ],
+ "GDPR:art:18:par:1": [
+  "GDPR:art:21"
+ ],
+ "GDPR:art:19": [
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18"
+ ],
+ "GDPR:art:20:par:1": [
+  "GDPR:art:6",
+  "GDPR:art:9"
+ ],
+ "GDPR:art:20:par:3": [
+  "GDPR:art:17"
+ ],
+ "GDPR:art:21:par:1": [
+  "GDPR:art:6"
+ ],
+ "GDPR:art:21:par:6": [
+  "GDPR:art:89"
+ ],
+ "GDPR:art:22:par:4": [
+  "GDPR:art:9"
+ ],
+ "GDPR:art:23:par:1": [
+  "GDPR:art:12",
+  "GDPR:art:13",
+  "GDPR:art:14",
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22",
+  "GDPR:art:34",
+  "GDPR:art:5"
+ ],
+ "GDPR:art:24:par:3": [
+  "GDPR:art:40",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:25:par:3": [
+  "GDPR:art:42"
+ ],
+ "GDPR:art:26:par:1": [
+  "GDPR:art:13",
+  "GDPR:art:14"
+ ],
+ "GDPR:art:27:par:1": [
+  "GDPR:art:3"
+ ],
+ "GDPR:art:27:par:2": [
+  "GDPR:art:9",
+  "GDPR:art:10"
+ ],
+ "GDPR:art:28:par:3": [
+  "GDPR:art:32",
+  "GDPR:art:33",
+  "GDPR:art:34",
+  "GDPR:art:35",
+  "GDPR:art:36"
+ ],
+ "GDPR:art:28:par:5": [
+  "GDPR:art:40",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:28:par:6": [
+  "GDPR:art:42",
+  "GDPR:art:43"
+ ],
+ "GDPR:art:28:par:7": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:28:par:8": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:28:par:10": [
+  "GDPR:art:82",
+  "GDPR:art:83",
+  "GDPR:art:84"
+ ],
+ "GDPR:art:30:par:1": [
+  "GDPR:art:49",
+  "GDPR:art:32"
+ ],
+ "GDPR:art:30:par:2": [
+  "GDPR:art:49",
+  "GDPR:art:32"
+ ],
+ "GDPR:art:30:par:5": [
+  "GDPR:art:9",
+  "GDPR:art:10"
+ ],
+ "GDPR:art:32:par:3": [
+  "GDPR:art:40",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:33:par:1": [
+  "GDPR:art:55"
+ ],
+ "GDPR:art:34:par:2": [
+  "GDPR:art:33"
+ ],
+ "GDPR:art:35:par:3": [
+  "GDPR:art:9",
+  "GDPR:art:10"
+ ],
+ "GDPR:art:35:par:4": [
+  "GDPR:art:68"
+ ],
+ "GDPR:art:35:par:6": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:35:par:8": [
+  "GDPR:art:40"
+ ],
+ "GDPR:art:35:par:10": [
+  "GDPR:art:6"
+ ],
+ "GDPR:art:36:par:1": [
+  "GDPR:art:35"
+ ],
+ "GDPR:art:36:par:2": [
+  "GDPR:art:58"
+ ],
+ "GDPR:art:36:par:3": [
+  "GDPR:art:35"
+ ],
+ "GDPR:art:37:par:1": [
+  "GDPR:art:9",
+  "GDPR:art:10"
+ ],
+ "GDPR:art:37:par:5": [
+  "GDPR:art:39"
+ ],
+ "GDPR:art:38:par:2": [
+  "GDPR:art:39"
+ ],
+ "GDPR:art:39:par:1": [
+  "GDPR:art:35",
+  "GDPR:art:36"
+ ],
+ "GDPR:art:40:par:2": [
+  "GDPR:art:24",
+  "GDPR:art:25",
+  "GDPR:art:32",
+  "GDPR:art:77",
+  "GDPR:art:79"
+ ],
+ "GDPR:art:40:par:3": [
+  "GDPR:art:3",
+  "GDPR:art:46"
+ ],
+ "GDPR:art:40:par:4": [
+  "GDPR:art:41",
+  "GDPR:art:55",
+  "GDPR:art:56"
+ ],
+ "GDPR:art:40:par:5": [
+  "GDPR:art:55"
+ ],
+ "GDPR:art:40:par:7": [
+  "GDPR:art:55",
+  "GDPR:art:63"
+ ],
+ "GDPR:art:40:par:9": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:41:par:1": [
+  "GDPR:art:57",
+  "GDPR:art:58",
+  "GDPR:art:40"
+ ],
+ "GDPR:art:41:par:3": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:42:par:2": [
+  "GDPR:art:3",
+  "GDPR:art:46"
+ ],
+ "GDPR:art:42:par:4": [
+  "GDPR:art:55",
+  "GDPR:art:56"
+ ],
+ "GDPR:art:42:par:5": [
+  "GDPR:art:43",
+  "GDPR:art:58",
+  "GDPR:art:63"
+ ],
+ "GDPR:art:42:par:6": [
+  "GDPR:art:43"
+ ],
+ "GDPR:art:42:par:7": [
+  "GDPR:art:43"
+ ],
+ "GDPR:art:43:par:1": [
+  "GDPR:art:57",
+  "GDPR:art:58",
+  "GDPR:art:55",
+  "GDPR:art:56"
+ ],
+ "GDPR:art:43:par:2": [
+  "GDPR:art:42",
+  "GDPR:art:55",
+  "GDPR:art:56",
+  "GDPR:art:63"
+ ],
+ "GDPR:art:43:par:3": [
+  "GDPR:art:55",
+  "GDPR:art:56",
+  "GDPR:art:63"
+ ],
+ "GDPR:art:43:par:6": [
+  "GDPR:art:42"
+ ],
+ "GDPR:art:43:par:8": [
+  "GDPR:art:92",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:43:par:9": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:45:par:3": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:45:par:5": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:45:par:7": [
+  "GDPR:art:46",
+  "GDPR:art:47",
+  "GDPR:art:48",
+  "GDPR:art:49"
+ ],
+ "GDPR:art:46:par:1": [
+  "GDPR:art:45"
+ ],
+ "GDPR:art:46:par:2": [
+  "GDPR:art:47",
+  "GDPR:art:93",
+  "GDPR:art:40",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:46:par:4": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:47:par:1": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:47:par:2": [
+  "GDPR:art:22",
+  "GDPR:art:79",
+  "GDPR:art:13",
+  "GDPR:art:14",
+  "GDPR:art:37"
+ ],
+ "GDPR:art:47:par:3": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:49:par:1": [
+  "GDPR:art:45",
+  "GDPR:art:46",
+  "GDPR:art:13",
+  "GDPR:art:14"
+ ],
+ "GDPR:art:49:par:6": [
+  "GDPR:art:30"
+ ],
+ "GDPR:art:51:par:3": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:55:par:2": [
+  "GDPR:art:6",
+  "GDPR:art:56"
+ ],
+ "GDPR:art:56:par:1": [
+  "GDPR:art:55",
+  "GDPR:art:60"
+ ],
+ "GDPR:art:56:par:3": [
+  "GDPR:art:60"
+ ],
+ "GDPR:art:56:par:4": [
+  "GDPR:art:60"
+ ],
+ "GDPR:art:56:par:5": [
+  "GDPR:art:61",
+  "GDPR:art:62"
+ ],
+ "GDPR:art:57:par:1": [
+  "GDPR:art:80",
+  "GDPR:art:28",
+  "GDPR:art:46",
+  "GDPR:art:35",
+  "GDPR:art:36",
+  "GDPR:art:40",
+  "GDPR:art:42",
+  "GDPR:art:41",
+  "GDPR:art:43",
+  "GDPR:art:47",
+  "GDPR:art:58"
+ ],
+ "GDPR:art:58:par:1": [
+  "GDPR:art:42"
+ ],
+ "GDPR:art:58:par:2": [
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:42",
+  "GDPR:art:43",
+  "GDPR:art:83"
+ ],
+ "GDPR:art:58:par:3": [
+  "GDPR:art:36",
+  "GDPR:art:40",
+  "GDPR:art:43",
+  "GDPR:art:42",
+  "GDPR:art:28",
+  "GDPR:art:46",
+  "GDPR:art:47"
+ ],
+ "GDPR:art:59": [
+  "GDPR:art:58"
+ ],
+ "GDPR:art:60:par:2": [
+  "GDPR:art:61",
+  "GDPR:art:62"
+ ],
+ "GDPR:art:60:par:4": [
+  "GDPR:art:63"
+ ],
+ "GDPR:art:60:par:11": [
+  "GDPR:art:66"
+ ],
+ "GDPR:art:61:par:8": [
+  "GDPR:art:55",
+  "GDPR:art:66"
+ ],
+ "GDPR:art:61:par:9": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:62:par:2": [
+  "GDPR:art:56"
+ ],
+ "GDPR:art:62:par:7": [
+  "GDPR:art:55",
+  "GDPR:art:66"
+ ],
+ "GDPR:art:64:par:1": [
+  "GDPR:art:35",
+  "GDPR:art:40",
+  "GDPR:art:41",
+  "GDPR:art:43",
+  "GDPR:art:46",
+  "GDPR:art:28",
+  "GDPR:art:47"
+ ],
+ "GDPR:art:64:par:2": [
+  "GDPR:art:61",
+  "GDPR:art:62"
+ ],
+ "GDPR:art:64:par:8": [
+  "GDPR:art:65"
+ ],
+ "GDPR:art:65:par:1": [
+  "GDPR:art:60",
+  "GDPR:art:64"
+ ],
+ "GDPR:art:65:par:6": [
+  "GDPR:art:60"
+ ],
+ "GDPR:art:66:par:1": [
+  "GDPR:art:63",
+  "GDPR:art:64",
+  "GDPR:art:65",
+  "GDPR:art:60"
+ ],
+ "GDPR:art:66:par:4": [
+  "GDPR:art:64",
+  "GDPR:art:65"
+ ],
+ "GDPR:art:67": [
+  "GDPR:art:64",
+  "GDPR:art:93"
+ ],
+ "GDPR:art:68:par:6": [
+  "GDPR:art:65"
+ ],
+ "GDPR:art:69:par:1": [
+  "GDPR:art:70",
+  "GDPR:art:71"
+ ],
+ "GDPR:art:69:par:2": [
+  "GDPR:art:70"
+ ],
+ "GDPR:art:70:par:1": [
+  "GDPR:art:64",
+  "GDPR:art:65",
+  "GDPR:art:17",
+  "GDPR:art:22",
+  "GDPR:art:33",
+  "GDPR:art:34",
+  "GDPR:art:47",
+  "GDPR:art:49",
+  "GDPR:art:58",
+  "GDPR:art:83",
+  "GDPR:art:54",
+  "GDPR:art:40",
+  "GDPR:art:42",
+  "GDPR:art:43",
+  "GDPR:art:12",
+  "GDPR:art:66"
+ ],
+ "GDPR:art:70:par:3": [
+  "GDPR:art:93"
+ ],
+ "GDPR:art:70:par:4": [
+  "GDPR:art:76"
+ ],
+ "GDPR:art:71:par:2": [
+  "GDPR:art:70",
+  "GDPR:art:65"
+ ],
+ "GDPR:art:74:par:1": [
+  "GDPR:art:65",
+  "GDPR:art:63"
+ ],
+ "GDPR:art:77:par:2": [
+  "GDPR:art:78"
+ ],
+ "GDPR:art:78:par:2": [
+  "GDPR:art:55",
+  "GDPR:art:56",
+  "GDPR:art:77"
+ ],
+ "GDPR:art:79:par:1": [
+  "GDPR:art:77"
+ ],
+ "GDPR:art:80:par:1": [
+  "GDPR:art:77",
+  "GDPR:art:78",
+  "GDPR:art:79",
+  "GDPR:art:82"
+ ],
+ "GDPR:art:80:par:2": [
+  "GDPR:art:77",
+  "GDPR:art:78",
+  "GDPR:art:79"
+ ],
+ "GDPR:art:82:par:6": [
+  "GDPR:art:79"
+ ],
+ "GDPR:art:83:par:2": [
+  "GDPR:art:58",
+  "GDPR:art:25",
+  "GDPR:art:32",
+  "GDPR:art:40",
+  "GDPR:art:42"
+ ],
+ "GDPR:art:83:par:4": [
+  "GDPR:art:8",
+  "GDPR:art:11",
+  "GDPR:art:25",
+  "GDPR:art:26",
+  "GDPR:art:27",
+  "GDPR:art:28",
+  "GDPR:art:29",
+  "GDPR:art:30",
+  "GDPR:art:31",
+  "GDPR:art:32",
+  "GDPR:art:33",
+  "GDPR:art:34",
+  "GDPR:art:35",
+  "GDPR:art:36",
+  "GDPR:art:37",
+  "GDPR:art:38",
+  "GDPR:art:39",
+  "GDPR:art:42",
+  "GDPR:art:43",
+  "GDPR:art:41"
+ ],
+ "GDPR:art:83:par:5": [
+  "GDPR:art:5",
+  "GDPR:art:6",
+  "GDPR:art:7",
+  "GDPR:art:9",
+  "GDPR:art:12",
+  "GDPR:art:13",
+  "GDPR:art:14",
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:17",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21",
+  "GDPR:art:22",
+  "GDPR:art:44",
+  "GDPR:art:45",
+  "GDPR:art:46",
+  "GDPR:art:47",
+  "GDPR:art:48",
+  "GDPR:art:49",
+  "GDPR:art:58"
+ ],
+ "GDPR:art:83:par:6": [
+  "GDPR:art:58"
+ ],
+ "GDPR:art:83:par:7": [
+  "GDPR:art:58"
+ ],
+ "GDPR:art:84:par:1": [
+  "GDPR:art:83"
+ ],
+ "GDPR:art:89:par:2": [
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:18",
+  "GDPR:art:21"
+ ],
+ "GDPR:art:89:par:3": [
+  "GDPR:art:15",
+  "GDPR:art:16",
+  "GDPR:art:18",
+  "GDPR:art:19",
+  "GDPR:art:20",
+  "GDPR:art:21"
+ ],
+ "GDPR:art:90:par:1": [
+  "GDPR:art:58"
+ ],
+ "GDPR:art:92:par:2": [
+  "GDPR:art:12",
+  "GDPR:art:43"
+ ],
+ "GDPR:art:92:par:3": [
+  "GDPR:art:12",
+  "GDPR:art:43"
+ ],
+ "GDPR:art:92:par:5": [
+  "GDPR:art:12",
+  "GDPR:art:43"
+ ],
+ "GDPR:art:93:par:3": [
+  "GDPR:art:5"
+ ],
+ "GDPR:art:97:par:2": [
+  "GDPR:art:45"
+ ],
+ "GDPR:rec:13": [
+  "GDPR:art:2"
+ ],
+ "GDPR:rec:106": [
+  "GDPR:art:25"
+ ]
+}

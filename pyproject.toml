@@ -14,6 +14,13 @@ dependencies = [
     "lxml>=5.3",
     "pyyaml>=6.0",
     "numpy>=2.0",
+    "tokenizers>=0.23.3",
+    "qdrant-client>=1.20.0",
+    "fastembed>=0.9.1",
+    "fastapi==0.162.0",
+    "uvicorn[standard]>=0.54.0",
+    "opentelemetry-sdk==1.45.2",
+    "opentelemetry-exporter-otlp-proto-http==1.45.2",
 ]
 
 [dependency-groups]
@@ -25,6 +32,9 @@ dev = [
     "pre-commit>=4.0",
     "types-pyyaml>=6.0",
     "lxml-stubs>=0.5",
+    "pyarrow>=26.0.1",
+    "jsonschema>=4.26.0",
+    "httpx>=0.28.1",
 ]
 
 [build-system]
@@ -42,6 +52,9 @@ src = ["src", "tests", "evals", "scripts"]
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "T20", "N", "PT", "RET", "ARG"]
 ignore = ["RUF001", "RUF002", "RUF003"]  # Italian text and typographic quotes are legitimate
+
+[tool.ruff.lint.isort]
+known-first-party = ["reglens", "evals", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["ARG"]
@@ -61,6 +74,9 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 pythonpath = ["src", "."]
 addopts = "-ra --strict-markers -m 'not llm and not integration and not data and not network'"
+filterwarnings = [
+    "ignore:Payload indexes have no effect in the local Qdrant:UserWarning",
+]
 markers = [
     "llm: calls a real LLM provider (excluded by default)",
     "integration: needs a running Qdrant (excluded by default, run with make test-integration)",

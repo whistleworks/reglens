@@ -37,8 +37,9 @@ check: lint typecheck test ## lint + typecheck + test (mandatory before each com
 ingest: ## Fetch, parse and chunk the corpus into data/processed/
 	uv run python -m reglens.ingestion.cli ingest
 
-index: ## Embed and index the chunks into Qdrant
-	uv run python -m reglens.ingestion.cli index
+index: ## Embed and index chunks (STRATEGY=paragraph|article|fixed ENRICH=none|hierarchy RECREATE=1)
+	uv run python -m reglens.ingestion.cli index --strategy $(or $(STRATEGY),paragraph) \
+		--enrich $(or $(ENRICH),none) $(if $(RECREATE),--recreate,)
 
 qdrant: ## Start local Qdrant
 	docker compose up -d qdrant
@@ -46,11 +47,40 @@ qdrant: ## Start local Qdrant
 eval: ## Run eval (SPLIT=dev STAGE=retrieval CONFIG=configs/bm25.yaml)
 	uv run python -m evals.run_eval --split $(SPLIT) --stage $(STAGE) --config $(CONFIG)
 
-beir: ## BEIR SciFact BM25 sanity check
-	uv run python -m evals.beir_sanity
+review-sheet: ## Markdown review sheet for a dataset (DATASET=evals/datasets/reglens_v1.jsonl)
+	PYTHONPATH=. uv run python scripts/review_sheet.py $(or $(DATASET),evals/datasets/reglens_v1.jsonl)
 
-eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test: ## Later milestones
+beir: ## BEIR SciFact BM25 sanity check (MEMORY=1 for in-process Qdrant)
+	uv run python -m evals.beir_sanity $(if $(MEMORY),--memory,)
+
+compare: ## Paired comparison of two runs (A=<json> B=<json>)
+	uv run python -m evals.compare $(A) $(B)
+
+report: ## Ablation table from runs (RUNS="a.json b.json" OUT=docs/ablation.md)
+	uv run python -m evals.report $(RUNS) $(if $(OUT),--out $(OUT),)
+
+serve: ## Run the API + UI on http://localhost:8000 (QDRANT_URL and LLM keys from .env)
+	uv run uvicorn reglens.api.main:create_app --factory --host 0.0.0.0 --port $(or $(PORT),8000)
+
+calibrate: ## Judge calibration (LABELS=evals/human_labels/calibration.jsonl RUN=<judged e2e json>)
+	uv run python -m evals.calibrate_judge $(or $(LABELS),evals/human_labels/calibration.jsonl) $(RUN)
+
+eval-smoke: ## CI smoke eval + regression gate (BM25, 20 dev queries, no secrets)
+	uv run python -m evals.smoke
+
+export-index: ## Copy the serving collection into index_snapshot/ for the Docker image (COLLECTION=...)
+	QDRANT_URL=$(or $(QDRANT_URL),path:qdrant_local) uv run python scripts/export_index.py \
+		--collection $(COLLECTION) --out index_snapshot
+
+docker-build: ## Build the image (needs index_snapshot/: run make export-index first)
+	docker build --build-arg GIT_SHA=$$(git rev-parse --short=12 HEAD) -t reglens:$$(git rev-parse --short=12 HEAD) -t reglens:latest .
+
+docker-run: ## Run the image on http://localhost:7860 with .env
+	docker run --rm -p 7860:7860 --env-file .env reglens:latest
+
+eval-final demo load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
-.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval beir \
-	eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test
+.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \
+	beir review-sheet compare report eval-smoke eval-final calibrate serve demo docker-build export-index \
+	docker-run load-test

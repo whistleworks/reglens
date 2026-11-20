@@ -1,0 +1,49 @@
+{
+ "run_id": "20261120-0747_4cf503d13b7c_beir-scifact-notitle",
+ "variant": "notitle",
+ "timestamp": "2026-11-20T07:47:44+00:00",
+ "git_sha": "4cf503d13b7c",
+ "benchmark": "BEIR SciFact (test qrels)",
+ "dataset_revisions": {
+  "BeIR/scifact": "b3b5335604bf5ee3c4447671af975ea25143d4f5",
+  "BeIR/scifact-qrels": "2938d17dc3b09882fdb8c12bbbe2e2dc0e75a029"
+ },
+ "backend": "qdrant-memory",
+ "method": {
+  "sparse_model": "Qdrant/bm25",
+  "stemmer": "snowball english",
+  "k1": 1.2,
+  "b": 0.75,
+  "avg_len": 141.33,
+  "idf": "Qdrant Modifier.IDF",
+  "doc_text": "text"
+ },
+ "docs": 5183,
+ "index_seconds": 0.9,
+ "metrics": {
+  "ndcg@10": {
+   "value": 0.6762,
+   "ci95": [
+    0.6338,
+    0.7188
+   ],
+   "n": 300
+  },
+  "recall@100": {
+   "value": 0.9249,
+   "ci95": [
+    0.8938,
+    0.9522
+   ],
+   "n": 300
+  },
+  "latency_ms_p50": 32.22
+ },
+ "reference": {
+  "ndcg@10": 0.665,
+  "source": "Thakur et al. 2021, arXiv:2104.08663v4, Table 2 (BM25, SciFact)",
+  "tolerance": 0.02
+ },
+ "delta": 0.0112,
+ "within_tolerance": true
+}

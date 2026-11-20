@@ -1,0 +1,31 @@
+name: uptime
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes (well within host ToS)
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  health:
+    if: vars.LIVE_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check /health twice
+        id: check
+        run: |
+          for i in 1 2; do
+            if curl -fsS --max-time 60 "${{ vars.LIVE_URL }}/health"; then echo "ok=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 30
+          done
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+      - name: Open an issue after two consecutive failures
+        if: steps.check.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue list -R "${{ github.repository }}" --label uptime --state open | grep -q . || \
+          gh issue create -R "${{ github.repository }}" --label uptime \
+            --title "Live /health failing" --body "Two consecutive /health checks failed at $(date -u). See docs/runbook.md#health-ko."

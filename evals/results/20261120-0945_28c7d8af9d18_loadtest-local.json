@@ -1,0 +1,33 @@
+{
+ "run_id": "20261120-0945_28c7d8af9d18_loadtest-local",
+ "timestamp": "2026-11-20T09:45:00+00:00",
+ "git_sha": "28c7d8af9d18",
+ "environment": "MacBook (Apple Silicon, 16 GB), uvicorn 1 worker, INDEX_MODE=local_snapshot (embedded Qdrant), no LLM keys -> sources_only mode; NOT a production measurement",
+ "serving_config": "configs/serving.yaml (units + hierarchy, recitals excluded, no reranker)",
+ "runs": {
+  "default_rate_limit_30_per_min": {
+   "users": 5,
+   "duration_s": 30,
+   "requests": 61683,
+   "rps": 2056.1,
+   "p50_ms": 1.9,
+   "p95_ms": 3.8,
+   "p99_ms": 7.1,
+   "error_rate": 0.0,
+   "rate_limited_429": 0.9993,
+   "sources_only": 0.0007
+  },
+  "rate_limit_disabled": {
+   "users": 5,
+   "duration_s": 30,
+   "requests": 515,
+   "rps": 17.17,
+   "p50_ms": 281.9,
+   "p95_ms": 366.5,
+   "p99_ms": 519.8,
+   "error_rate": 0.0,
+   "rate_limited_429": 0.0,
+   "sources_only": 1.0
+  }
+ }
+}

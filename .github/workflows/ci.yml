@@ -15,7 +15,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -29,5 +29,49 @@ jobs:
           uv run ruff check .
       - name: Typecheck
         run: uv run mypy
-      - name: Unit tests
+      - name: Unit tests (no network, no secrets)
         run: uv run pytest --cov --cov-report=term-missing
+      - name: Data tests on the committed corpus
+        run: uv run pytest -m data -k "not fit_the_embedding_model"
+
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      qdrant:
+        image: qdrant/qdrant:v1.20.0
+        ports: ["6333:6333"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --all-groups --frozen
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/fastembed
+          key: fastembed-${{ hashFiles('uv.lock') }}
+      - name: Integration tests (Qdrant service container, real models)
+        env:
+          QDRANT_URL: http://localhost:6333
+          FASTEMBED_CACHE_PATH: ~/.cache/fastembed
+        run: uv run pytest -m integration
+
+  smoke-eval-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --all-groups --frozen
+      - name: Smoke eval + regression gate (fails if recall@5 drops > 0.03 vs baseline)
+        run: uv run python -m evals.smoke --write-candidate smoke.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-eval
+          path: smoke.json
