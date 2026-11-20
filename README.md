@@ -2,7 +2,7 @@
 
 **Agentic RAG over the EU AI Act & GDPR with verifiable citations — evaluated, observable, deployable.**
 
-![CI](https://img.shields.io/badge/CI-GitHub_Actions-blue) ![eval](https://img.shields.io/badge/eval-gated-green) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
+[![CI](https://github.com/whistleworks/reglens/actions/workflows/ci.yml/badge.svg)](https://github.com/whistleworks/reglens/actions/workflows/ci.yml) ![eval](https://img.shields.io/badge/eval-gated-green) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
 
 Ask in English or Italian (*"Is a chatbot that screens job applicants high-risk?"*). RegLens retrieves from the official texts, answers **only** from what it retrieved, cites article / paragraph / point ids with deep links to EUR-Lex, and says *"not in the corpus"* instead of guessing. Not legal advice.
 
