@@ -120,3 +120,13 @@ def test_config_from_yaml(tmp_path: Path) -> None:
     path = tmp_path / "ingest.yaml"
     path.write_text("chunking:\n  strategy: paragraph\n  max_tokens: 300\n")
     assert ChunkingConfig.from_yaml(path).max_tokens == 300
+
+
+def test_labels_follow_the_chunk_language() -> None:
+    chunks_it = ParagraphChunker(ChunkingConfig(max_tokens=120), words).chunk(
+        build_corpus(FIXTURES, "it")
+    )
+    by_id = {c.id: c for c in chunks_it}
+    assert by_id["GDPR:rec:1#it"].title == "Considerando 1"
+    assert by_id["AIA:annex:III#it~0"].title.startswith("Allegato III:")
+    assert " > Capo III " in by_id["AIA:art:6:par:1a#it"].path

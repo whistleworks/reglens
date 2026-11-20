@@ -68,11 +68,16 @@ class FastEmbedBM25:
     """One BM25 model per language. ``avg_len`` should be the corpus mean length in tokens."""
 
     def __init__(
-        self, model_name: str = "Qdrant/bm25", avg_len: dict[Lang, float] | None = None
+        self,
+        model_name: str = "Qdrant/bm25",
+        avg_len: dict[Lang, float] | None = None,
+        *,
+        disable_stemmer: bool = False,
     ) -> None:
         from fastembed import SparseTextEmbedding
 
         self.name = model_name
+        self.disable_stemmer = disable_stemmer
         self._factory = SparseTextEmbedding
         self.avg_len: dict[Lang, float] = {}
         self._models: dict[Lang, Any] = {}
@@ -81,7 +86,12 @@ class FastEmbedBM25:
     def _build(self, avg_len: dict[Lang, float]) -> None:
         self.avg_len = {lang: avg_len.get(lang, 256.0) for lang in _SNOWBALL}
         self._models = {
-            lang: self._factory(self.name, language=snowball, avg_len=self.avg_len[lang])
+            lang: self._factory(
+                self.name,
+                language=snowball,
+                avg_len=self.avg_len[lang],
+                disable_stemmer=self.disable_stemmer,
+            )
             for lang, snowball in _SNOWBALL.items()
         }
 

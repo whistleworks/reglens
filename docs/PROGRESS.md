@@ -37,7 +37,7 @@
   1. BEIR usa Elasticsearch multi_match su title e text come campi separati; noi concateniamo title + text in un solo campo.
   2. Analyzer diverso: Snowball english di FastEmbed con le sue stopword vs l'analyzer ES di BEIR.
   3. avg_len calcolato sui token dopo stopword e stemming (come FastEmbed) vs la lunghezza dei campi Lucene.
-  Esperimento proposto: due run diagnostici (solo `text` senza titolo; stemmer disabilitato) per misurare la sensibilità, più un confronto con `rank_bm25` sullo stesso preprocessing. Va rieseguito anche sul server Qdrant, quando Docker è disponibile.
+  **Esperimento fatto (2026-11-20, Qdrant in-memory, file `evals/results/20261120-*_beir-scifact-*.json`):** senza titolo 0.6762 (+0.011), senza stemming 0.6617 (−0.003), senza entrambi 0.6472 (−0.018). Il gap è spiegato dal preprocessing (stemming ≈ +0.027, titolo ≈ +0.012), non da un errore nel calcolo di BM25/IDF/nDCG. La configurazione ufficiale **non** viene modificata per centrare il valore. Da decidere con te: accettare il gap documentato oppure allineare il preprocessing a quello di BEIR dopo averne verificato l'analyzer Elasticsearch nel codice di BEIR. Va rieseguito sul server Qdrant quando Docker è disponibile.
 
 ### Prossimo passo
 1. **Tu:** installa Docker (`brew install --cask orbstack`, poi apri OrbStack una volta).

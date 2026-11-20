@@ -31,6 +31,23 @@ _LINK_CELEX: dict[tuple[Regulation, UnitType], str] = {
     ("GDPR", "recital"): "32016R0679",
 }
 _REG_LABEL: dict[Regulation, str] = {"AIA": "AI Act", "GDPR": "GDPR"}
+# Structural labels in the language of the chunk (titles and paths are shown to users).
+_LABELS: dict[Lang, dict[str, str]] = {
+    "en": {
+        "recital": "Recital",
+        "annex": "Annex",
+        "chapter": "Chapter",
+        "section": "Section",
+        "par": "par.",
+    },
+    "it": {
+        "recital": "Considerando",
+        "annex": "Allegato",
+        "chapter": "Capo",
+        "section": "Sezione",
+        "par": "par.",
+    },
+}
 
 
 class ChunkingConfig(BaseModel):
@@ -129,6 +146,7 @@ class ParagraphChunker:
     def chunk(self, corpus: Corpus) -> list[Chunk]:
         chunks: list[Chunk] = []
         for doc in corpus.regulations:
+            labels = _LABELS[doc.lang]
             for article in doc.articles:
                 chunks.extend(self._article_chunks(doc, article))
             for recital in doc.recitals:
@@ -138,8 +156,10 @@ class ParagraphChunker:
                         unit_id=recital.id,
                         article_id=recital.id,
                         unit_type="recital",
-                        title=f"Recital {recital.number}",
-                        path=f"{_REG_LABEL[doc.regulation]} > Recital ({recital.number})",
+                        title=f"{labels['recital']} {recital.number}",
+                        path=(
+                            f"{_REG_LABEL[doc.regulation]} > {labels['recital']} ({recital.number})"
+                        ),
                         anchor=f"rct_{recital.number}",
                         text=recital.text,
                     )
@@ -153,8 +173,11 @@ class ParagraphChunker:
                         unit_id=annex.id,
                         article_id=annex.id,
                         unit_type="annex",
-                        title=f"Annex {annex.number}: {annex.title}",
-                        path=f"{_REG_LABEL[doc.regulation]} > Annex {annex.number} {annex.title}",
+                        title=f"{labels['annex']} {annex.number}: {annex.title}",
+                        path=(
+                            f"{_REG_LABEL[doc.regulation]} > {labels['annex']} {annex.number} "
+                            f"{annex.title}"
+                        ),
                         anchor=f"anx_{annex.number}",
                         text=annex.text,
                     )
@@ -162,15 +185,22 @@ class ParagraphChunker:
         return chunks
 
     def _article_chunks(self, doc: RegulationDoc, article: Article) -> list[Chunk]:
+        labels = _LABELS[doc.lang]
         parts = [_REG_LABEL[doc.regulation]]
         if article.chapter:
-            parts.append(f"Chapter {article.chapter} {article.chapter_title or ''}".strip())
+            parts.append(
+                f"{labels['chapter']} {article.chapter} {article.chapter_title or ''}".strip()
+            )
         if article.section:
-            parts.append(f"Section {article.section} {article.section_title or ''}".strip())
+            parts.append(
+                f"{labels['section']} {article.section} {article.section_title or ''}".strip()
+            )
         parts.append(f"{article.heading} {article.title}".strip())
         out: list[Chunk] = []
         for paragraph in article.paragraphs:
-            path = " > ".join(parts + ([f"par. {paragraph.number}"] if paragraph.number else []))
+            path = " > ".join(
+                parts + ([f"{labels['par']} {paragraph.number}"] if paragraph.number else [])
+            )
             out.extend(
                 self._make(
                     doc,

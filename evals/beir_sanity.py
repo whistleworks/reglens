@@ -76,7 +76,9 @@ def evaluate(
     }
 
 
-def _download() -> tuple[dict[str, str], dict[str, str], Qrels, dict[str, str]]:
+def _download(
+    with_title: bool = True,
+) -> tuple[dict[str, str], dict[str, str], Qrels, dict[str, str]]:
     import pyarrow.parquet as pq
     from huggingface_hub import HfApi, hf_hub_download
 
@@ -100,7 +102,7 @@ def _download() -> tuple[dict[str, str], dict[str, str], Qrels, dict[str, str]]:
         QRELS_REPO, "test.tsv", repo_type="dataset", revision=revisions[QRELS_REPO]
     )
     corpus = {
-        str(row["_id"]): f"{row['title']} {row['text']}".strip()
+        str(row["_id"]): (f"{row['title']} {row['text']}" if with_title else row["text"]).strip()
         for row in pq.read_table(corpus_path).to_pylist()
     }
     queries = {str(row["_id"]): str(row["text"]) for row in pq.read_table(queries_path).to_pylist()}
@@ -111,6 +113,10 @@ def _download() -> tuple[dict[str, str], dict[str, str], Qrels, dict[str, str]]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="beir_sanity")
     parser.add_argument("--memory", action="store_true", help="in-process Qdrant instead of server")
+    # Diagnostic variants: they explain the gap to the published value; the official
+    # sanity check is the default configuration and is never tuned on these runs.
+    parser.add_argument("--no-title", action="store_true", help="diagnostic: index text only")
+    parser.add_argument("--no-stem", action="store_true", help="diagnostic: disable stemming")
     args = parser.parse_args(argv)
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -119,11 +125,12 @@ def main(argv: list[str] | None = None) -> int:
     from reglens.ingestion.pipeline import git_sha
     from reglens.retrieval.qdrant import make_client
 
-    corpus, queries, qrels, revisions = _download()
+    corpus, queries, qrels, revisions = _download(with_title=not args.no_title)
+    variant = "-".join(v for v, on in (("notitle", args.no_title), ("nostem", args.no_stem)) if on)
     log.info("beir.loaded", docs=len(corpus), queries=len(qrels))
 
     client = QdrantClient(":memory:") if args.memory else make_client(settings)
-    bm25 = FastEmbedBM25(settings.sparse_model)
+    bm25 = FastEmbedBM25(settings.sparse_model, disable_stemmer=args.no_stem)
     doc_ids = list(corpus)
     avg_len = bm25.fit_avg_len({"en": [corpus[d] for d in doc_ids]})["en"]
     if client.collection_exists(COLLECTION):
@@ -167,7 +174,8 @@ def main(argv: list[str] | None = None) -> int:
     now = datetime.now(UTC)
     sha = git_sha()
     result = {
-        "run_id": f"{now:%Y%m%d-%H%M}_{sha}_beir-scifact",
+        "run_id": f"{now:%Y%m%d-%H%M}_{sha}_beir-scifact" + (f"-{variant}" if variant else ""),
+        "variant": variant or "official",
         "timestamp": now.isoformat(timespec="seconds"),
         "git_sha": sha,
         "benchmark": "BEIR SciFact (test qrels)",
@@ -175,12 +183,12 @@ def main(argv: list[str] | None = None) -> int:
         "backend": "qdrant-memory" if args.memory else f"qdrant-server {settings.qdrant_url}",
         "method": {
             "sparse_model": bm25.name,
-            "stemmer": "snowball english",
+            "stemmer": "none" if args.no_stem else "snowball english",
             "k1": 1.2,
             "b": 0.75,
             "avg_len": avg_len,
             "idf": "Qdrant Modifier.IDF",
-            "doc_text": "title + ' ' + text",
+            "doc_text": "text" if args.no_title else "title + ' ' + text",
         },
         "docs": len(corpus),
         "index_seconds": index_seconds,
@@ -196,6 +204,8 @@ def main(argv: list[str] | None = None) -> int:
     out = REPO_ROOT / "evals" / "results" / f"{result['run_id']}.json"
     out.write_text(json.dumps(result, indent=1) + "\n")
     log.info("beir.done", ndcg10=ndcg, delta=result["delta"], within=within, path=str(out))
+    if variant:
+        return 0  # diagnostics never fail: only the official configuration is gated
     return 0 if within else 1
 
 
