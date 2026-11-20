@@ -1,7 +1,7 @@
 # PROGRESS
 
 ## Stato attuale (2026-11-20)
-- **Branch:** `m1-fondamenta`, con il lavoro di M1–M5 in commit separati. Non ancora pubblicato su GitHub.
+- **Repo:** pubblico su https://github.com/whistleworks/reglens. Il branch `m1-fondamenta` (M1–M5 in commit separati) è nella PR #1 verso `main`, con CI verde: check, integration, smoke-eval-gate, pip-audit, gitleaks e trivy. **Da fare:** il merge, che serve l'OK del titolare.
 - **Su richiesta esplicita del titolare ("finiscilo al meglio")** si è proseguito oltre M1 senza le approvazioni per milestone, implementando il codice delle milestone successive. Le decisioni che spettano al titolare restano aperte (vedi sotto).
 - **Test:** 285 unit test, 21 test sui dati e gli integration test con marcatore; `make check` verde.
 
@@ -56,14 +56,15 @@ Dataset `reglens_v1@cdebd13e`, 83 query dev con target di retrieval. Tabella com
 3. **Chiavi API gratuite:** Groq e Google AI Studio (Gemini), in `.env`, per i run e2e reali.
 4. **Etichettare 40 risposte** (pass/fail) per calibrare il giudice: `evals/human_labels/calibration.jsonl`.
 5. **Hosting:** HF Spaces PRO ($9/mese) oppure Google Cloud Run (carta), vedi ADR-0001.
-6. **Repo GitHub pubblico** e OK al push.
+6. ~~Repo GitHub pubblico~~: fatto il 2026-11-20 su whistleworks. Manca il merge della PR #1.
 7. **Account Langfuse e Grafana Cloud** (gratuiti), facoltativi ma richiesti dal brief.
 
 ## Problemi aperti
-- Docker non installato: integration test e BEIR su server Qdrant da fare in CI.
+- Docker non installato in locale: gli integration test su server Qdrant girano in CI (verdi sulla PR #1).
+- Su 5vjf9ffgdw-max resta un repo `reglens` privato e vuoto, creato per errore: da eliminare.
 - Gap BEIR documentato (vedi sopra).
 - Latenze misurate in modalità embedded: non sono latenze di produzione.
 
 ## Log sessioni
 - **2026-11-09:** M1 passi 1–10 (bozza del dataset v0).
-- **2026-11-20:** M2 (retrieval, chunking, dataset v1, ablation di 16 configurazioni, esperimenti E1–E4, ADR-0002 e 0003), codice di M3, M4 e M5, README, smoke test live e load test locali.
+- **2026-11-20:** M2 (retrieval, chunking, dataset v1, ablation di 16 configurazioni, esperimenti E1–E4, ADR-0002 e 0003), codice di M3, M4 e M5, README, smoke test live e load test locali; pubblicazione su GitHub (whistleworks), fix del workflow security (trivy-action fissata per sha, pip-audit senza il progetto stesso).
