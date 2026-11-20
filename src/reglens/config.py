@@ -55,6 +55,13 @@ class Settings(BaseSettings):
     agent_timeout_s: float = 25.0
     agent_max_tokens: int = 24_000
 
+    # Observability (M4): Langfuse via OTLP, metrics via OTLP to Grafana Cloud
+    langfuse_public_key: str | None = None
+    langfuse_secret_key: SecretStr | None = None
+    langfuse_host: str = "https://cloud.langfuse.com"
+    otel_exporter_otlp_endpoint: str | None = None
+    otel_exporter_otlp_headers: str | None = None
+
     # Retrieval
     embedding_model: str = "intfloat/multilingual-e5-large"
     sparse_model: str = "Qdrant/bm25"
@@ -72,7 +79,14 @@ class Settings(BaseSettings):
         return _split_csv(value)
 
     @field_validator(
-        "qdrant_api_key", "groq_api_key", "gemini_api_key", "openrouter_api_key", mode="before"
+        "qdrant_api_key",
+        "groq_api_key",
+        "gemini_api_key",
+        "openrouter_api_key",
+        "langfuse_public_key",
+        "langfuse_secret_key",
+        "otel_exporter_otlp_endpoint",
+        mode="before",
     )
     @classmethod
     def _empty_is_none(cls, value: object) -> object:

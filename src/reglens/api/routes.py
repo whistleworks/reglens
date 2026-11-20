@@ -8,7 +8,7 @@ from collections.abc import AsyncIterator
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, StreamingResponse
 from starlette.concurrency import run_in_threadpool
 
 from reglens import __version__
@@ -20,6 +20,7 @@ from reglens.api.ratelimit import RateLimiter, hash_ip
 from reglens.api.schemas import DISCLAIMER, AskRequest, AskResponse, FeedbackRequest
 from reglens.api.services import RetrievalUnavailableError, Services
 from reglens.config import Settings
+from reglens.observability.metrics import METRICS
 from reglens.retrieval.lang import detect_lang
 
 router = APIRouter()
@@ -158,7 +159,13 @@ async def ui_ask(
 )
 async def feedback(req: FeedbackRequest, svc: ServicesDep) -> dict[str, str]:
     await run_in_threadpool(svc.record_feedback, req.request_id, req.value, req.comment)
+    METRICS.inc("feedback_total", vote=req.value)
     return {"status": "recorded"}
+
+
+@router.get("/metrics", include_in_schema=False)
+async def metrics() -> PlainTextResponse:
+    return PlainTextResponse(METRICS.prometheus(), media_type="text/plain; version=0.0.4")
 
 
 @router.get("/health")

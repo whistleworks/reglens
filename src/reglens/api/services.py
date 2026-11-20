@@ -20,6 +20,8 @@ from reglens.api.schemas import CitationOut, SourceOut
 from reglens.llm.budget import BudgetExceededError, DailyBudget
 from reglens.llm.client import LLMError
 from reglens.observability.logging import get_logger, mask_pii
+from reglens.observability.metrics import METRICS
+from reglens.observability.tracing import span
 from reglens.retrieval.qdrant import Hit
 from reglens.retrieval.store import ArticleStore
 
@@ -98,11 +100,34 @@ class Services:
         return CitationOut(id=cid, quote=quote, title=title, url=url)
 
     def ask(self, guarded: GuardrailResult) -> AnswerOutcome:
+        with span(
+            "request",
+            question=guarded.text,
+            injection=guarded.injection_suspected,
+            **{f"version.{k}": v for k, v in self.versions.items()},
+        ) as root:
+            outcome = self._ask(guarded)
+            root.set_attribute("status", outcome.status)
+            root.set_attribute("mode", outcome.mode)
+            root.set_attribute("cost_usd", outcome.cost_usd)
+        if outcome.mode == "sources_only":
+            METRICS.inc("degraded_total", mode=outcome.degraded[0] if outcome.degraded else "?")
+        if outcome.status not in ("answered", "clarify", "sources_only"):
+            METRICS.inc("refusals_total", reason=outcome.status)
+        METRICS.inc("cost_usd_total", outcome.cost_usd)
+        METRICS.set("budget_remaining_usd", self.budget.remaining_usd)
+        return outcome
+
+    def _ask(self, guarded: GuardrailResult) -> AnswerOutcome:
         try:
-            hits = self.retrieve(guarded.text)
+            with span("retrieval"):
+                hits = self.retrieve(guarded.text)
         except Exception as exc:
             log.error("api.retrieval_unavailable", error_type=type(exc).__name__)
+            METRICS.inc("errors_total", type="retrieval_unavailable")
             raise RetrievalUnavailableError(str(exc)) from exc
+        if hits:
+            METRICS.observe("retrieval_top_score", hits[0].score)
         sources = self.sources_from(hits)
 
         degraded: list[str] = []
@@ -118,11 +143,21 @@ class Services:
 
         assert self.answer is not None
         try:
-            result = self.answer(guarded)
+            with span("answer"):
+                result = self.answer(guarded)
         except LLMError as exc:
             log.warning("api.llm_unavailable", error=str(exc))
+            METRICS.inc("errors_total", type="llm_unavailable")
+            if exc.status == 429:
+                METRICS.inc("provider_429_total")
             return self._sources_only(sources, ["llm_unavailable"])
         self.budget.record(result.cost_usd)
+        METRICS.observe("agent_steps", result.steps, route=result.route)
+        METRICS.inc("tokens_total", result.prompt_tokens, direction="in")
+        METRICS.inc("tokens_total", result.completion_tokens, direction="out")
+        METRICS.inc("tool_errors_total", sum(1 for t in result.tool_calls if t.error))
+        if result.reason and "citations could not be validated" in result.reason:
+            METRICS.inc("citation_failures_total")
         if result.status is Status.LLM_ERROR:
             return self._sources_only(sources, ["llm_unavailable"])
         return AnswerOutcome(

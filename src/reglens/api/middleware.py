@@ -12,6 +12,7 @@ from fastapi import FastAPI, Request, Response
 
 from reglens.api.ratelimit import hash_ip
 from reglens.observability.logging import get_logger
+from reglens.observability.metrics import METRICS
 
 log = get_logger("reglens.api.access")
 _SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{8,64}$")
@@ -49,6 +50,13 @@ def install_middleware(app: FastAPI) -> None:
         response.headers["X-Request-ID"] = request_id
         for name, value in SECURITY_HEADERS.items():
             response.headers.setdefault(name, value)
+        elapsed = time.perf_counter() - started
+        route = request.scope.get("route")
+        route_path = getattr(route, "path", request.url.path)
+        METRICS.inc("requests_total", route=route_path, status=response.status_code)
+        METRICS.observe("latency_seconds", elapsed, stage="http", route=route_path)
+        if response.status_code >= 500:
+            METRICS.inc("errors_total", type=f"http_{response.status_code}")
         log.info(
             "http.request",
             route=request.url.path,

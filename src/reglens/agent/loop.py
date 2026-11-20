@@ -23,6 +23,7 @@ from reglens.agent.tools import Citation, FinalAnswerArgs, ToolRegistry
 from reglens.llm.client import ChatClient, ChatRequest, LLMError, Message
 from reglens.llm.pricing import shadow_cost_usd
 from reglens.observability.logging import get_logger
+from reglens.observability.tracing import span
 
 log = get_logger(__name__)
 
@@ -90,11 +91,21 @@ class AgentLoop:
                 break
             state.step += 1
             try:
-                response = self.llm.chat(
-                    ChatRequest(
-                        messages=state.messages, tools=self.tools.specs(), tool_choice="auto"
+                with span(
+                    "llm.generate",
+                    step=state.step,
+                    model=self.model_ref,
+                    prompt_version=self.system.version,
+                ) as llm_span:
+                    response = self.llm.chat(
+                        ChatRequest(
+                            messages=state.messages, tools=self.tools.specs(), tool_choice="auto"
+                        )
                     )
-                )
+                    llm_span.set_attribute("tokens_in", response.usage.prompt_tokens)
+                    llm_span.set_attribute("tokens_out", response.usage.completion_tokens)
+                    llm_span.set_attribute("provider", response.provider)
+                    llm_span.set_attribute("cached", response.cached)
             except LLMError as exc:
                 log.warning("agent.llm_error", error=str(exc))
                 state.status = Status.LLM_ERROR
@@ -156,7 +167,8 @@ class AgentLoop:
                 final = args
                 continue
             try:
-                outcome = self.tools.execute(args)
+                with span(f"tool.{call.name}", step=state.step, arguments=call.arguments):
+                    outcome = self.tools.execute(args)
             except Exception as exc:  # a failing tool must not crash the loop
                 outcome_error = f"{type(exc).__name__}: {exc}"
                 state.tool_calls.append(
@@ -194,7 +206,9 @@ class AgentLoop:
         if final.refused:
             state.status = Status.REFUSED
             return final
-        report = validate_citations(final.citations, state.retrieved_ids, self.tools.store)
+        with span("citation_validation", cited=[c.id for c in final.citations]) as check:
+            report = validate_citations(final.citations, state.retrieved_ids, self.tools.store)
+            check.set_attribute("errors", len(report.errors))
         if not final.citations and not final.clarification_needed:
             report.errors.append("no citations: every answer must cite its sources")
         if report.ok:

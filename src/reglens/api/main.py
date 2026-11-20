@@ -20,6 +20,8 @@ from reglens.api.routes import router
 from reglens.api.services import Services
 from reglens.config import Settings, get_settings
 from reglens.observability.logging import configure_logging
+from reglens.observability.metrics import METRICS
+from reglens.observability.tracing import setup_tracing
 
 STATIC = Path(__file__).parents[1] / "web" / "static"
 
@@ -27,6 +29,8 @@ STATIC = Path(__file__).parents[1] / "web" / "static"
 def create_app(services: Services | None = None, settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
     configure_logging(settings.log_level)
+    setup_tracing(settings)
+    METRICS.enable_otel(settings)
     app = FastAPI(
         title="RegLens",
         version=__version__,

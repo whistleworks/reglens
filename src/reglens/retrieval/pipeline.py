@@ -11,6 +11,7 @@ from typing import Literal, Protocol
 
 from reglens.ingestion.sources import Lang
 from reglens.observability.logging import get_logger
+from reglens.observability.tracing import span
 from reglens.retrieval.fusion import RRF_K, rrf
 from reglens.retrieval.lang import detect_lang
 from reglens.retrieval.qdrant import Hit, SearchFilters
@@ -78,12 +79,16 @@ class RetrievalPipeline:
         if self.mode in ("dense", "hybrid"):
             assert self.dense is not None
             t = time.perf_counter()
-            rankings.append(self.dense.search(query, self.candidates, filters))
+            with span("retrieval.dense", k=self.candidates):
+                rankings.append(self.dense.search(query, self.candidates, filters))
             latency["dense"] = _ms(t)
         if self.mode in ("bm25", "hybrid"):
             assert self.sparse is not None
             t = time.perf_counter()
-            rankings.append(self.sparse.search(query, self.candidates, filters, query_lang=lang))
+            with span("retrieval.sparse", k=self.candidates, query_lang=lang):
+                rankings.append(
+                    self.sparse.search(query, self.candidates, filters, query_lang=lang)
+                )
             latency["sparse"] = _ms(t)
 
         if len(rankings) > 1:
@@ -97,7 +102,8 @@ class RetrievalPipeline:
         if self.reranker is not None:
             t = time.perf_counter()
             try:
-                hits = rerank(query, hits, self.reranker, self.rerank_top_n)
+                with span("rerank", top_n=self.rerank_top_n):
+                    hits = rerank(query, hits, self.reranker, self.rerank_top_n)
             except Exception as exc:  # degrade to fused order rather than failing the request
                 log.warning("retrieval.rerank_failed", error_type=type(exc).__name__)
                 degraded.append("rerank_unavailable")
