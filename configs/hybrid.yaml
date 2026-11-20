@@ -1,0 +1,7 @@
+# Dense e5 + BM25 fused with RRF (k=60), paragraph chunks, no enrichment
+name: hybrid
+retriever: hybrid
+strategy: paragraph
+enrich: none
+candidates: 50
+ks: [5, 10]

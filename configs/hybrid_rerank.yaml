@@ -1,0 +1,10 @@
+# Hybrid + cross-encoder rerank of the top 20 (bge-reranker-v2-m3, INT8 ONNX on CPU)
+name: hybrid_rerank
+retriever: hybrid
+strategy: paragraph
+enrich: none
+rerank: true
+rerank_model: BAAI/bge-reranker-v2-m3-int8
+rerank_top_n: 20
+candidates: 50
+ks: [5, 10]

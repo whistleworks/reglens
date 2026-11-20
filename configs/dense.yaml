@@ -1,5 +1,7 @@
 # M1 baseline: dense only (multilingual-e5-large, cosine)
 name: dense
 retriever: dense
+strategy: paragraph
+enrich: none
 candidates: 50
 ks: [5, 10]

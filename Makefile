@@ -53,8 +53,15 @@ review-sheet: ## Markdown review sheet for a dataset (DATASET=evals/datasets/reg
 beir: ## BEIR SciFact BM25 sanity check (MEMORY=1 for in-process Qdrant)
 	uv run python -m evals.beir_sanity $(if $(MEMORY),--memory,)
 
-eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test: ## Later milestones
+compare: ## Paired comparison of two runs (A=<json> B=<json>)
+	uv run python -m evals.compare $(A) $(B)
+
+report: ## Ablation table from runs (RUNS="a.json b.json" OUT=docs/ablation.md)
+	uv run python -m evals.report $(RUNS) $(if $(OUT),--out $(OUT),)
+
+eval-smoke eval-final calibrate serve demo docker-build docker-run load-test: ## Later milestones
 	@echo "'$@' is not implemented yet (see docs/PROJECT_BRIEF.md, section 4)." && exit 1
 
-.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval beir review-sheet \
-	eval-smoke eval-final calibrate compare serve demo docker-build docker-run load-test
+.PHONY: help setup fmt lint typecheck test test-integration test-data check ingest index qdrant eval \
+	beir review-sheet compare report eval-smoke eval-final calibrate serve demo docker-build \
+	docker-run load-test
