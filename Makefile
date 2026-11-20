@@ -47,8 +47,8 @@ qdrant: ## Start local Qdrant
 eval: ## Run eval (SPLIT=dev STAGE=retrieval CONFIG=configs/bm25.yaml)
 	uv run python -m evals.run_eval --split $(SPLIT) --stage $(STAGE) --config $(CONFIG)
 
-review-sheet: ## Markdown review sheet for a dataset (DATASET=evals/datasets/reglens_v0.jsonl)
-	PYTHONPATH=. uv run python scripts/review_sheet.py $(or $(DATASET),evals/datasets/reglens_v0.jsonl)
+review-sheet: ## Markdown review sheet for a dataset (DATASET=evals/datasets/reglens_v1.jsonl)
+	PYTHONPATH=. uv run python scripts/review_sheet.py $(or $(DATASET),evals/datasets/reglens_v1.jsonl)
 
 beir: ## BEIR SciFact BM25 sanity check (MEMORY=1 for in-process Qdrant)
 	uv run python -m evals.beir_sanity $(if $(MEMORY),--memory,)

@@ -32,7 +32,7 @@ from reglens.retrieval.pipeline import RetrievalResult
 log = get_logger(__name__)
 
 RESULTS_DIR = REPO_ROOT / "evals" / "results"
-DEFAULT_DATASET = REPO_ROOT / "evals" / "datasets" / "reglens_v0.jsonl"
+DEFAULT_DATASET = REPO_ROOT / "evals" / "datasets" / "reglens_v1.jsonl"
 RESULTS_SCHEMA_VERSION = 1
 
 TEST_ACCESS_LOG = RESULTS_DIR / "test_access.log"
