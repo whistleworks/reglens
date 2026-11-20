@@ -1,7 +1,7 @@
 # PROGRESS
 
 ## Stato attuale (2026-11-20)
-- **Repo:** pubblico su https://github.com/whistleworks/reglens. Il branch `m1-fondamenta` (M1–M5 in commit separati) è nella PR #1 verso `main`, con CI verde: check, integration, smoke-eval-gate, pip-audit, gitleaks e trivy. **Da fare:** il merge, che serve l'OK del titolare.
+- **Repo:** pubblico su https://github.com/whistleworks/reglens. Il branch `m1-fondamenta` (M1–M5 in commit separati) è stato unito in `main` con la PR #1 il 2026-11-20, con CI verde: check, integration, smoke-eval-gate, pip-audit, gitleaks e trivy.
 - **Su richiesta esplicita del titolare ("finiscilo al meglio")** si è proseguito oltre M1 senza le approvazioni per milestone, implementando il codice delle milestone successive. Le decisioni che spettano al titolare restano aperte (vedi sotto).
 - **Test:** 285 unit test, 21 test sui dati e gli integration test con marcatore; `make check` verde.
 
@@ -56,7 +56,7 @@ Dataset `reglens_v1@cdebd13e`, 83 query dev con target di retrieval. Tabella com
 3. **Chiavi API gratuite:** Groq e Google AI Studio (Gemini), in `.env`, per i run e2e reali.
 4. **Etichettare 40 risposte** (pass/fail) per calibrare il giudice: `evals/human_labels/calibration.jsonl`.
 5. **Hosting:** HF Spaces PRO ($9/mese) oppure Google Cloud Run (carta), vedi ADR-0001.
-6. ~~Repo GitHub pubblico~~: fatto il 2026-11-20 su whistleworks. Manca il merge della PR #1.
+6. ~~Repo GitHub pubblico~~: fatto il 2026-11-20 su whistleworks, PR #1 unita.
 7. **Account Langfuse e Grafana Cloud** (gratuiti), facoltativi ma richiesti dal brief.
 
 ## Problemi aperti
