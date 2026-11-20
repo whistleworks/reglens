@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
+from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -24,7 +25,7 @@ from reglens.observability.logging import get_logger
 
 log = get_logger(__name__)
 
-MANIFEST_SCHEMA_VERSION = 1
+MANIFEST_SCHEMA_VERSION = 2
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -96,16 +97,36 @@ def git_sha(default: str = "unknown") -> str:
     return out.stdout.strip() or default
 
 
+def _chunk_stats(chunks: Sequence[Chunk]) -> dict[str, Any]:
+    lengths = [c.n_tokens for c in chunks]
+    return {
+        "n": len(chunks),
+        "by_lang": {lang: sum(c.lang == lang for c in chunks) for lang in LANGS},
+        "by_type": {t: sum(c.type == t for c in chunks) for t in ("article", "recital", "annex")},
+        "split_units": len({c.unit_id + c.lang for c in chunks if "~" in c.id}),
+        "tokens": length_stats(lengths),
+        "tokens_histogram": _histogram(lengths),
+    }
+
+
+def chunks_filename(strategy: str) -> str:
+    return f"chunks_{strategy}.jsonl"
+
+
 def run_ingest(
     raw_dir: Path,
     processed_dir: Path,
-    config: ChunkingConfig,
+    configs: ChunkingConfig | Sequence[ChunkingConfig],
     count_tokens: TokenCounter,
     *,
     sources_lock: dict[str, Any],
     sha: str,
 ) -> dict[str, Any]:
+    configs = [configs] if isinstance(configs, ChunkingConfig) else list(configs)
     processed_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = processed_dir / "manifest.json"
+    previous = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+
     corpora: dict[Lang, Corpus] = {lang: build_corpus(raw_dir, lang) for lang in LANGS}
     files: dict[str, str] = {}
     for lang, corpus in corpora.items():
@@ -124,14 +145,16 @@ def run_ingest(
     xrefs = {lang: build_xrefs(corpus, known) for lang, corpus in corpora.items()}
     files["xrefs.json"] = _write(processed_dir / "xrefs.json", _json(xrefs["en"]))
 
-    chunker = make_chunker(config, count_tokens)
-    chunks: list[Chunk] = [c for lang in LANGS for c in chunker.chunk(corpora[lang])]
-    chunks_name = f"chunks_{config.strategy}.jsonl"
-    files[chunks_name] = _write(
-        processed_dir / chunks_name, "".join(c.model_dump_json() + "\n" for c in chunks)
-    )
+    chunk_stats: dict[str, Any] = {}
+    for config in configs:
+        chunker = make_chunker(config, count_tokens)
+        chunks: list[Chunk] = [c for lang in LANGS for c in chunker.chunk(corpora[lang])]
+        name = chunks_filename(config.strategy)
+        files[name] = _write(
+            processed_dir / name, "".join(c.model_dump_json() + "\n" for c in chunks)
+        )
+        chunk_stats[config.strategy] = _chunk_stats(chunks)
 
-    lengths = [c.n_tokens for c in chunks]
     counts = {
         lang: {
             doc.regulation: {
@@ -143,16 +166,23 @@ def run_ingest(
         }
         for lang, corpus in corpora.items()
     }
+    chunking = {c.strategy: c.model_dump() for c in configs}
     content_hash = sha256_bytes(
-        json.dumps({"files": files, "chunking": config.model_dump()}, sort_keys=True).encode()
+        json.dumps({"files": files, "chunking": chunking}, sort_keys=True).encode()
     )
+    # An index stays valid as long as the chunk file it was built from is unchanged.
+    indexes = {
+        name: info
+        for name, info in (previous.get("indexes") or {}).items()
+        if files.get(chunks_filename(info.get("strategy", ""))) == info.get("chunks_sha256")
+    }
     manifest: dict[str, Any] = {
         "schema_version": MANIFEST_SCHEMA_VERSION,
         "content_hash": content_hash,
         "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "git_sha": sha,
         "sources": sources_lock,
-        "chunking": config.model_dump(),
+        "chunking": chunking,
         "files": files,
         "counts": counts,
         "glossary_entries": len(glossary),
@@ -161,23 +191,13 @@ def run_ingest(
             "pairs": sum(len(t) for t in xrefs["en"].values()),
             "en_it_jaccard": _xref_agreement(xrefs),
         },
-        "chunks": {
-            "n": len(chunks),
-            "by_lang": {lang: sum(c.lang == lang for c in chunks) for lang in LANGS},
-            "by_type": {
-                t: sum(c.type == t for c in chunks) for t in ("article", "recital", "annex")
-            },
-            "split_units": len({c.unit_id + c.lang for c in chunks if "~" in c.id}),
-            "tokens": length_stats(lengths),
-            "tokens_histogram": _histogram(lengths),
-        },
-        "index": None,  # filled by `make index`
+        "chunks": chunk_stats,
+        "indexes": indexes,  # filled by `make index`, keyed by collection name
     }
-    (processed_dir / "manifest.json").write_text(_json(manifest), encoding="utf-8")
+    manifest_path.write_text(_json(manifest), encoding="utf-8")
     log.info(
         "ingest.done",
         content_hash=content_hash[:12],
-        chunks=len(chunks),
-        max_tokens=manifest["chunks"]["tokens"]["max"],
+        **{f"chunks_{k}": v["n"] for k, v in chunk_stats.items()},
     )
     return manifest

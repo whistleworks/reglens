@@ -1,9 +1,15 @@
 """Chunking strategies behind one interface.
 
-M1 ships the ``paragraph`` baseline only: one chunk per article paragraph and per
-recital; annexes are packed on line boundaries. Any unit over the token budget of the
-embedding model is split on line, then sentence boundaries. The fixed-size and article-aware
-strategies of M2 implement the same :class:`Chunker` protocol.
+Three strategies, compared in the M2 ablation (ADR-0002):
+
+* ``paragraph``: one chunk per article paragraph and per recital (M1 baseline);
+* ``article``: one chunk per whole article (split on line boundaries if too long);
+* ``fixed``: windows of ``max_tokens`` with ``overlap_tokens`` over the running text of
+  each regulation, ignoring the legal structure (a window is attributed to the unit
+  where it starts, which is the realistic cost of structure-blind chunking).
+
+Recitals and annexes are chunked the same way by ``paragraph`` and ``article``. Any unit
+over the token budget is split on line, then sentence boundaries.
 """
 
 from __future__ import annotations
@@ -50,16 +56,27 @@ _LABELS: dict[Lang, dict[str, str]] = {
 }
 
 
+Strategy = Literal["paragraph", "article", "fixed"]
+
+
 class ChunkingConfig(BaseModel):
-    strategy: Literal["paragraph"] = "paragraph"
+    strategy: Strategy = "paragraph"
     max_tokens: int = Field(
         default=500, description="Budget for the text, below the model limit (512 for e5)"
     )
+    overlap_tokens: int = Field(default=64, description="Only for the fixed strategy")
     tokenizer: str = "intfloat/multilingual-e5-large"
 
     @classmethod
     def from_yaml(cls, path: Path) -> ChunkingConfig:
-        return cls.model_validate(yaml.safe_load(path.read_text())["chunking"])
+        """The first (baseline) strategy of configs/ingest.yaml."""
+        return cls.all_from_yaml(path)[0]
+
+    @classmethod
+    def all_from_yaml(cls, path: Path) -> list[ChunkingConfig]:
+        raw = yaml.safe_load(path.read_text())["chunking"]
+        items = raw if isinstance(raw, list) else [raw]
+        return [cls.model_validate(item) for item in items]
 
 
 class Chunk(BaseModel):
@@ -267,7 +284,107 @@ def hf_token_counter(tokenizer_name: str) -> TokenCounter:
     return count
 
 
+class ArticleChunker(ParagraphChunker):
+    """Whole articles; recitals and annexes as in the paragraph strategy."""
+
+    def _article_chunks(self, doc: RegulationDoc, article: Article) -> list[Chunk]:
+        labels = _LABELS[doc.lang]
+        parts = [_REG_LABEL[doc.regulation]]
+        if article.chapter:
+            parts.append(
+                f"{labels['chapter']} {article.chapter} {article.chapter_title or ''}".strip()
+            )
+        if article.section:
+            parts.append(
+                f"{labels['section']} {article.section} {article.section_title or ''}".strip()
+            )
+        parts.append(f"{article.heading} {article.title}".strip())
+        return self._make(
+            doc,
+            unit_id=article.id,
+            article_id=article.id,
+            unit_type="article",
+            title=f"{article.heading} {article.title}".strip(),
+            path=" > ".join(parts),
+            anchor=f"art_{article.number}",
+            text=article.text,
+            article=article.number,
+        )
+
+
+class FixedChunker:
+    """Structure-blind token windows with overlap (per regulation and unit type)."""
+
+    def __init__(self, config: ChunkingConfig, count_tokens: TokenCounter) -> None:
+        if config.overlap_tokens >= config.max_tokens:
+            raise ValueError("overlap_tokens must be smaller than max_tokens")
+        self.config = config
+        self.count = count_tokens
+        self._units = ParagraphChunker(
+            config.model_copy(update={"max_tokens": 10**9}), count_tokens
+        )
+        self._word_cost: dict[str, int] = {}
+
+    def _cost(self, word: str) -> int:
+        # tokens of a word on its own, without the 2 special tokens the counter adds
+        if word not in self._word_cost:
+            self._word_cost[word] = max(1, self.count(word) - self.count(""))
+        return self._word_cost[word]
+
+    def chunk(self, corpus: Corpus) -> list[Chunk]:
+        units = self._units.chunk(corpus)  # one unsplit chunk per unit, in document order
+        out: list[Chunk] = []
+        groups: dict[tuple[str, str], list[Chunk]] = {}
+        for unit in units:
+            groups.setdefault((unit.regulation, unit.type), []).append(unit)
+        for group in groups.values():  # windows never cross regulations or unit types
+            words: list[tuple[str, Chunk]] = [(w, u) for u in group for w in u.text.split()]
+            out.extend(self._windows(words))
+        return out
+
+    def _windows(self, words: list[tuple[str, Chunk]]) -> list[Chunk]:
+        windows: list[Chunk] = []
+        start = 0
+        n = 0
+        budget, overlap = self.config.max_tokens, self.config.overlap_tokens
+        while start < len(words):
+            end, used = start, self.count("")
+            while end < len(words) and used + self._cost(words[end][0]) <= budget:
+                used += self._cost(words[end][0])
+                end += 1
+            end = max(end, start + 1)
+            text = " ".join(w for w, _ in words[start:end])
+            while self.count(text) > budget and end - start > 1:  # estimate was optimistic
+                end -= 1
+                text = " ".join(w for w, _ in words[start:end])
+            first = words[start][1]
+            windows.append(
+                first.model_copy(
+                    update={
+                        "id": f"{first.unit_id}#{first.lang}~w{n}",
+                        "paragraph": first.paragraph,
+                        "text": text,
+                        "n_tokens": self.count(text),
+                    }
+                )
+            )
+            n += 1
+            if end >= len(words):
+                break
+            # step back by roughly ``overlap`` tokens
+            back, cost = end, 0
+            while back > start + 1 and cost < overlap:
+                back -= 1
+                cost += self._cost(words[back][0])
+            start = back
+        return windows
+
+
 def make_chunker(config: ChunkingConfig, count_tokens: TokenCounter) -> Chunker:
     if config.strategy == "paragraph":
         return ParagraphChunker(config, count_tokens)
+    if config.strategy == "article":
+        return ArticleChunker(config, count_tokens)
+    if config.strategy == "fixed":
+        return FixedChunker(config, count_tokens)
     raise ValueError(f"unknown chunking strategy {config.strategy!r}")  # pragma: no cover

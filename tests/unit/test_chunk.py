@@ -9,6 +9,7 @@ from reglens.ingestion.chunk import (
     ChunkingConfig,
     ParagraphChunker,
     eurlex_url,
+    make_chunker,
     split_to_budget,
 )
 from reglens.ingestion.parse import build_corpus
@@ -101,8 +102,8 @@ def test_ingest_is_idempotent(tmp_path: Path) -> None:
     for name in first["files"]:
         assert (tmp_path / "a" / name).read_bytes() == (tmp_path / "b" / name).read_bytes()
     manifest = json.loads((tmp_path / "a" / "manifest.json").read_text())
-    assert manifest["chunks"]["n"] == first["chunks"]["n"] > 0
-    assert manifest["chunks"]["tokens"]["max"] <= 200
+    assert manifest["chunks"]["paragraph"]["n"] == first["chunks"]["paragraph"]["n"] > 0
+    assert manifest["chunks"]["paragraph"]["tokens"]["max"] <= 200
     assert manifest["glossary_entries"] == 26 + 70
 
 
@@ -130,3 +131,60 @@ def test_labels_follow_the_chunk_language() -> None:
     assert by_id["GDPR:rec:1#it"].title == "Considerando 1"
     assert by_id["AIA:annex:III#it~0"].title.startswith("Allegato III:")
     assert " > Capo III " in by_id["AIA:art:6:par:1a#it"].path
+
+
+def test_article_strategy_one_chunk_per_article() -> None:
+    corpus = build_corpus(FIXTURES, "en")
+    chunks = make_chunker(ChunkingConfig(strategy="article", max_tokens=2000), words).chunk(corpus)
+    art6 = [c for c in chunks if c.article_id == "AIA:art:6"]
+    assert [c.id for c in art6] == ["AIA:art:6#en"]
+    assert art6[0].unit_id == "AIA:art:6"
+    assert "The first subparagraph shall apply" in art6[0].text
+
+
+def test_fixed_strategy_windows_overlap_and_cover_everything() -> None:
+    corpus = build_corpus(FIXTURES, "en")
+    config = ChunkingConfig(strategy="fixed", max_tokens=100, overlap_tokens=20)
+    chunks = make_chunker(config, words).chunk(corpus)
+    articles = [c for c in chunks if c.type == "article"]
+    assert all(c.n_tokens <= 100 for c in chunks)
+    assert len({c.id for c in chunks}) == len(chunks)
+    # consecutive windows share ~20 words
+    first, second = articles[0].text.split(), articles[1].text.split()
+    assert first[-20:] == second[:20]
+    # windows may straddle articles: attributed to the unit where they start
+    assert {c.article_id for c in articles} <= {
+        "AIA:art:3",
+        "AIA:art:4a",
+        "AIA:art:6",
+        "AIA:art:51",
+        "AIA:art:105",
+        "GDPR:art:4",
+        "GDPR:art:6",
+        "GDPR:art:38",
+    }
+
+
+def test_fixed_strategy_rejects_bad_overlap() -> None:
+    with pytest.raises(ValueError, match="overlap"):
+        make_chunker(ChunkingConfig(strategy="fixed", max_tokens=50, overlap_tokens=50), words)
+
+
+def test_hierarchy_enrichment_prefixes_the_path(chunks_en: list) -> None:  # type: ignore[type-arg]
+    from reglens.ingestion.enrich import embedding_text
+
+    chunk = next(c for c in chunks_en if c.id == "AIA:art:6:par:2#en")
+    assert embedding_text(chunk, "none") == chunk.text
+    enriched = embedding_text(chunk, "hierarchy")
+    assert enriched.startswith("AI Act > Chapter III")
+    assert enriched.endswith(chunk.text)
+
+
+def test_all_strategies_from_yaml(tmp_path: Path) -> None:
+    path = tmp_path / "ingest.yaml"
+    path.write_text(
+        "chunking:\n  - strategy: paragraph\n  - strategy: fixed\n    overlap_tokens: 32\n"
+    )
+    configs = ChunkingConfig.all_from_yaml(path)
+    assert [c.strategy for c in configs] == ["paragraph", "fixed"]
+    assert ChunkingConfig.from_yaml(path).strategy == "paragraph"

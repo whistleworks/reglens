@@ -1,8 +1,8 @@
 {
- "schema_version": 1,
- "content_hash": "7d05c4cdc95555bf825f7a3f4303b67c13b72034d8b1bed1786e00960f14fb41",
- "created_at": "2026-11-20T07:46:51+00:00",
- "git_sha": "4cf503d13b7c",
+ "schema_version": 2,
+ "content_hash": "36687cc56ba7b875c6c8895f8463c7e607d47b48b8ac11782400a55525f62785",
+ "created_at": "2026-11-20T08:01:01+00:00",
+ "git_sha": "a3960be3851a",
  "sources": {
   "aia_consolidated_en": {
    "celex": "02024R1689-20260727",
@@ -36,16 +36,33 @@
   }
  },
  "chunking": {
-  "strategy": "paragraph",
-  "max_tokens": 500,
-  "tokenizer": "intfloat/multilingual-e5-large"
+  "paragraph": {
+   "strategy": "paragraph",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "article": {
+   "strategy": "article",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  },
+  "fixed": {
+   "strategy": "fixed",
+   "max_tokens": 500,
+   "overlap_tokens": 64,
+   "tokenizer": "intfloat/multilingual-e5-large"
+  }
  },
  "files": {
   "corpus_en.json": "908ab178bd5749d13b3ded95473512f9aae95d1513190e563d5a651fafe1e7a7",
   "corpus_it.json": "3961dce6af6ffa6156a3162f999f5b2967a96c66cc1f643398eee02e9473ca6d",
   "glossary.json": "0ffc05dc6ab19f2dbe34b46c9bdbce3625c2939dfa02b94abc165ee123638a06",
   "xrefs.json": "23acee07a75333a6903dbbe612c7fc69b0c5212ba76df830b885180d9c10f3cc",
-  "chunks_paragraph.jsonl": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300"
+  "chunks_paragraph.jsonl": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
+  "chunks_article.jsonl": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
+  "chunks_fixed.jsonl": "1224e4bc26235a379ad12ef797dbfd23cca4cd99bff2defb1248ddec7661021b"
  },
  "counts": {
   "en": {
@@ -80,32 +97,107 @@
   "en_it_jaccard": 0.9851
  },
  "chunks": {
-  "n": 2814,
-  "by_lang": {
-   "en": 1402,
-   "it": 1412
+  "paragraph": {
+   "n": 2814,
+   "by_lang": {
+    "en": 1402,
+    "it": 1412
+   },
+   "by_type": {
+    "article": 1985,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 115,
+   "tokens": {
+    "min": 9.0,
+    "p50": 100.0,
+    "p95": 443.0,
+    "max": 500.0,
+    "mean": 147.15
+   },
+   "tokens_histogram": {
+    "0-63": 802,
+    "64-127": 895,
+    "128-255": 616,
+    "256-383": 283,
+    "384-511": 218,
+    ">=512": 0
+   }
   },
-  "by_type": {
-   "article": 1985,
-   "recital": 767,
-   "annex": 62
+  "article": {
+   "n": 1539,
+   "by_lang": {
+    "en": 754,
+    "it": 785
+   },
+   "by_type": {
+    "article": 710,
+    "recital": 767,
+    "annex": 62
+   },
+   "split_units": 244,
+   "tokens": {
+    "min": 19.0,
+    "p50": 250.0,
+    "p95": 488.0,
+    "max": 500.0,
+    "mean": 267.4
+   },
+   "tokens_histogram": {
+    "0-63": 95,
+    "64-127": 273,
+    "128-255": 409,
+    "256-383": 308,
+    "384-511": 454,
+    ">=512": 0
+   }
   },
-  "split_units": 115,
-  "tokens": {
-   "min": 9.0,
-   "p50": 100.0,
-   "p95": 443.0,
-   "max": 500.0,
-   "mean": 147.15
-  },
-  "tokens_histogram": {
-   "0-63": 802,
-   "64-127": 895,
-   "128-255": 616,
-   "256-383": 283,
-   "384-511": 218,
-   ">=512": 0
+  "fixed": {
+   "n": 947,
+   "by_lang": {
+    "en": 449,
+    "it": 498
+   },
+   "by_type": {
+    "article": 518,
+    "recital": 376,
+    "annex": 53
+   },
+   "split_units": 835,
+   "tokens": {
+    "min": 120.0,
+    "p50": 500.0,
+    "p95": 500.0,
+    "max": 500.0,
+    "mean": 497.0
+   },
+   "tokens_histogram": {
+    "0-63": 0,
+    "64-127": 1,
+    "128-255": 5,
+    "256-383": 1,
+    "384-511": 940,
+    ">=512": 0
+   }
   }
  },
- "index": null
+ "indexes": {
+  "reglens_7d05c4cd_e5large_paragraph": {
+   "collection": "reglens_7d05c4cd_e5large_paragraph",
+   "points": 2814,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 59.57,
+    "it": 63.94
+   },
+   "enrich": "none",
+   "seconds": 681.9,
+   "created_at": "2026-11-20T07:59:05+00:00",
+   "strategy": "paragraph",
+   "chunks_sha256": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300"
+  }
+ }
 }

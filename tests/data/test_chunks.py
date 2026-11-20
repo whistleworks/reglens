@@ -25,9 +25,12 @@ def manifest() -> dict[str, Any]:
     return data
 
 
-@pytest.fixture(scope="module")
-def chunks(manifest: dict[str, Any]) -> list[Chunk]:
-    path = get_settings().processed_dir / f"chunks_{manifest['chunking']['strategy']}.jsonl"
+STRATEGIES = ["paragraph", "article", "fixed"]
+
+
+@pytest.fixture(scope="module", params=STRATEGIES)
+def chunks(request: pytest.FixtureRequest, manifest: dict[str, Any]) -> list[Chunk]:
+    path = get_settings().processed_dir / f"chunks_{request.param}.jsonl"
     return [Chunk.model_validate_json(line) for line in path.read_text().splitlines()]
 
 
@@ -48,7 +51,9 @@ def test_chunks_fit_the_embedding_model(chunks: list[Chunk]) -> None:
     assert worst <= E5_MAX_TOKENS
 
 
-def test_every_unit_is_covered_in_both_languages(chunks: list[Chunk]) -> None:
+def test_every_unit_is_covered_in_both_languages(manifest: dict[str, Any]) -> None:
+    path = get_settings().processed_dir / "chunks_paragraph.jsonl"
+    chunks = [Chunk.model_validate_json(line) for line in path.read_text().splitlines()]
     corpus = json.loads((get_settings().processed_dir / "corpus_en.json").read_text())
     units = {
         p["id"] for doc in corpus["regulations"] for a in doc["articles"] for p in a["paragraphs"]
@@ -57,11 +62,13 @@ def test_every_unit_is_covered_in_both_languages(chunks: list[Chunk]) -> None:
         assert {c.unit_id for c in chunks if c.lang == lang} == units, lang
 
 
-def test_manifest_matches_files(manifest: dict[str, Any], chunks: list[Chunk]) -> None:
+def test_manifest_matches_files(manifest: dict[str, Any]) -> None:
     import hashlib
 
     processed = get_settings().processed_dir
     for name, digest in manifest["files"].items():
         assert hashlib.sha256((processed / name).read_bytes()).hexdigest() == digest, name
-    assert manifest["chunks"]["n"] == len(chunks)
-    assert manifest["chunks"]["tokens"]["max"] <= manifest["chunking"]["max_tokens"]
+    for strategy, stats in manifest["chunks"].items():
+        lines = (processed / f"chunks_{strategy}.jsonl").read_text().splitlines()
+        assert stats["n"] == len(lines)
+        assert stats["tokens"]["max"] <= manifest["chunking"][strategy]["max_tokens"]

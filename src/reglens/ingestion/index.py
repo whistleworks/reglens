@@ -35,9 +35,10 @@ def model_slug(model_name: str) -> str:
     return re.sub(r"[^a-z0-9]", "", base)
 
 
-def collection_name(content_hash: str, dense_model: str, strategy: str, enrich: str) -> str:
+def collection_name(chunks_sha: str, dense_model: str, strategy: str, enrich: str) -> str:
+    """Versioned by the sha of the chunk file it is built from."""
     suffix = "" if enrich == "none" else f"_{enrich}"
-    return f"reglens_{content_hash[:8]}_{model_slug(dense_model)}_{strategy}{suffix}"
+    return f"reglens_{chunks_sha[:8]}_{model_slug(dense_model)}_{strategy}{suffix}"
 
 
 def payload(chunk: Chunk) -> dict[str, Any]:

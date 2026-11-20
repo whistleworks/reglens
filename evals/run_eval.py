@@ -27,7 +27,7 @@ from evals.metrics.stats import bootstrap_ci, percentiles
 from reglens.config import REPO_ROOT, get_settings
 from reglens.ingestion.sources import Lang
 from reglens.observability.logging import configure_logging, get_logger
-from reglens.retrieval.qdrant import Hit
+from reglens.retrieval.pipeline import RetrievalResult
 
 log = get_logger(__name__)
 
@@ -35,13 +35,23 @@ RESULTS_DIR = REPO_ROOT / "evals" / "results"
 DEFAULT_DATASET = REPO_ROOT / "evals" / "datasets" / "reglens_v0.jsonl"
 RESULTS_SCHEMA_VERSION = 1
 
-# (query, k, query_lang) -> ranked hits
-SearchFn = Callable[[str, int, Lang], list[Hit]]
+TEST_ACCESS_LOG = RESULTS_DIR / "test_access.log"
+
+# (query, query_lang or None to auto-detect) -> retrieval result with per-stage latency
+SearchFn = Callable[[str, Lang | None], RetrievalResult]
 
 
 class RetrievalConfig(BaseModel):
     name: str
-    retriever: Literal["bm25", "dense"]
+    retriever: Literal["bm25", "dense", "hybrid"]
+    strategy: Literal["paragraph", "article", "fixed"] = "paragraph"
+    enrich: Literal["none", "hierarchy"] = "none"
+    rerank: bool = False
+    rerank_model: str = "BAAI/bge-reranker-v2-m3-int8"
+    rerank_top_n: int = 20
+    query_lang: Literal["detect", "dataset"] = Field(
+        default="detect", description="BM25 stemmer from a detector (as in production) or gold"
+    )
     candidates: int = Field(
         default=50, description="Chunks retrieved before projecting to article level"
     )
@@ -66,12 +76,14 @@ class MetricValue(BaseModel):
 class PerQuery(BaseModel):
     id: str
     lang: str
+    query_lang: str | None = None
     category: str
     retrieved_ids: list[str]
     retrieved_chunks: list[str]
     gold_ids: list[str]
     scores: dict[str, float]
     latency_ms: float
+    stage_latency_ms: dict[str, float] = Field(default_factory=dict)
     cost_usd: float = 0.0
     error: str | None = None
 
@@ -128,28 +140,43 @@ def run_retrieval(
     for record in records:
         started = time.perf_counter()
         error: str | None = None
-        hits: list[Hit] = []
+        result = RetrievalResult(hits=[])
         try:
-            hits = search(record.question, config.candidates, record.lang)
+            lang = record.lang if config.query_lang == "dataset" else None
+            result = search(record.question, lang)
         except Exception as exc:  # an eval run must survive single-query failures
             error = f"{type(exc).__name__}: {exc}"
             log.warning("eval.query_failed", id=record.id, error=error)
         latency = (time.perf_counter() - started) * 1000
+        hits = result.hits
         chunk_units = [h.unit_id for h in hits]
         rows.append(
             PerQuery(
                 id=record.id,
                 lang=record.lang,
+                query_lang=None if error else result.query_lang,
                 category=record.category,
                 retrieved_ids=to_article_level(chunk_units)[: max(config.ks)],
                 retrieved_chunks=[h.chunk_id for h in hits[:20]],
                 gold_ids=list(record.gold_ids),
                 scores={} if error else retrieval_scores(chunk_units, record.gold_ids, config.ks),
                 latency_ms=round(latency, 2),
+                stage_latency_ms=result.latency_ms,
                 error=error,
             )
         )
     return rows
+
+
+def _stage_latencies(rows: Sequence[PerQuery]) -> dict[str, dict[str, float]]:
+    stages: dict[str, list[float]] = defaultdict(list)
+    for row in rows:
+        for stage, value in row.stage_latency_ms.items():
+            stages[stage].append(value)
+    out = {stage: percentiles(values) for stage, values in sorted(stages.items())}
+    if rows:
+        out["retrieval"] = percentiles([r.latency_ms for r in rows])
+    return out
 
 
 def build_result(
@@ -182,7 +209,7 @@ def build_result(
         metrics=_aggregate(rows),
         by_category=_grouped(rows, "category"),
         by_lang=_grouped(rows, "lang"),
-        latency_ms={"retrieval": percentiles([r.latency_ms for r in rows])} if rows else {},
+        latency_ms=_stage_latencies(rows),
         cost_usd={"total": 0.0, "per_query": 0.0},
         n_queries=len(rows),
         n_skipped=n_skipped,
@@ -197,33 +224,81 @@ def write_result(result: RunResult, results_dir: Path = RESULTS_DIR) -> Path:
     return path
 
 
+def resolve_index(
+    config: RetrievalConfig, manifest: dict[str, Any], dense_model: str
+) -> dict[str, Any]:
+    """The manifest index built from ``config.strategy``/``config.enrich`` (or ``collection``)."""
+    indexes: dict[str, dict[str, Any]] = manifest.get("indexes") or {}
+    if config.collection:
+        if config.collection not in indexes:
+            raise SystemExit(f"collection {config.collection} not in the data manifest")
+        return indexes[config.collection]
+    matches = [
+        info
+        for info in indexes.values()
+        if info.get("strategy") == config.strategy
+        and info.get("enrich") == config.enrich
+        and info.get("dense_model") == dense_model
+    ]
+    if not matches:
+        raise SystemExit(
+            f"no index for strategy={config.strategy} enrich={config.enrich}: run "
+            f"`make index STRATEGY={config.strategy} ENRICH={config.enrich}`"
+        )
+    return max(matches, key=lambda info: str(info.get("created_at", "")))
+
+
 def _real_search(config: RetrievalConfig) -> tuple[SearchFn, dict[str, str], str]:
     from reglens.ingestion.embed import FastEmbedBM25, FastEmbedDense
     from reglens.retrieval.dense import DenseRetriever
+    from reglens.retrieval.pipeline import RetrievalPipeline
     from reglens.retrieval.qdrant import make_client
+    from reglens.retrieval.rerank import FastEmbedReranker
     from reglens.retrieval.sparse import SparseRetriever
 
     settings = get_settings()
     manifest = json.loads((settings.processed_dir / "manifest.json").read_text())
-    index = manifest.get("index") or {}
-    collection = config.collection or settings.qdrant_collection or index.get("collection")
-    if not collection:
-        raise SystemExit("no Qdrant collection: run `make index` first")
+    index = resolve_index(config, manifest, settings.embedding_model)
+    collection = str(index["collection"])
     client = make_client(settings)
-    if config.retriever == "bm25":
-        sparse = SparseRetriever(
-            client, collection, FastEmbedBM25(index.get("sparse_model", settings.sparse_model))
-        )
-        return (
-            lambda q, k, lang: sparse.search(q, k, query_lang=lang),
-            {"sparse": sparse.encoder.name},
-            collection,
-        )
-    dense = DenseRetriever(
-        client, collection, FastEmbedDense(index.get("dense_model", settings.embedding_model))
+    model_ids: dict[str, str] = {}
+    dense = sparse = None
+    if config.retriever in ("dense", "hybrid"):
+        dense = DenseRetriever(client, collection, FastEmbedDense(index["dense_model"]))
+        model_ids["dense"] = index["dense_model"]
+    if config.retriever in ("bm25", "hybrid"):
+        sparse = SparseRetriever(client, collection, FastEmbedBM25(index["sparse_model"]))
+        model_ids["sparse"] = index["sparse_model"]
+    reranker = FastEmbedReranker(config.rerank_model) if config.rerank else None
+    if reranker is not None:
+        model_ids["reranker"] = config.rerank_model
+    pipeline = RetrievalPipeline(
+        config.retriever,
+        dense=dense,
+        sparse=sparse,
+        reranker=reranker,
+        candidates=config.candidates,
+        rerank_top_n=config.rerank_top_n,
     )
-    # e5 is multilingual: the query language is not needed for dense search
-    return (lambda q, k, _lang: dense.search(q, k), {"dense": dense.encoder.name}, collection)
+    return (lambda q, lang: pipeline.search(q, query_lang=lang), model_ids, collection)
+
+
+def log_test_access(config: Path, dataset: Path, log_path: Path = TEST_ACCESS_LOG) -> None:
+    """Append-only record of every use of the test split (checked by the eval-auditor)."""
+    from reglens.ingestion.pipeline import git_sha
+
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    line = json.dumps(
+        {
+            "timestamp": datetime.now(UTC).isoformat(timespec="seconds"),
+            "git_sha": git_sha(),
+            "config": str(config),
+            "dataset": str(dataset),
+        }
+    )
+    with log_path.open("a", encoding="utf-8") as fh:
+        fh.write(line + "\n")
+    log.warning("eval.test_split_accessed", log=str(log_path))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -239,6 +314,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.split == "test" and not args.final:
         log.error("eval.test_split_refused", reason="the test split needs --final (M6 only)")
         return 2
+    if args.split == "test":
+        log_test_access(args.config, args.dataset)
 
     from reglens.ingestion.pipeline import git_sha
 

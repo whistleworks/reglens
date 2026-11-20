@@ -45,7 +45,12 @@ def main() -> None:
     args = parser.parse_args()
 
     settings = get_settings()
-    index = json.loads((settings.processed_dir / "manifest.json").read_text())["index"]
+    manifest = json.loads((settings.processed_dir / "manifest.json").read_text())
+    index = next(
+        i
+        for i in manifest["indexes"].values()
+        if i["strategy"] == "paragraph" and i["enrich"] == "none"
+    )
     client = make_client(settings)
     bm25 = SparseRetriever(client, index["collection"], FastEmbedBM25(index["sparse_model"]))
     dense = DenseRetriever(client, index["collection"], FastEmbedDense(index["dense_model"]))
