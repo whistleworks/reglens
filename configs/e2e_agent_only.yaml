@@ -1,0 +1,10 @@
+# Same as e2e_hybrid but every question goes to the agent (router off): measures the router
+name: e2e_agent_only
+router: false
+judge: true
+retrieval:
+  name: hybrid
+  retriever: hybrid
+  strategy: paragraph
+  enrich: none
+  candidates: 50

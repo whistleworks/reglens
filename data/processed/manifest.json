@@ -214,6 +214,22 @@
    "strategy": "article",
    "chunks_sha256": "e1912678b698e66890a5d2059c684b0d16dc7273bf7507b3f0736c81323d49c3",
    "created_at": "2026-11-20T08:14:26+00:00"
+  },
+  "reglens_1fffbb2d_e5large_paragraph_hierarchy": {
+   "collection": "reglens_1fffbb2d_e5large_paragraph_hierarchy",
+   "points": 2814,
+   "dense_model": "intfloat/multilingual-e5-large",
+   "dense_dim": 1024,
+   "sparse_model": "Qdrant/bm25",
+   "bm25_avg_len": {
+    "en": 74.39,
+    "it": 78.55
+   },
+   "enrich": "hierarchy",
+   "seconds": 852.0,
+   "strategy": "paragraph",
+   "chunks_sha256": "1fffbb2dbdd4c3a70236d04d86002e9acfbcff30ec1b608c830d1335b5798300",
+   "created_at": "2026-11-20T08:28:40+00:00"
   }
  }
 }

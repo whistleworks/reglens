@@ -1,0 +1,10 @@
+# End-to-end: hybrid retrieval (paragraph chunks) + router + agent + judge
+name: e2e_hybrid
+router: true
+judge: true
+retrieval:
+  name: hybrid
+  retriever: hybrid
+  strategy: paragraph
+  enrich: none
+  candidates: 50

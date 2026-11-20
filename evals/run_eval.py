@@ -248,7 +248,7 @@ def resolve_index(
     return max(matches, key=lambda info: str(info.get("created_at", "")))
 
 
-def _real_search(config: RetrievalConfig) -> tuple[SearchFn, dict[str, str], str]:
+def build_pipeline(config: RetrievalConfig) -> tuple[Any, dict[str, str], str]:
     from reglens.ingestion.embed import FastEmbedBM25, FastEmbedDense
     from reglens.retrieval.dense import DenseRetriever
     from reglens.retrieval.pipeline import RetrievalPipeline
@@ -280,7 +280,79 @@ def _real_search(config: RetrievalConfig) -> tuple[SearchFn, dict[str, str], str
         candidates=config.candidates,
         rerank_top_n=config.rerank_top_n,
     )
+    return pipeline, model_ids, collection
+
+
+def _real_search(config: RetrievalConfig) -> tuple[SearchFn, dict[str, str], str]:
+    pipeline, model_ids, collection = build_pipeline(config)
     return (lambda q, lang: pipeline.search(q, query_lang=lang), model_ids, collection)
+
+
+def run_e2e_cli(args: argparse.Namespace) -> int:
+    from evals.e2e import E2EConfig, build_e2e_result, evaluate_one
+    from evals.metrics.judge import Judge
+    from reglens.agent.guardrails import check_input
+    from reglens.agent.loop import AgentLoop
+    from reglens.agent.router import RoutedAssistant
+    from reglens.agent.tools import ToolRegistry
+    from reglens.ingestion.pipeline import git_sha
+    from reglens.llm.factory import generation_client, judge_client
+    from reglens.retrieval.store import ArticleStore
+
+    settings = get_settings()
+    config = E2EConfig.from_yaml(args.config)
+    records = [r for r in load_dataset(args.dataset) if r.split == args.split]
+    pipeline, model_ids, collection = build_pipeline(config.retrieval)
+    store = ArticleStore.from_dir(settings.processed_dir)
+    tools = ToolRegistry(store, lambda q, f: pipeline.search(q, f).hits)
+    llm = generation_client(settings)
+    agent = AgentLoop(
+        llm,
+        tools,
+        max_steps=settings.agent_max_steps,
+        timeout_s=settings.agent_timeout_s,
+        max_tokens_total=settings.agent_max_tokens,
+    )
+    assistant = RoutedAssistant(agent, tools, router_enabled=config.router)
+    judge = Judge(judge_client(settings)) if config.judge else None
+    model_ids = {
+        **model_ids,
+        "generator": settings.llm_primary_model,
+        "fallbacks": ",".join(settings.llm_fallback_models),
+    }
+    if judge is not None:
+        model_ids["judge"] = settings.judge_model
+    rows = []
+    for record in records:
+        row = evaluate_one(record, lambda q: assistant.answer(check_input(q)), store, judge, config)
+        rows.append(row)
+        log.info("e2e.query", id=row.id, status=row.status, route=row.route, error=row.error)
+    prompt_versions = {
+        "system": agent.system.version,
+        "repair": agent.repair.version,
+        "rag": assistant.rag_prompt.version,
+    }
+    if judge is not None:
+        prompt_versions.update({f"judge_{k}": v for k, v in judge.versions.items()})
+    result = build_e2e_result(
+        rows,
+        config=config,
+        split=args.split,
+        dataset_path=args.dataset,
+        git_sha=git_sha(),
+        model_ids=model_ids,
+        prompt_versions=prompt_versions,
+        index_version=collection,
+    )
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    path = RESULTS_DIR / f"{result.run_id}.json"
+    path.write_text(result.model_dump_json(indent=1) + "\n", encoding="utf-8")
+    log.info(
+        "e2e.done",
+        path=str(path.relative_to(REPO_ROOT)),
+        **{name: m.value for name, m in result.metrics.items()},
+    )
+    return 0
 
 
 def log_test_access(config: Path, dataset: Path, log_path: Path = TEST_ACCESS_LOG) -> None:
@@ -304,7 +376,7 @@ def log_test_access(config: Path, dataset: Path, log_path: Path = TEST_ACCESS_LO
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="run_eval")
     parser.add_argument("--split", choices=["dev", "test"], default="dev")
-    parser.add_argument("--stage", choices=["retrieval"], default="retrieval")
+    parser.add_argument("--stage", choices=["retrieval", "e2e"], default="retrieval")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
     parser.add_argument("--final", action="store_true", help="required for --split test (M6)")
@@ -318,6 +390,9 @@ def main(argv: list[str] | None = None) -> int:
         log_test_access(args.config, args.dataset)
 
     from reglens.ingestion.pipeline import git_sha
+
+    if args.stage == "e2e":
+        return run_e2e_cli(args)
 
     config = RetrievalConfig.from_yaml(args.config)
     records = [r for r in load_dataset(args.dataset) if r.split == args.split]

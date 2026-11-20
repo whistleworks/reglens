@@ -39,6 +39,22 @@ class Settings(BaseSettings):
     max_input_chars: int = 2000
     daily_budget_usd: float = 1.0
 
+    # LLM (ADR-0001, ADR-0005): "<provider>/<model>" references
+    llm_primary_model: str = "groq/openai/gpt-oss-120b"
+    llm_fallback_models: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: ["gemini/gemini-3.8-flash"]
+    )
+    llm_timeout_s: float = 20.0
+    judge_model: str = "gemini/gemini-3.8-flash"
+    llm_cache_dir: Path = REPO_ROOT / "evals" / "cache"
+    llm_cache_mode: Literal["readwrite", "replay", "off"] = "readwrite"
+    groq_api_key: SecretStr | None = None
+    gemini_api_key: SecretStr | None = None
+    openrouter_api_key: SecretStr | None = None
+    agent_max_steps: int = 6
+    agent_timeout_s: float = 25.0
+    agent_max_tokens: int = 24_000
+
     # Retrieval
     embedding_model: str = "intfloat/multilingual-e5-large"
     sparse_model: str = "Qdrant/bm25"
@@ -49,15 +65,25 @@ class Settings(BaseSettings):
     qdrant_collection: str = ""
     index_mode: Literal["cloud", "local_snapshot"] = "cloud"
 
-    @field_validator("api_keys", "cors_origins", mode="before")
+    @field_validator("api_keys", "cors_origins", "llm_fallback_models", mode="before")
     @classmethod
     def _csv(cls, value: object) -> object:
         return _split_csv(value)
 
-    @field_validator("qdrant_api_key", mode="before")
+    @field_validator(
+        "qdrant_api_key", "groq_api_key", "gemini_api_key", "openrouter_api_key", mode="before"
+    )
     @classmethod
     def _empty_is_none(cls, value: object) -> object:
         return None if value == "" else value
+
+    def provider_key(self, provider: str) -> str | None:
+        secret = {
+            "groq": self.groq_api_key,
+            "gemini": self.gemini_api_key,
+            "openrouter": self.openrouter_api_key,
+        }.get(provider)
+        return secret.get_secret_value() if secret else None
 
     @property
     def raw_dir(self) -> Path:
