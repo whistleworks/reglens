@@ -20,6 +20,10 @@ class ToolCall(BaseModel):
     id: str
     name: str
     arguments: str = Field(description="Raw JSON string as produced by the model")
+    extra_content: dict[str, Any] | None = Field(
+        default=None,
+        description="Provider data to echo back verbatim (Gemini's thought_signature)",
+    )
 
     def parsed_arguments(self) -> dict[str, Any]:
         value = json.loads(self.arguments or "{}")
@@ -38,14 +42,16 @@ class Message(BaseModel):
     def to_api(self) -> dict[str, Any]:
         out: dict[str, Any] = {"role": self.role, "content": self.content}
         if self.tool_calls:
-            out["tool_calls"] = [
-                {
+            out["tool_calls"] = []
+            for c in self.tool_calls:
+                call: dict[str, Any] = {
                     "id": c.id,
                     "type": "function",
                     "function": {"name": c.name, "arguments": c.arguments},
                 }
-                for c in self.tool_calls
-            ]
+                if c.extra_content:
+                    call["extra_content"] = c.extra_content
+                out["tool_calls"].append(call)
         if self.tool_call_id is not None:
             out["tool_call_id"] = self.tool_call_id
         if self.name is not None:
@@ -74,7 +80,9 @@ class ChatRequest(BaseModel):
     tools: list[ToolSpec] = Field(default_factory=list)
     tool_choice: Literal["auto", "required", "none"] | None = None
     temperature: float = 0.0
-    max_tokens: int = 1024
+    # Room for hidden reasoning: Gemini 3.x counts thinking tokens against max_tokens and
+    # returned finish_reason "length" with no tool call at 1024 (2026-11-21).
+    max_tokens: int = 4096
     seed: int | None = 0
     json_mode: bool = False
 
@@ -133,7 +141,7 @@ class OpenAICompatClient:
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
-        if request.seed is not None:
+        if request.seed is not None and self.provider not in PROVIDERS_WITHOUT_SEED:
             body["seed"] = request.seed
         if request.tools:
             body["tools"] = [t.to_api() for t in request.tools]
@@ -179,6 +187,7 @@ class OpenAICompatClient:
                 id=str(c.get("id") or f"call_{i}"),
                 name=c["function"]["name"],
                 arguments=c["function"].get("arguments") or "{}",
+                extra_content=c.get("extra_content") or None,
             )
             for i, c in enumerate(raw.get("tool_calls") or [])
         ]
@@ -201,7 +210,16 @@ PROVIDER_BASE_URLS: dict[str, str] = {
     "groq": "https://api.groq.com/openai/v1",
     "gemini": "https://generativelanguage.googleapis.com/v1beta/openai",
     "openrouter": "https://openrouter.ai/api/v1",
+    # Self-hosted, keyless (Ollama's OpenAI-compatible API); overridable via OLLAMA_BASE_URL.
+    "ollama": "http://127.0.0.1:11434/v1",
 }
+
+# Providers whose OpenAI-compatible endpoint rejects the `seed` field (Gemini: HTTP 400
+# "Unknown name \"seed\""). Determinism there relies on temperature 0 and the LLM cache.
+PROVIDERS_WITHOUT_SEED = frozenset({"gemini"})
+
+# Providers that run locally and need no API key.
+LOCAL_PROVIDERS = frozenset({"ollama"})
 
 
 def parse_model_ref(ref: str) -> tuple[str, str]:

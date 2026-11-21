@@ -73,6 +73,36 @@ def test_payload_and_parsing_with_tools() -> None:
     assert response.usage == Usage(prompt_tokens=10, completion_tokens=5)
 
 
+def test_gemini_thought_signature_round_trips() -> None:
+    extra = {"google": {"thought_signature": "sig=="}}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        call = {
+            "id": "c1",
+            "type": "function",
+            "function": {"name": "search", "arguments": "{}"},
+            "extra_content": extra,
+        }
+        return httpx.Response(200, json=completion(None, [call]))
+
+    response = client(handler, provider="gemini").chat(REQUEST)
+    sent = response.message.to_api()["tool_calls"][0]
+    assert sent["extra_content"] == extra
+    plain = Message(
+        role="assistant",
+        tool_calls=[response.message.tool_calls[0].model_copy(update={"extra_content": None})],
+    )
+    assert "extra_content" not in plain.to_api()["tool_calls"][0]
+
+
+def test_gemini_payload_omits_seed() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json=completion())
+
+    assert "seed" not in client(handler, provider="gemini").payload(REQUEST)
+    assert client(handler, provider="groq").payload(REQUEST)["seed"] == 0
+
+
 @pytest.mark.parametrize(
     ("status", "retryable"), [(429, True), (503, True), (400, False), (401, False)]
 )
@@ -219,3 +249,23 @@ def test_parse_model_ref() -> None:
     assert parse_model_ref("groq/openai/gpt-oss-120b") == ("groq", "openai/gpt-oss-120b")
     with pytest.raises(ValueError, match="provider"):
         parse_model_ref("unknown/x")
+
+
+def test_ollama_is_a_local_keyless_provider(tmp_path: Path) -> None:
+    from reglens.config import Settings
+    from reglens.llm.factory import make_client
+
+    assert parse_model_ref("ollama/qwen3.5:9b") == ("ollama", "qwen3.5:9b")
+    settings = Settings(
+        llm_cache_dir=tmp_path, ollama_base_url="http://127.0.0.1:9/v1", llm_cache_mode="off"
+    )
+    made = make_client(settings, "ollama/qwen3.5:9b")  # no API key needed
+    assert made is not None
+    assert made.provider == "ollama"
+    assert made.model == "qwen3.5:9b"
+
+
+def test_local_models_have_zero_shadow_cost() -> None:
+    usage = Usage(prompt_tokens=1_000_000, completion_tokens=1_000_000)
+    assert shadow_cost_usd("ollama/qwen3.5:9b", usage) == 0.0
+    assert "self-hosted" in price_of("ollama/anything").source
