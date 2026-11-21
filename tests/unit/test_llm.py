@@ -73,6 +73,28 @@ def test_payload_and_parsing_with_tools() -> None:
     assert response.usage == Usage(prompt_tokens=10, completion_tokens=5)
 
 
+def test_gemini_thought_signature_round_trips() -> None:
+    extra = {"google": {"thought_signature": "sig=="}}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        call = {
+            "id": "c1",
+            "type": "function",
+            "function": {"name": "search", "arguments": "{}"},
+            "extra_content": extra,
+        }
+        return httpx.Response(200, json=completion(None, [call]))
+
+    response = client(handler, provider="gemini").chat(REQUEST)
+    sent = response.message.to_api()["tool_calls"][0]
+    assert sent["extra_content"] == extra
+    plain = Message(
+        role="assistant",
+        tool_calls=[response.message.tool_calls[0].model_copy(update={"extra_content": None})],
+    )
+    assert "extra_content" not in plain.to_api()["tool_calls"][0]
+
+
 def test_gemini_payload_omits_seed() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, json=completion())

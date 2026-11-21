@@ -20,6 +20,10 @@ class ToolCall(BaseModel):
     id: str
     name: str
     arguments: str = Field(description="Raw JSON string as produced by the model")
+    extra_content: dict[str, Any] | None = Field(
+        default=None,
+        description="Provider data to echo back verbatim (Gemini's thought_signature)",
+    )
 
     def parsed_arguments(self) -> dict[str, Any]:
         value = json.loads(self.arguments or "{}")
@@ -38,14 +42,16 @@ class Message(BaseModel):
     def to_api(self) -> dict[str, Any]:
         out: dict[str, Any] = {"role": self.role, "content": self.content}
         if self.tool_calls:
-            out["tool_calls"] = [
-                {
+            out["tool_calls"] = []
+            for c in self.tool_calls:
+                call: dict[str, Any] = {
                     "id": c.id,
                     "type": "function",
                     "function": {"name": c.name, "arguments": c.arguments},
                 }
-                for c in self.tool_calls
-            ]
+                if c.extra_content:
+                    call["extra_content"] = c.extra_content
+                out["tool_calls"].append(call)
         if self.tool_call_id is not None:
             out["tool_call_id"] = self.tool_call_id
         if self.name is not None:
@@ -179,6 +185,7 @@ class OpenAICompatClient:
                 id=str(c.get("id") or f"call_{i}"),
                 name=c["function"]["name"],
                 arguments=c["function"].get("arguments") or "{}",
+                extra_content=c.get("extra_content") or None,
             )
             for i, c in enumerate(raw.get("tool_calls") or [])
         ]

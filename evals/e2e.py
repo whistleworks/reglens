@@ -189,7 +189,9 @@ def aggregate(rows: Sequence[E2EQuery]) -> dict[str, MetricValue]:
         out[name] = MetricValue(
             value=round(sum(values) / len(values), 4), ci95=bootstrap_ci(values), n=len(values)
         )
-    errors = [float(r.error is not None) for r in rows]
+    # A provider failure surfaces as status "llm_error" with no exception: count it too,
+    # otherwise a run where every call failed reports error_rate 0.
+    errors = [float(r.error is not None or r.status == "llm_error") for r in rows]
     if errors:
         out["error_rate"] = MetricValue(
             value=round(sum(errors) / len(errors), 4), ci95=bootstrap_ci(errors), n=len(errors)

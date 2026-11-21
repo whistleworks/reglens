@@ -92,6 +92,25 @@ def test_errors_do_not_stop_the_run(store, tmp_path: Path) -> None:  # type: ign
     E2EResult.model_validate(json.loads(out.model_dump_json()))
 
 
+def test_llm_error_status_counts_in_error_rate(store) -> None:  # type: ignore[no-untyped-def]
+    records = load_dataset(DATASET)
+    rows = [
+        evaluate_one(r, lambda q: result(Status.LLM_ERROR, [], [], answer=""), store, None, CONFIG)
+        for r in records
+    ]
+    out = build_e2e_result(
+        rows,
+        config=CONFIG,
+        split="dev",
+        dataset_path=DATASET,
+        git_sha="abc",
+        model_ids={},
+        prompt_versions={},
+        index_version="i",
+    )
+    assert out.metrics["error_rate"].value == 1.0
+
+
 def test_e2e_config_from_yaml(tmp_path: Path) -> None:
     path = tmp_path / "c.yaml"
     path.write_text("name: x\nrouter: false\nretrieval:\n  name: h\n  retriever: dense\n")
