@@ -80,7 +80,9 @@ class ChatRequest(BaseModel):
     tools: list[ToolSpec] = Field(default_factory=list)
     tool_choice: Literal["auto", "required", "none"] | None = None
     temperature: float = 0.0
-    max_tokens: int = 1024
+    # Room for hidden reasoning: Gemini 3.x counts thinking tokens against max_tokens and
+    # returned finish_reason "length" with no tool call at 1024 (2026-11-21).
+    max_tokens: int = 4096
     seed: int | None = 0
     json_mode: bool = False
 

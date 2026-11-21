@@ -155,6 +155,21 @@ def test_step_limit(store: ArticleStore) -> None:
     assert result.citations == []
 
 
+def test_last_step_offers_only_final_answer(store: ArticleStore) -> None:
+    final = {"answer": "High-risk.", "citations": [{"id": "AIA:art:6:par:2"}]}
+    turns = [
+        [call("search", {"query": "high-risk"})],
+        [call("search", {"query": "more"})],
+        [call("final_answer", final)],
+    ]
+    agent, llm = loop(store, turns, max_steps=3)
+    result = agent.run(check_input("high-risk?"))
+    assert result.status is Status.ANSWERED
+    assert [t.name for t in llm.requests[0].tools] != ["final_answer"]
+    assert [t.name for t in llm.requests[2].tools] == ["final_answer"]
+    assert llm.requests[2].tool_choice == "required"
+
+
 def test_invalid_citation_then_repair_then_refusal(store: ArticleStore) -> None:
     bad = {"answer": "x", "citations": [{"id": "GDPR:art:4"}]}  # exists but never retrieved
     agent, llm = loop(
