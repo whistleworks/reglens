@@ -73,6 +73,14 @@ def test_payload_and_parsing_with_tools() -> None:
     assert response.usage == Usage(prompt_tokens=10, completion_tokens=5)
 
 
+def test_gemini_payload_omits_seed() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json=completion())
+
+    assert "seed" not in client(handler, provider="gemini").payload(REQUEST)
+    assert client(handler, provider="groq").payload(REQUEST)["seed"] == 0
+
+
 @pytest.mark.parametrize(
     ("status", "retryable"), [(429, True), (503, True), (400, False), (401, False)]
 )

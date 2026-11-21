@@ -133,7 +133,7 @@ class OpenAICompatClient:
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
-        if request.seed is not None:
+        if request.seed is not None and self.provider not in PROVIDERS_WITHOUT_SEED:
             body["seed"] = request.seed
         if request.tools:
             body["tools"] = [t.to_api() for t in request.tools]
@@ -204,6 +204,10 @@ PROVIDER_BASE_URLS: dict[str, str] = {
     # Self-hosted, keyless (Ollama's OpenAI-compatible API); overridable via OLLAMA_BASE_URL.
     "ollama": "http://127.0.0.1:11434/v1",
 }
+
+# Providers whose OpenAI-compatible endpoint rejects the `seed` field (Gemini: HTTP 400
+# "Unknown name \"seed\""). Determinism there relies on temperature 0 and the LLM cache.
+PROVIDERS_WITHOUT_SEED = frozenset({"gemini"})
 
 # Providers that run locally and need no API key.
 LOCAL_PROVIDERS = frozenset({"ollama"})
