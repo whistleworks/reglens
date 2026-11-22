@@ -22,6 +22,7 @@ const anchorOf = (id) => `cite-${id.replace(/[^A-Za-z0-9]+/g, "-")}`;
 /* Inline text: **bold** and canonical ids (AIA:art:6:par:2) as links to the citation rail.
    Built with DOM nodes only, never innerHTML, so model output cannot inject markup. */
 function inline(parent, text) {
+  text = text.replace(/\[\s*((?:AIA|GDPR):[^\]\s]+)\s*\]/g, "$1");
   const parts = text.split(/(\*\*[^*]+\*\*|(?<![\w*])\*[^*\s][^*]*\*(?![\w*]))/g);
   for (const part of parts) {
     if (!part) continue;
@@ -84,6 +85,9 @@ function light(id) {
 function render(data) {
   lastRequestId = data.request_id;
   resultEl.hidden = false;
+  document.querySelector(".refs").hidden = false;
+  document.querySelector(".refs").classList.remove("is-pending");
+  document.getElementById("feedback").hidden = false;
   renderMarkdown(document.getElementById("answer"), data.answer || "");
   if (data.disclaimer) document.getElementById("disclaimer").textContent = data.disclaimer;
 
@@ -121,8 +125,37 @@ function render(data) {
   document.getElementById("feedback-status").textContent = "";
 }
 
+function showThinking() {
+  const answer = document.getElementById("answer");
+  const lines = el("div", "", { class: "thinking", "aria-hidden": "true" });
+  for (let i = 0; i < 4; i++) lines.append(el("span"));
+  answer.replaceChildren(lines);
+  document.getElementById("degraded").hidden = true;
+  document.getElementById("feedback").hidden = true;
+  document.getElementById("citations").replaceChildren();
+  document.getElementById("sources-box").hidden = true;
+  document.querySelector(".refs").hidden = true;
+}
+
+/* The retrieved passages arrive before the answer: show them in the rail right away. */
+function showFound(sources) {
+  const refs = document.querySelector(".refs");
+  const list = document.getElementById("citations");
+  list.replaceChildren();
+  refs.hidden = sources.length === 0;
+  refs.classList.add("is-pending");
+  document.getElementById("citations-title").textContent = "Sto leggendo questi articoli";
+  for (const s of sources) {
+    const li = el("li");
+    li.append(el("span", s.id, { class: "cite-id" }));
+    li.append(el("a", s.title, { href: s.url, target: "_blank", rel: "noopener", class: "cite-title" }));
+    list.append(li);
+  }
+}
+
 function setBusy(busy, message = "") {
   body.classList.toggle("is-busy", busy);
+  if (!busy && document.querySelector("#answer .thinking")) document.getElementById("answer").replaceChildren();
   askBtn.disabled = busy;
   statusEl.textContent = message;
 }
@@ -130,7 +163,8 @@ function setBusy(busy, message = "") {
 async function ask(question) {
   body.classList.remove("is-empty");
   threadEl.hidden = false;
-  resultEl.hidden = true;
+  resultEl.hidden = false;
+  showThinking();
   document.getElementById("asked").textContent = question;
   setBusy(true, "Cerco negli articoli dell'AI Act e del GDPR");
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -158,7 +192,7 @@ async function ask(question) {
       buffer = buffer.slice(idx + 2);
       const event = /^event: (.*)$/m.exec(raw)?.[1];
       const data = JSON.parse(/^data: (.*)$/m.exec(raw)?.[1] || "null");
-      if (event === "sources") setBusy(true, "Ho trovato gli articoli, sto scrivendo la risposta");
+      if (event === "preview") { showFound(data || []); setBusy(true, "Ho trovato gli articoli, sto scrivendo la risposta"); }
       if (event === "answer") { setBusy(false); render(data); }
       if (event === "error") setBusy(false, (data && (data.detail || data.title)) || "La risposta non è arrivata. Riprova.");
     }
