@@ -195,10 +195,19 @@ def test_open_breaker_skips_provider() -> None:
     breaker.record_failure()
     primary = Scripted("groq", ["never"])
     chain = FallbackChain(
-        [primary, Scripted("gemini", ["ok"])], retry=NO_SLEEP, breakers={"groq": breaker}
+        [primary, Scripted("gemini", ["ok"])], retry=NO_SLEEP, breakers={"groq/m": breaker}
     )
     assert chain.chat(REQUEST).provider == "gemini"
     assert primary.calls == 0
+
+
+def test_same_provider_fallback_survives_open_breaker() -> None:
+    primary = Scripted("gemini", [LLMError("503", retryable=True)] * 3)
+    backup = Scripted("gemini", ["from lite"])
+    backup.model = "lite"
+    chain = FallbackChain([primary, backup], retry=NO_SLEEP)
+    assert chain.chat(REQUEST).message.content == "from lite"
+    assert chain.fallbacks_used == 1
 
 
 def test_backoff_is_bounded_full_jitter() -> None:
