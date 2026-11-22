@@ -17,7 +17,7 @@ from reglens.api.auth import extract_key, key_matches
 from reglens.api.errors import ProblemError
 from reglens.api.middleware import client_ip
 from reglens.api.ratelimit import RateLimiter, hash_ip
-from reglens.api.schemas import DISCLAIMER, AskRequest, AskResponse, FeedbackRequest
+from reglens.api.schemas import DISCLAIMER, AskRequest, AskResponse, FeedbackRequest, SourceOut
 from reglens.api.services import RetrievalUnavailableError, Services
 from reglens.config import Settings
 from reglens.observability.metrics import METRICS
@@ -104,6 +104,15 @@ def _ask(req: AskRequest, request: Request, svc: Services, cfg: Settings) -> Ask
     )
 
 
+def _preview_sources(req: AskRequest, svc: Services, cfg: Settings) -> list[SourceOut]:
+    """Retrieved passages shown while the answer is being written (best effort: on any
+    failure the client just waits for the final event, which reports errors properly)."""
+    try:
+        return svc.sources_from(svc.retrieve(check_input(req.question, cfg.max_input_chars).text))
+    except Exception:  # the real request below handles and reports the error
+        return []
+
+
 async def _sse(
     req: AskRequest, request: Request, svc: Services, cfg: Settings
 ) -> AsyncIterator[str]:
@@ -111,6 +120,9 @@ async def _sse(
         return f"event: {name}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
     yield event("status", {"stage": "retrieval", "request_id": request.state.request_id})
+    preview = await run_in_threadpool(_preview_sources, req, svc, cfg)
+    if preview:
+        yield event("preview", [s.model_dump() for s in preview])
     try:
         response = await run_in_threadpool(_ask, req, request, svc, cfg)
     except ProblemError as exc:

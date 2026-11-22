@@ -51,6 +51,8 @@ class Settings(BaseSettings):
     groq_api_key: SecretStr | None = None
     gemini_api_key: SecretStr | None = None
     openrouter_api_key: SecretStr | None = None
+    # Local models, no account or key: `ollama serve`, LLM_PRIMARY_MODEL=ollama/qwen3.5:9b
+    ollama_base_url: str = "http://127.0.0.1:11434/v1"
     agent_max_steps: int = 6
     agent_timeout_s: float = 25.0
     agent_max_tokens: int = 24_000

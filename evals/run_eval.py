@@ -252,6 +252,8 @@ def run_e2e_cli(args: argparse.Namespace) -> int:
     settings = get_settings()
     config = E2EConfig.from_yaml(args.config)
     records = [r for r in load_dataset(args.dataset) if r.split == args.split]
+    if args.limit:
+        records = records[: args.limit]  # dataset order, deterministic
     pipeline, model_ids, collection = build_pipeline(config.retrieval)
     store = ArticleStore.from_dir(settings.processed_dir)
     tools = ToolRegistry(store, lambda q, f: pipeline.search(q, f).hits)
@@ -330,6 +332,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
     parser.add_argument("--final", action="store_true", help="required for --split test (M6)")
+    parser.add_argument("--limit", type=int, default=0, help="e2e only: first N records")
     args = parser.parse_args(argv)
     configure_logging(get_settings().log_level)
 

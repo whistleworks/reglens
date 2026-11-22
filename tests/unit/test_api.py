@@ -173,7 +173,7 @@ def test_sse_stream(tmp_path: Path) -> None:
     events = [
         line.removeprefix("event: ") for line in text.splitlines() if line.startswith("event: ")
     ]
-    assert events == ["status", "sources", "answer", "done"]
+    assert events == ["status", "preview", "sources", "answer", "done"]
 
 
 def test_sse_reports_errors_as_events(tmp_path: Path) -> None:

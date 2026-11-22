@@ -61,6 +61,10 @@ class AllProvidersFailedError(LLMError):
     pass
 
 
+def _key(client: ChatClient) -> str:
+    return f"{client.provider}/{client.model}"
+
+
 class FallbackChain:
     """Try each client in order; retry retryable errors; skip providers with an open breaker."""
 
@@ -75,7 +79,9 @@ class FallbackChain:
             raise ValueError("at least one client is required")
         self.clients = list(clients)
         self.retry = retry or RetryPolicy()
-        self.breakers = breakers or {c.provider: CircuitBreaker() for c in self.clients}
+        # One breaker per provider/model: a 503 "high demand" on one Gemini model must not
+        # block a fallback to another model of the same provider.
+        self.breakers = breakers or {_key(c): CircuitBreaker() for c in self.clients}
         self.provider = "+".join(c.provider for c in self.clients)
         self.model = self.clients[0].model
         self.fallbacks_used = 0
@@ -83,19 +89,20 @@ class FallbackChain:
     def chat(self, request: ChatRequest) -> ChatResponse:
         errors: list[str] = []
         for position, client in enumerate(self.clients):
-            breaker = self.breakers.setdefault(client.provider, CircuitBreaker())
+            breaker = self.breakers.setdefault(_key(client), CircuitBreaker())
             if not breaker.allow():
-                errors.append(f"{client.provider}: circuit open")
+                errors.append(f"{_key(client)}: circuit open")
                 continue
             for attempt in range(self.retry.attempts):
                 try:
                     response = client.chat(request)
                 except LLMError as exc:
                     breaker.record_failure()
-                    errors.append(f"{client.provider}: {exc}")
+                    errors.append(f"{_key(client)}: {exc}")
                     log.warning(
                         "llm.error",
                         provider=client.provider,
+                        model=client.model,
                         attempt=attempt,
                         retryable=exc.retryable,
                         status=exc.status,
